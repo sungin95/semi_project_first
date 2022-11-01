@@ -33,7 +33,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     "accounts",
-    "foods",
+    "restaurants",
     "imagekit",
     "django.contrib.admin",
     "django.contrib.auth",
@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = "ko-kr"
 
-TIME_ZONE = "UTC"
+TIME_ZONE = "Seoul/Asia"
 
 USE_I18N = True
 
