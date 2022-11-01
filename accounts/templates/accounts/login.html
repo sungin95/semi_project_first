@@ -5,7 +5,9 @@
   <form action="{% url 'accounts:login' %}" method="POST">
     {% csrf_token %}
     {% bootstrap_form form %}
-    <button type="submit" class="btn btn-outline-dark">로그인</button>
+    <div class="d-flex">
+      <button type="submit" class="btn btn-outline-dark">로그인</button>
+      <button type="button" class="btn btn-outline-dark mx-3" onclick="location.href='{% url 'accounts:signup' %}' ">회원가입</button>
+    </div>
   </form>
-  <button type="button" class="btn btn-outline-dark" onclick="location.href='{% url 'accounts:signup' %}' ">회원가입</button>
 {% endblock content %}
