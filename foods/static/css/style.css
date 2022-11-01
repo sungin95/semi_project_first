@@ -1,0 +1,63 @@
+@charset "utf-8";
+
+/* CSS Document */
+body {
+    height: 1920px;
+    width: 1080px;
+}
+
+.category {
+    height: 10%;
+    background-color: #EEEEEE;
+}
+
+.food_cate {
+    height: 10%;
+    width: 100%;
+    background-color: #DDDDDD;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.food_cate a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.a_menu {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.a_menu img {
+    height: 5rem;
+}
+
+.a_menu p {
+    text-align: center;
+
+}
+
+.restaurants {
+    height: auto;
+    background-color: #EEEEEE;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 1rem 0
+}
+
+.restaurants img {
+    width: 25rem;
+    height: 25rem;
+    object-fit: cover;
+    margin: 1rem;
+}
+
+.more {
+    margin-top: 3rem;
+    display: flex;
+    justify-content: center;
+}
