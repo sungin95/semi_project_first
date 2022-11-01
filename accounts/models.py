@@ -11,3 +11,8 @@ class User(AbstractUser):
         format="JPEG",
         options={"quality": 90},
     )
+    followings = models.ManyToManyField(
+        "self",
+        symmetrical=False,
+        related_name="followers",
+    )
