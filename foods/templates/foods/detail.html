@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block block %}
+  <!-- 음식점 정보 -->
+  <div class="row">
+    <div class="d-flex  justify-content-between">
+      <h2>음식점명</h2>
+      <div class="">
+        <div>별점</div>
+        <div>조회수</div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <div>주소</div>
+        <div>전화번호</div>
+        <div>영업시간</div>
+        <div>메뉴</div>
+      </div>
+      <div class="col">
+        <div>주소 내용</div>
+        <div>전화번호 내용</div>
+        <div>영업시간 내용</div>
+        <div>메뉴 내용</div>
+      </div>
+    </div>
+
+    <!-- 메뉴사진 -->
+    <div class="row row-cols-4 g-3">
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+    </div>
+    <div class="row justify-content-center" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
+
+    <!-- 리뷰창 -->
+    <!-- 개인 리뷰 -->
+    <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
+      <div class="d-flex justify-content-between p-0 h-auto">
+        <div class="d-flex">
+          <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
+          <div class="rounded-pill" style="background-color:yellow">맛있다</div>
+        </div>
+
+        <div class="rounded-pill" style="background-color:yellow">시간</div>
+      </div>
+      <div style="background-color:grey;" class="p-0 h-75">리뷰내용</div>
+    </div>
+
+    <!-- 페이지네이션 -->
+    <div class="row">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+{% endblock block %}
