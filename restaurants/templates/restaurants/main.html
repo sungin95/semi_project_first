@@ -2,50 +2,48 @@
 {% load django_bootstrap5 %}
 {% block content %}
   <!--검색-->
-  <div class="container">
-    <div class="row">
-      <p class="title">솔직한 맛 평가</p>
-      <h1 class="title">오늘의 플레이트</h1>
-      <a href="{% url 'restaurants:create' %}">음식점정보 등록하기</a>
-      <fieldset class="main-search">
-        <legend>전체 검색</legend>
-        <label class="search-word" for="main-search">
-          <span class="icon">검색 :</span>
-          <input id="main-search" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역, 식당 또는 음식" autocomplete="off" onclick="trackEvent('CLICK_SEARCH_MAIN')">
-          <span class="clear_btn">CLEAR</span>
-        </label>
-        <input class="btn-search" type="submit" value="검색" onclick="trackEvent('CLICK_KEYWORD_SEARCH');">
-      </fieldset>
-    </div>
 
-    <!--카테고리-->
-    <div class="row">
-      <div class="col">
-        <a href="/store?affect_type=Home&amp;affect_id=0">
-          <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">
-          <span class="css-xd55zv e1387oiq0">중식</span></a>
-      </div>
-      <div class="col">
-        <a href="/store?affect_type=Home&amp;affect_id=0">
-          <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">
-          <span class="css-xd55zv e1387oiq0">양식</span></a>
-      </div>
-    </div>
-
-    <!--음식 그림-->
-    <div class="row">
-      <h3 class="title">끌리는 음식</h3>
-      <!-- 지역선택 -->
-      <div class="row row-cols-4">
-        <div class="col text-center"><img src="https://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-        <div class="col text-center"><img src="https://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-        <div class="col text-center"><img src="https://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-        <div class="col text-center"><img src="https://placeimg.com/200/200/natures" alt="" class="img-fluid"></div>
-      </div>
-    </div>
-
-    <!--더 보기 -->
-    <button class="btn btn-primary" type="button" href="">▾ 더보기 ▾</button>
+  <div class="row">
+    <p class="title">솔직한 맛 평가</p>
+    <h1 class="title">오늘의 플레이트</h1>
+    <fieldset class="main-search">
+      <legend>전체 검색</legend>
+      <label class="search-word" for="main-search">
+        <span class="icon">검색 :</span>
+        <input id="main-search" class="HomeSearchInput" name="main-search" type="text" maxlength="50" placeholder="지역, 식당 또는 음식" autocomplete="off" onclick="trackEvent('CLICK_SEARCH_MAIN')">
+        <span class="clear_btn">CLEAR</span>
+      </label>
+      <input class="btn-search" type="submit" value="검색" onclick="trackEvent('CLICK_KEYWORD_SEARCH');">
+    </fieldset>
   </div>
+
+  <!--카테고리-->
+  <div class="row">
+    <div class="col">
+      <a href="/store?affect_type=Home&amp;affect_id=0">
+        <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">
+        <span class="css-xd55zv e1387oiq0">중식</span></a>
+    </div>
+    <div class="col">
+      <a href="/store?affect_type=Home&amp;affect_id=0">
+        <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">
+        <span class="css-xd55zv e1387oiq0">양식</span></a>
+    </div>
+  </div>
+
+  <!--음식 그림-->
+  <div class="row">
+    <h3 class="title">끌리는 음식</h3>
+    <!-- 지역선택 -->
+    <div class="row row-cols-4">
+      <div class="col text-center"><img src="https://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="https://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="https://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="https://placeimg.com/200/200/natures" alt="" class="img-fluid"></div>
+    </div>
+  </div>
+
+  <!--더 보기 -->
+  <button class="btn btn-primary" type="button" href="">▾ 더보기 ▾</button>
 
 {% endblock content %}
