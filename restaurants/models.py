@@ -1,4 +1,7 @@
 from django.db import models
+from imagekit.models import ProcessedImageField
+from imagekit.processors import Thumbnail
+from django.conf import settings
 
 # Create your models here.
 class Restaurants(models.Model):
@@ -9,3 +12,4 @@ class Restaurants(models.Model):
     price_avg = models.TextField()
     parking = models.CharField(max_length=50)
     day_off = models.CharField(max_length=40)
+    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_restaurant")

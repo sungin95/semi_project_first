@@ -1,5 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.views.decorators.http import require_safe, require_http_methods, require_POST
+from django.contrib.auth.decorators import login_required
+from django.http import JsonResponse
 from .models import Restaurants
 from .forms import RestaurantForm
 from django.contrib import messages
