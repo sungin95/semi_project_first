@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+
+  <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
+    <div class="d-flex justify-content-between p-0 h-auto">
+      <div class="d-flex">
+        <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
+        <div class="rounded-pill" style="background-color:yellow">맛있다</div>
+      </div>
+
+      <div class="rounded-pill" style="background-color:yellow">{{ review.created_at }}</div>
+    </div>
+    <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
+  </div>
+  {% if request.user == review.user %}
+    <button type="submit" class="btn btn-outline-dark" onclick="location.href='{% url 'reviews:update' review.pk restaurant.pk%}'">수정</button>
+    <button type="submit" class="btn btn-outline-dark" onclick="location.href='{% url 'reviews:delete' review.pk restaurant.pk%}'">삭제</button>
+  {% else %}
+  {% endif %}
+{% endblock content %}

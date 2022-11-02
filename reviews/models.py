@@ -3,10 +3,9 @@ from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import Thumbnail
 
-# Create your models here.
-
 
 class Review(models.Model):
+    restaurants = models.ForeignKey("restaurants.Restaurants", on_delete=models.CASCADE)
     title = models.CharField(max_length=50)
     content = models.TextField()
     created_at = models.DateTimeField(auto_now_add=True)
