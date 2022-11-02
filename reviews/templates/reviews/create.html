@@ -1,10 +1,23 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'reviews/css/style.css' %}">
+{% endblock css %}
 {% block content %}
-  <h1>Create</h1>
+<div class="container">
+  <div class="title">
+    <p>
+      <span class="r_name"><b>와라야키 쿠이신보</b></span>에 대한 솔직한 리뷰를 써주세요.
+    </p>
+  </div>
   <form action="" method="POST" enctype="multipart/form-data">
     {% csrf_token %}
     {% bootstrap_form review_form %}
-    <button type="submit" class="btn btn-outline-dark">생성</button>
+    <div class="review_buttons">
+      <button type="submit" class="cancel">취소</button>
+      <button type="submit" class="confirm">리뷰 올리기</button>
+    </div>
   </form>
+</div>
 {% endblock content %}
