@@ -10,14 +10,6 @@
       <div class="">
         <div>별점</div>
         <div>조회수</div>
-        {% comment %} {% if request.user.is_authenticated %} {% endcomment %}
-          {% if request.user in restaurant.like_users.all %}
-            <i id="like-btn" data-article-id="{{ restaurant.pk }}" class="bi bi-heart-fill"></i>
-          {% else %}
-            <i id="like-btn" data-article-id="{{ restaurant.pk }}" class="bi bi-heart"></i>
-          {% endif %}
-        {% comment %} {% endif %} {% endcomment %}
-        <span id="like-count">{{ restaurant.like_users.count }}</span>
       </div>
     </div>
     <div class="row">

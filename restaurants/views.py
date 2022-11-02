@@ -5,7 +5,6 @@ from django.views.decorators.http import (
     require_POST,
 )
 from django.contrib.auth.decorators import login_required
-from django.http import JsonResponse
 from .models import Restaurants
 from .forms import RestaurantForm
 from django.contrib import messages
@@ -15,6 +14,13 @@ from reviews.models import Review
 def main(request):
     return render(request, "restaurants/main.html")
 
+
+def index(request):
+    restaurants = Restaurants.objects.all()
+    context = {
+        'restaurants': restaurants,
+    }
+    return render(request, 'restaurants/index.html', context)
 
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)

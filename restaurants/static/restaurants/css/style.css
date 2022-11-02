@@ -1,20 +1,16 @@
 @charset "utf-8";
 
 /* CSS Document */
-body {
-    height: 1920px;
-    width: 1080px;
-}
 
 .category {
     height: 10%;
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
 }
 
 .food_cate {
     height: 10%;
     width: 100%;
-    background-color: #DDDDDD;
+    background-color: #dddddd;
     display: flex;
     justify-content: space-around;
     align-items: center;
@@ -37,16 +33,15 @@ body {
 
 .a_menu p {
     text-align: center;
-
 }
 
 .restaurants {
     height: auto;
-    background-color: #EEEEEE;
+    background-color: #eeeeee;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    padding: 1rem 0
+    padding: 1rem 0;
 }
 
 .restaurants img {
