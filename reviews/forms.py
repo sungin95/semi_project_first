@@ -2,7 +2,7 @@ from .models import Review, Comment
 from django import forms
 
 
-class ReviewForm(forms.modelForm):
+class ReviewForm(forms.ModelForm):
     class Meta:
         model = Review
         fields = [
@@ -12,7 +12,7 @@ class ReviewForm(forms.modelForm):
         ]
 
 
-class CommentForm(forms.modelForm):
+class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = [
