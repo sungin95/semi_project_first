@@ -18,16 +18,16 @@ def main(request):
 def index(request):
     restaurants = Restaurants.objects.all()
     context = {
-        'restaurants': restaurants,
+        "restaurants": restaurants,
     }
-    return render(request, 'restaurants/index.html', context)
+    return render(request, "restaurants/index.html", context)
+
 
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     context = {
         "restaurant": restaurant,
     }
-    print(dir(restaurant))
     return render(request, "restaurants/detail.html", context)
 
 
@@ -72,3 +72,19 @@ def update(request, restaurant_pk):
 def delete(request, restaurant_pk):
     get_object_or_404(Restaurants, pk=restaurant_pk).delete()
     return redirect("restaurants:main")
+
+
+@login_required
+def like(request, restaurant_pk):
+    restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
+    if restaurant.like_users.filter(pk=request.user.pk).exists():
+        restaurant.like_users.remove(request.user)
+        is_like = False
+    else:
+        restaurant.like_users.add(request.user)
+        is_like = True
+    context = {
+        "is_like": is_like,
+        "liketCount": restaurant.like_users.count(),
+    }
+    return redirect("restaurants:detail", restaurant.pk)

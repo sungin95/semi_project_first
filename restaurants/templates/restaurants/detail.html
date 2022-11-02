@@ -11,6 +11,19 @@
         <div>별점</div>
         <div>조회수</div>
         <a href="{% url 'reviews:create' restaurant.pk %}">리뷰 작성하기</a>
+        <form method="POST" action="{% url 'restaurants:like' restaurant.pk %}">
+          {% csrf_token %}
+          {% if request.user.is_authenticated %}
+            {% if request.user in restaurant.like_users.all %}
+              <input type="submit" class="btn btn-dark" value="좋아요">
+            {% else %}
+              <input type="submit" class="btn btn-dark" value="좋아요 취소">
+            {% endif %}
+          {% else %}
+            {% bootstrap_button buton_type="submit" content="로그인이 필요"%}
+          {% endif %}
+          <span class="mx-3" id="like-count">{{review.like.count}}</span>
+        </form>
       </div>
     </div>
     <div class="row">
