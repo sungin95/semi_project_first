@@ -33,3 +33,19 @@ def create(request):
         'form': form,
     }
     return render(request, 'restaurants/forms.html', context)
+
+@require_http_methods(['GET','POST'])
+def update(request, restaurant_pk):
+    restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
+    if request.method == 'POST':
+        form = RestaurantForm(request.POST, request.FILES, instance=restaurant)
+        if form.is_valid():
+            form.save()
+            return redirect('restaurants:detail', restaurant.pk)
+    else:
+        form = RestaurantForm(instance=restaurant)
+    context = {
+        'restaurant': restaurant,
+        'form': form,
+    }
+    return render(request, 'restaurants/forms.html', context)
