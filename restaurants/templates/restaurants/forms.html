@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+
+{% block content %}
+  {% if request.resolver_match.url_name == 'create' %}
+    <h1>음식점 정보등록</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% bootstrap_button content='리뷰작성' button_type='submit' button_class="btn-primary" %}
+    </form>
+
+  {% else %}
+    <h1>음식점 정보수정</h1>
+    <form action="" method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% bootstrap_button content='수정하기' button_type='submit' button_class="btn-primary" %}
+    </form>
+  {% endif %}
+
+{% endblock content %}
