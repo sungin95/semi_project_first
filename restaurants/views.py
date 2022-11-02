@@ -9,6 +9,13 @@ from django.contrib import messages
 def main(request):
     return render(request, 'restaurants/main.html')
 
+def index(request):
+    restaurants = Restaurants.objects.all()
+    context = {
+        'restaurants': restaurants,
+    }
+    return render(request, 'restaurants/index.html', context)
+
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     context = {

@@ -1,0 +1,9 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+  <h1>음식점 목록</h1>
+  {% for restaurant in restaurants %}
+    <p>{{ restaurant.restaurant_name }}</p>
+    <a class="btn btn-primary" href="{% url 'restaurants:detail' restaurant.pk %}">자세히보기</a>
+  {% endfor %}
+{% endblock content %}
