@@ -49,3 +49,7 @@ def update(request, restaurant_pk):
         'form': form,
     }
     return render(request, 'restaurants/forms.html', context)
+
+def delete(request, restaurant_pk):
+    get_object_or_404(Restaurants, pk=restaurant_pk).delete()
+    return redirect('restaurants:main')
