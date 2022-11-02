@@ -26,37 +26,43 @@ def create(request, restaurant_pk):
     return render(request, "reviews/create.html", context)
 
 
-def update(request, review_pk):
+def update(request, restaurant_pk, review_pk):
     review = Review.objects.get(pk=review_pk)
+    restaurant = Restaurants.objects.get(pk=restaurant_pk)
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES, instance=review)
         if review_form.is_valid():
-            review_form.save()
-            return redirect("reviews:create")  # ! 여기 수정 필요!!!!!!
+            review = review_form.save(commit=False)
+            review.restaurants = restaurant
+            review.user = request.user
+            review.save()
+            return redirect("restaurants:detail", restaurant.pk)
     else:
         review_form = ReviewForm(instance=review)
-
     context = {
         "review_form": review_form,
     }
     return render(request, "reviews/create.html", context)
 
 
-def detail(request, review_pk):
+def detail(request, review_pk, restaurant_pk):
     review = Review.objects.get(pk=review_pk)
+    restaurant = Restaurants.objects.get(pk=restaurant_pk)
     context = {
         "review": review,
+        "restaurant": restaurant,
     }
-    return render(request, "restaurants/detail.html", context)  # ! 여기 수정 필요!!!!!!
+    return render(request, "reviews/detail.html", context)  # ! 여기 수정 필요!!!!!!
 
 
-def delete(request, review_pk):
+def delete(request, review_pk, restaurant_pk):
     review = Review.objects.get(pk=review_pk)
+    restaurant = Restaurants.objects.get(pk=restaurant_pk)
     if request.user.is_authenticated:
         if request.user == review.user:
             review.delete()
-            return redirect("restaurants:index")
-    return redirect("reviews.detail", review.pk)
+            return redirect("restaurants:detail", restaurant.pk)
+    return redirect("reviews:detail", review.pk)
 
 
 @login_required
