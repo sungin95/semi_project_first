@@ -1,0 +1,41 @@
+@charset "utf-8";
+
+/* CSS Document */
+body {
+    width: 1080px;
+    height: 1920px;
+}
+
+.title {
+    height: 10%;
+    margin: 3rem 0 3rem 0;
+    font-size: 1.1rem;
+}
+
+.r_name {
+    color: red;
+    font-size: 1.8rem;
+}
+
+form {
+    height: 50%;
+}
+
+.review_buttons {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.review_buttons button {
+    border: 1px solid #666666;
+    background-color: white;
+    color: #666666;
+    padding: 1rem;
+    border-radius: 20rem;
+    width: 10rem;
+}
+
+.cancel {
+    margin-right: 2rem;
+    padding-left: 20px;
+}
