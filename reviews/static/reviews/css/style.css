@@ -1,6 +1,7 @@
 @charset "utf-8";
 
 /* CSS Document */
+/* create.html */
 body {
     width: 1080px;
     height: 1920px;
@@ -13,7 +14,7 @@ body {
 }
 
 .r_name {
-    color: red;
+    color: #505050;
     font-size: 1.8rem;
 }
 
