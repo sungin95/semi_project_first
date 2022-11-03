@@ -12,4 +12,6 @@ class Restaurants(models.Model):
     price_avg = models.TextField()
     parking = models.CharField(max_length=50)
     day_off = models.CharField(max_length=40)
-    like_users = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name="like_restaurant")
+    like_users = models.ManyToManyField(
+        settings.AUTH_USER_MODEL, related_name="like_restaurant"
+    )

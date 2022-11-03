@@ -1,16 +1,17 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
-{% load static %}
-{% block css %}
-<link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
-{% endblock css %}
+
 {% block content %}
-<container>
   <!-- 음식점 정보 -->
-  <!--<div class="row">
+  <div class="row">
     <a href="{% url 'restaurants:update' restaurant.pk %}">음식점정보 수정하기</a>
     <div class="d-flex  justify-content-between">
-      <h2>{{ restaurant.restaurant_name }}</h2>
+      <div>
+        <h2>{{ restaurant.restaurant_name }}</h2>
+        <span>평점:
+          <b>{{grade}}</b>
+        </span>
+      </div>
       <div class="">
         <div>별점</div>
         <div>조회수</div>
@@ -75,46 +76,15 @@
             src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
       </div>
     </div>
-    <table>
-      <tr>
-        <th>주소</th>
-        <td>{{ restaurant.address }}</td>
-      </tr>
-      <tr>
-        <th>전화번호</th>
-        <td>전화번호 내용</td>
-      </tr>
-      <tr>
-        <th>영업시간</th>
-        <td>{{ restaurant.Opening_hours }}</td>
-      </tr>
-      <tr>
-        <th>메뉴</th>
-        <td>{{ restaurant.menu }}</td>
-      </tr>
-      <tr>
-        <th>가격대</th>
-        <td>{{ restaurant.price_avg }}</td>
-      </tr>
-      <tr>
-        <th>주차</th>
-        <td>{{ restaurant.parking }}</td>
-      </tr>
-      <tr>
-        <th>휴일</th>
-        <td>{{ restaurant.day_off }}</td>
-      </tr>
-    </table>
-  </div>
 
-  <!-- 메뉴사진 -->
-  <div class="row row-cols-4 g-3">
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-  </div>
-  <div class="row justify-content-center" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
+    <!-- 메뉴사진 -->
+    <div class="row row-cols-4 g-3">
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+    </div>
+    <div class="row justify-content-center" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
 
   <!-- 리뷰창 -->
   <!-- 개인 리뷰 -->
@@ -126,9 +96,32 @@
         <div class="rounded-pill" style="background-color:yellow">맛있다</div>
       </div>
 
-      <div class="rounded-pill" style="background-color:yellow">{{ review.created_at }}</div>
+    <!-- 페이지네이션 -->
+    <div class="row">
+      <nav aria-label="Page navigation example">
+        <ul class="pagination justify-content-center">
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">1</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">2</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#">3</a>
+          </li>
+          <li class="page-item">
+            <a class="page-link" href="#" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
     </div>
-    <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
   </div>
   {% empty %}
   <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
