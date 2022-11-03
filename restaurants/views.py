@@ -9,6 +9,7 @@ from .models import Restaurants
 from .forms import RestaurantForm
 from django.contrib import messages
 from reviews.models import Review
+from datetime import datetime
 
 # Create your views here.
 def main(request):
@@ -26,12 +27,18 @@ def index(request):
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     reviews = restaurant.review_set.all()
+    now = datetime.now()
     cnt = 0
     add = 0
     for review in reviews:
+        print(type(now))
+        print(type(review.created_at))
         cnt += 1
         add += review.grade
-    grade = round(add / cnt, 1)
+    if cnt == 0:
+        grade = ""
+    else:
+        grade = round(add / cnt, 1)
     context = {
         "restaurant": restaurant,
         "grade": grade,
