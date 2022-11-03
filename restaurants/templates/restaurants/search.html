@@ -6,7 +6,9 @@
 {% endblock css %}
 {% block content %}
   <h1>검색</h1>
-
+  {% for w in s %}
+  <p>{{ w.keyword }}</p>
+  {% endfor %}
   <container>
     <div class="r_list">
       {% for restaurant in search_lists %}
