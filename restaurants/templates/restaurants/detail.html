@@ -16,6 +16,7 @@
             <p>24,310</p>
           </div>
           <form method="POST" action="{% url 'restaurants:like' restaurant.pk %}">
+            <button type="button" onclick="location.href='{% url 'reviews:create' restaurant.pk %}' " class="btn btn-dark">리뷰 쓰기</button>
             {% csrf_token %}
             {% if request.user.is_authenticated %}
               {% if request.user in restaurant.like_users.all %}
