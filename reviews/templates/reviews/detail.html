@@ -16,7 +16,10 @@
   </div>
   {% if request.user == review.user %}
     <button type="submit" class="btn btn-outline-dark" onclick="location.href='{% url 'reviews:update' review.pk restaurant.pk%}'">수정</button>
-    <button type="submit" class="btn btn-outline-dark" onclick="location.href='{% url 'reviews:delete' review.pk restaurant.pk%}'">삭제</button>
+    <form action="{% url 'reviews:delete' review.pk restaurant.pk%}" method="POST">
+      {% csrf_token %}
+      <input type="submit" class='btn btn-dark' value='삭제'>
+    </form>
   {% else %}
   {% endif %}
 {% endblock content %}
