@@ -12,12 +12,21 @@ from .serializers import ReviewSerializer
 
 def create(request, restaurant_pk):
     restaurant = Restaurants.objects.get(pk=restaurant_pk)
+    grade_ = request.POST.get("grade")
+    grade = 0
+    if grade_ == "5":
+        grade = 5
+    elif grade_ == "3":
+        grade = 3
+    elif grade_ == "1":
+        grade = 1
     if request.method == "POST":
         review_form = ReviewForm(request.POST, request.FILES)
         if review_form.is_valid():
             review = review_form.save(commit=False)
             review.restaurants = restaurant
             review.user = request.user
+            review.grade = grade
             review.save()
             return redirect("restaurants:detail", restaurant.pk)
     else:
@@ -25,6 +34,7 @@ def create(request, restaurant_pk):
     context = {
         "name": restaurant.restaurant_name,
         "review_form": review_form,
+        "restaurant": restaurant,
     }
     return render(request, "reviews/create.html", context)
 
