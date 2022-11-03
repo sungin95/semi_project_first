@@ -1,55 +1,64 @@
 {% extends 'base.html' %}
-
 {% load django_bootstrap5 %}
-
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+{% endblock css %}
 {% block content %}
-  <container>
-    <div class="category">임시 카테고리</div>
-    <div class="food_cate">
+<container>
+  <div class="food_cate">
+    <a href="#">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/4480/4480784.png" alt="한식 카테고리">
+        <p>한식</p>
+      </div>
+    </a>
+    <a href="#">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/3511/3511307.png" alt="양식 카테고리">
+        <p>양식</p>
+      </div>
+    </a>
+    <a href="#">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/2548/2548242.png" alt="중식 카테고리">
+        <p>중식</p>
+      </div>
       <a href="#">
         <div class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/4480/4480784.png" alt="한식 카테고리">
-          <p>한식</p>
+          <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
+          <p>일식</p>
         </div>
       </a>
-      <a href="#">
-        <div class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/3511/3511307.png" alt="양식 카테고리">
-          <p>양식</p>
-        </div>
-      </a>
-      <a href="#">
-        <div class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/2548/2548242.png" alt="중식 카테고리">
-          <p>중식</p>
-        </div>
-        <a href="#">
-          <div class="a_menu">
-            <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
-            <p>일식</p>
-          </div>
-        </a>
-      </a>
-      <a href="#">
-        <div class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/7688/7688778.png" alt="기타 카테고리">
-          <p>기타</p>
-        </div>
-      </a>
-    </div>
-    <div class="restaurants">
-      <!-- a는 detail 페이지-->
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-      <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg" alt="음식점 이름, 음식 이름"></a>
-    </div>
-    <div class="more">
-      <button type="button">더보기</button>
-    </div>
-  </container>
+    </a>
+    <a href="#">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/7688/7688778.png" alt="기타 카테고리">
+        <p>기타</p>
+      </div>
+    </a>
+  </div>
+  <div class="restaurants">
+    <!-- a는 detail 페이지-->
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+    <a href="#"><img src="https://health.chosun.com/site/data/img_dir/2022/07/11/2022071101596_0.jpg"
+        alt="음식점 이름, 음식 이름"></a>
+  </div>
+  <div class="more">
+    <button type="button">더보기</button>
+  </div>
+</container>
 {% endblock %}
