@@ -58,6 +58,19 @@
         <div class="people_views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
           <p>24,310</p>
         </div>
+        <form method="POST" action="{% url 'restaurants:like' restaurant.pk %}">
+          {% csrf_token %}
+          {% if request.user.is_authenticated %}
+          {% if request.user in restaurant.like_users.all %}
+          <input type="submit" class="btn btn-dark" value="좋아요">
+          {% else %}
+          <input type="submit" class="btn btn-dark" value="좋아요 취소">
+          {% endif %}
+          {% else %}
+          {% bootstrap_button buton_type="submit" content="로그인이 필요"%}
+          {% endif %}
+          <span class="mx-3" id="like-count">{{review.like.count}}</span>
+        </form>
         <a href="{% url 'restaurants:update' restaurant.pk %}"><img
             src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
       </div>
@@ -103,31 +116,30 @@
   </div>
   <div class="row justify-content-center" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
 
-    <!-- 리뷰창 -->
-    <!-- 개인 리뷰 -->
-    {% for review in restaurant.review_set.all %}
-      <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
-        <div class="d-flex justify-content-between p-0 h-auto">
-          <div class="d-flex">
-            <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
-            <div class="rounded-pill" style="background-color:yellow">맛있다</div>
-          </div>
-
-          <div class="rounded-pill" style="background-color:yellow">{{ review.created_at }}</div>
-        </div>
-        <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
+  <!-- 리뷰창 -->
+  <!-- 개인 리뷰 -->
+  {% for review in restaurant.review_set.all %}
+  <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
+    <div class="d-flex justify-content-between p-0 h-auto">
+      <div class="d-flex">
+        <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
+        <div class="rounded-pill" style="background-color:yellow">맛있다</div>
       </div>
-      {% empty %}
-      <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
-        <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
-      </p>
-    {% endfor %}
 
       <div class="rounded-pill" style="background-color:yellow">{{ review.created_at }}</div>
     </div>
     <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
   </div>
+  {% empty %}
+  <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
+    <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
+  </p>
   {% endfor %}
+
+  <div class="rounded-pill" style="background-color:yellow">{{ review.created_at }}</div>
+  </div>
+  <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
+  </div>
 
   <!-- 페이지네이션 -->
   <div class="row">

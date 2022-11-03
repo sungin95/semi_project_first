@@ -20,6 +20,15 @@ class Review(models.Model):
     )
 
 
+class ReviewImages(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE)
+    images = models.ImageField(
+        upload_to="review",
+        blank=True,
+        null=True,
+    )
+
+
 class Comment(models.Model):
     review = models.ForeignKey(Review, on_delete=models.CASCADE)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)

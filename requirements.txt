@@ -7,6 +7,7 @@ Django==3.2.13
 django-appconf==1.0.5
 django-bootstrap5==22.1
 django-imagekit==4.1.0
+django-rest-framework
 gunicorn==20.1.0
 mypy-extensions==0.4.3
 pathspec==0.10.1
