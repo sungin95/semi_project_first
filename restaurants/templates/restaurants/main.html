@@ -28,7 +28,13 @@
     
 
     <!--검색-->
-    <fieldset class="main-search">
+    <form class="d-flex" action="{% url 'restaurants:search' %}">
+      <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+      <button class="btn btn-outline-warning" type="submit">
+        Search
+      </button>
+    </form>
+    {% comment %} <fieldset class="main-search">
       <legend>전체 검색</legend>
       <label class="search-word" for="main-search">
         <span class="icon">검색 :</span>
@@ -37,7 +43,7 @@
       </label>
       <input class="btn-search" type="submit" value="검색" onclick="trackEvent('CLICK_KEYWORD_SEARCH');">
     </fieldset>
-  </div>
+  </div> {% endcomment %}
 
   <!--카테고리-->
   <div class="row">
