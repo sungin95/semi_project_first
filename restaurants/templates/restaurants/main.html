@@ -47,11 +47,11 @@
 
   <!--카테고리-->
   <div class="row">
+    {% for w in s %}
     <div class="col">
-      <a href="/store?affect_type=Home&amp;affect_id=0">
-        <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">
-        <span class="css-xd55zv e1387oiq0">중식</span></a>
+      <p>{{ w.keyword }}</p>
     </div>
+    {% endfor %}
     <div class="col">
       <a href="/store?affect_type=Home&amp;affect_id=0">
         <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">

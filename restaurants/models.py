@@ -15,3 +15,8 @@ class Restaurants(models.Model):
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_restaurant"
     )
+
+
+class Search(models.Model):
+    keyword = models.TextField(max_length=30)
+    count = models.IntegerField(default=0)
