@@ -9,7 +9,9 @@ from .models import Restaurants
 from .forms import RestaurantForm
 from django.contrib import messages
 from reviews.models import Review
-from datetime import datetime, timedelta
+from django.db.models import Q
+from datetime import datetime
+
 
 # Create your views here.
 def main(request):
@@ -100,3 +102,16 @@ def like(request, restaurant_pk):
         "liketCount": restaurant.like_users.count(),
     }
     return redirect("restaurants:detail", restaurant.pk)
+
+def search(request):
+    if request.method == "GET":
+        content_list = Restaurants.objects.all()
+        search = request.GET.get("search", "")
+        if search:
+            search_lists = content_list.filter(
+                Q(restaurant_name__icontains=search) | Q(menu__icontains=search)
+            )
+            context = {
+                "search_lists": search_lists,
+            }
+            return render(request, "restaurants/search.html", context)
