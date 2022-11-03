@@ -25,8 +25,16 @@ def index(request):
 
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
+    reviews = restaurant.review_set.all()
+    cnt = 0
+    add = 0
+    for review in reviews:
+        cnt += 1
+        add += review.grade
+    grade = round(add / cnt, 1)
     context = {
         "restaurant": restaurant,
+        "grade": grade,
     }
     return render(request, "restaurants/detail.html", context)
 

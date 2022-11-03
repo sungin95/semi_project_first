@@ -2,6 +2,7 @@ from django.db import models
 from django.conf import settings
 from imagekit.models import ProcessedImageField
 from imagekit.processors import Thumbnail
+from django.core.validators import MaxValueValidator, MinValueValidator
 
 
 class Review(models.Model):
@@ -17,6 +18,9 @@ class Review(models.Model):
         processors=[Thumbnail(200, 300)],
         format="JPEG",
         options={"quality": 90},
+    )
+    grade = models.FloatField(
+        default=1, validators=[MaxValueValidator(5), MinValueValidator(0)]
     )
 
 

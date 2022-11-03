@@ -2,22 +2,30 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'reviews/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}">
 {% endblock css %}
 {% block content %}
-<div class="container">
-  <div class="title">
-    <p>
-      <span class="r_name"><b>와라야키 쿠이신보</b></span>에 대한 솔직한 리뷰를 써주세요.
-    </p>
-  </div>
-  <form action="" method="POST" enctype="multipart/form-data">
-    {% csrf_token %}
-    {% bootstrap_form review_form %}
-    <div class="review_buttons">
-      <button type="submit" class="cancel">취소</button>
-      <button type="submit" class="confirm">리뷰 올리기</button>
+  <div class="container">
+    <div class="title">
+      <p>
+        <span class="r_name">
+          <b>와라야키 쿠이신보</b>
+        </span>에 대한 솔직한 리뷰를 써주세요.
+      </p>
     </div>
-  </form>
-</div>
+    <form action="" method="POST" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form review_form %}
+      <select class="form-select" size="3" aria-label="size 3 select example" name="grade" required="required">
+        <option selected="selected">맛 평가를 해 주세요~</option>
+        <option value="5">맛있어요</option>
+        <option value="3">괜찮아요</option>
+        <option value="1">별루에요ㅠ</option>
+      </select>
+      <div class="review_buttons">
+        <button type="button" class="cancel" onclick="location.href='{% url 'restaurants:detail' restaurant.pk%}'">취소</button>
+        <button type="submit" class="confirm">리뷰 올리기</button>
+      </div>
+    </form>
+  </div>
 {% endblock content %}
