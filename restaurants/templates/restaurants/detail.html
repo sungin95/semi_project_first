@@ -16,20 +16,22 @@
             <p>24,310</p>
           </div>
           <form method="POST" action="{% url 'restaurants:like' restaurant.pk %}">
-            <button type="button" onclick="location.href='{% url 'reviews:create' restaurant.pk %}' " class="btn btn-dark">리뷰 쓰기</button>
+            <a href="{% url 'reviews:create' restaurant.pk %}"><img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
             {% csrf_token %}
             {% if request.user.is_authenticated %}
               {% if request.user in restaurant.like_users.all %}
-                <input type="submit" class="btn btn-dark" value="좋아요">
-              {% else %}
                 <input type="submit" class="btn btn-dark" value="좋아요 취소">
+              {% else %}
+                <input type="submit" class="btn btn-dark" value="좋아요">
               {% endif %}
             {% else %}
               {% bootstrap_button buton_type="submit" content="로그인이 필요"%}
             {% endif %}
             <span class="mx-3" id="like-count">{{review.like.count}}</span>
           </form>
-          <a href="{% url 'restaurants:update' restaurant.pk %}"><img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
+          <div>
+            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">가게 정보 수정하기</button>
+          </div>
         </div>
       </div>
       <table>
