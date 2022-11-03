@@ -4,6 +4,8 @@ from .models import Review, Comment
 from .forms import CommentForm, ReviewForm
 from django.contrib.auth.decorators import login_required
 from restaurants.models import Restaurants
+from rest_framework.viewsets import ModelViewSet
+from .serializers import ReviewSerializer
 
 # Create your views here.
 
@@ -21,9 +23,15 @@ def create(request, restaurant_pk):
     else:
         review_form = ReviewForm()
     context = {
+        "name": restaurant.restaurant_name,
         "review_form": review_form,
     }
     return render(request, "reviews/create.html", context)
+
+
+class ReviewViewSet(ModelViewSet):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
 
 
 def update(request, restaurant_pk, review_pk):
