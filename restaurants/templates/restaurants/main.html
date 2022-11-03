@@ -25,28 +25,58 @@
       </div>
     </div>
 
-    
+    <!-- 인기 검색어 -->
+  <div class="row">
+    <div class="col">인기검색어</div>
+    {% for w in s %}
+    <div class="col">
+      <span>#</span>
+      <label for="search" class="css-xd55zv e1387oiq0" id="{{w.pk}}">{{ w.keyword }}</label>
+    </div>
+    {% endfor %}
+  </div>
 
     <!--검색-->
     <form class="d-flex" action="{% url 'restaurants:search' %}">
-      <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search">
+      <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search" id="search">
       <button class="btn btn-outline-warning" type="submit">
         Search
       </button>
     </form>
-
-  <!--카테고리-->
-  <div class="row">
-    {% for w in s %}
-    <div class="col">
-      <p>{{ w.keyword }}</p>
-    </div>
-    {% endfor %}
-    <div class="col">
-      <a href="/store?affect_type=Home&amp;affect_id=0">
-        <img src="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144" srcset="https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=144 1.5x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=180 2x,https://image.ohou.se/i/bucketplace-v2-development/uploads/shortcut/home_feed_shortcut_sets/166485672496321483.png?w=360 3x" class="e1387oiq1 css-1511w17">
-        <span class="css-xd55zv e1387oiq0">양식</span></a>
-    </div>
+  
+  <!-- 카테고리 -->
+  <h3>카테고리</h3>
+  <div class="food_cate">
+    <a href="{% url 'restaurants:menu' %}">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/4480/4480784.png" alt="한식 카테고리">
+        <p>한식</p>
+      </div>
+    </a>
+    <a href="{% url 'restaurants:menu' %}">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/3511/3511307.png" alt="양식 카테고리">
+        <p>양식</p>
+      </div>
+    </a>
+    <a href="{% url 'restaurants:menu' %}">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/2548/2548242.png" alt="중식 카테고리">
+        <p>중식</p>
+      </div>
+      <a href="{% url 'restaurants:menu' %}">
+        <div class="a_menu">
+          <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
+          <p>일식</p>
+        </div>
+      </a>
+    </a>
+    <a href="{% url 'restaurants:menu' %}">
+      <div class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/7688/7688778.png" alt="기타 카테고리">
+        <p>기타</p>
+      </div>
+    </a>
   </div>
 
   <!--음식 그림-->
@@ -61,16 +91,17 @@
   <button id="shuffle-menu" class="btn btn-primary" type="button">다른 메뉴 보기</button>
   {% comment %} <script src="{% static 'restaurants/js/main.js' %}"></script>  {% endcomment %}
 
+
   <!-- 랜덤 음식 -->
   <script>
     const row = document.querySelector("#random-food");
-    var foodsList = ["ricecake.jpg", "삼겹살.jpg", "치킨.png", "피자.jpg"];
+    var foodsList = ["떡볶이.jpg", "삼겹살.jpg", "치킨.png", "피자.jpg", "김밥.jpg", '비빔밥.jpg', '죽.jpg', '칼국수.jpg', '물냉면.jpg', '짜장면.jpg', '짬뽕.jpg', '떡갈비.jpg', '갈비찜.jpg', '해물찜.jpg', '계란말이.jpg', '순대국.jpg', '감자탕.jpg',];
     temp(0);
 
     function temp(num) {
         var template = [];
         for (let i = 0; i < 4; i++) {
-            var a = foodsList[(i + num) % 4];
+            var a = foodsList[(i + num) % foodsList.length];
             var url = "{% static 'restaurants/img/change' %}".replace("change", a);
             template.push(`<div class="col text-center"><img src="${url}" alt="" class="img-fluid rounded-pill"></div>`);
             row.insertAdjacentHTML("beforeend", template[i]);
@@ -80,7 +111,7 @@
     const shuffleMenu = document.querySelector("#shuffle-menu");
     shuffleMenu.addEventListener("click", () => {
         row.innerHTML = "";
-        temp(Math.floor(Math.random() * (3 - 0) + 1));
+        temp(Math.floor(Math.random() * (foodsList.length-1 - 0) + 1));
     });
   </script>
 
@@ -105,7 +136,17 @@
       document.querySelector('.slide-3').classList.remove('active')
   })
   </script>
-  {% comment %} <script>
+  
+{% endblock content %}
+
+
+
+
+
+
+
+<!-- 캐러셀 실패작 -->
+{% comment %} <script>
     var start = 0
     var clicking = false
     var slideBox = document.querySelectorAll('.slide-box')
@@ -150,4 +191,3 @@
     }
     
   </scrip> {% endcomment %}
-{% endblock content %}
