@@ -97,7 +97,6 @@ form {
     flex-flow: row;
     flex-wrap: wrap;
 }
-
 .a_restaurant {
     background-color: #fafafa;
     border-radius: 15px;
@@ -167,7 +166,6 @@ form {
     font-size: 0.9rem;
 }
 
-/* menu.html */
 .food_cate {
     align-items: center;
     display: flex;
