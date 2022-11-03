@@ -2,16 +2,28 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'reviews/css/style.css' %}">
+
+<link rel="stylesheet" href="{% static 'reviews/css/style_create.css' %}">
 {% endblock css %}
 {% block content %}
-  <div class="container">
-    <div class="title">
-      <p>
-        <span class="r_name">
-          <b>와라야키 쿠이신보</b>
-        </span>에 대한 솔직한 리뷰를 써주세요.
-      </p>
+<div class="container">
+  <div class="title">
+    <p>
+      <span class="r_name"><b>{{ name }}</b></span>에 대해 어떻게 생각하세요?
+    </p>
+  </div>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <!--{% bootstrap_form review_form %}-->
+    <div class="review_content">{{review_form.content}}</div>
+    <div class="review_img">
+      {{review_form.image}}
+      <img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" alt="사진 첨부">
+    </div>
+    <div></div>
+    <div class="review_buttons">
+      <button class="cancel"><a href="#">취소</a></button>
+      <button type="submit" class="confirm">리뷰 올리기</button>
     </div>
     <form action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
