@@ -17,3 +17,33 @@
     width: 100%;
     height: 100%;
 }
+
+/* 카테고리 시작 */
+.food_cate {
+    align-items: center;
+    display: flex;
+    height: 10%;
+    justify-content: space-around;
+    margin: 5rem 0 2rem 0;
+    width: 100%;
+}
+
+.food_cate a {
+    color: inherit;
+    text-decoration: none;
+}
+
+.a_menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.a_menu img {
+    height: 5rem;
+}
+
+.a_menu p {
+    text-align: center;
+}
+/* 카테고리 끝 */
