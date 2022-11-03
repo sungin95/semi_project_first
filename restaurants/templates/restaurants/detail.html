@@ -82,7 +82,13 @@
             <div class="rounded-pill" style="background-color:yellow">맛있다</div>
           </div>
 
-          <div class="rounded-pill" style="background-color:yellow">{{ review.created_at }}</div>
+          <div class="rounded-pill" style="background-color:yellow">
+            {% if review.created_string == False %}
+              <td>{{ review.created_string|date:'m월 d일' }}</td>
+            {% else %}
+              <td>{{ review.created_string }}</td>
+            {% endif %}
+          </div>
         </div>
         <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
       </div>

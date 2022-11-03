@@ -12,6 +12,7 @@ from reviews.models import Review
 from django.db.models import Q
 from datetime import datetime
 
+
 # Create your views here.
 def main(request):
     return render(request, "restaurants/main.html")
@@ -28,12 +29,9 @@ def index(request):
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     reviews = restaurant.review_set.all()
-    now = datetime.now()
     cnt = 0
     add = 0
     for review in reviews:
-        print(type(now))
-        print(type(review.created_at))
         cnt += 1
         add += review.grade
     if cnt == 0:
