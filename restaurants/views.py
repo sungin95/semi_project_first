@@ -122,7 +122,7 @@ def search(request):
 
         if search:
             search_lists = content_list.filter(
-                Q(restaurant_name__icontains=search) | Q(menu__icontains=search)
+                Q(restaurant_name__icontains=search) | Q(menu__icontains=search)| Q(category__icontains=search)
             )
             context = {
                 "search_lists": search_lists,
