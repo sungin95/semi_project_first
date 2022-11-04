@@ -184,6 +184,8 @@ form {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-style: none;
+    background: white;
 }
 
 .a_menu img {
@@ -192,6 +194,10 @@ form {
 
 .a_menu p {
     text-align: center;
+}
+
+.category-value {
+    display: none;
 }
 
 .restaurants {
@@ -213,4 +219,29 @@ form {
     display: flex;
     margin-top: 3rem;
     justify-content: center;
+}
+
+#img-text {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    transition: all 1s ease;
+    top: 50%;
+    left: 50%;
+    opacity: 0;
+}
+
+.img-text-box:hover #img-text {
+    opacity: 1;
+}
+
+.img-text-box:hover {
+    background: black;
+    transition: all 1s ease;
+    opacity: 80%;
+}
+
+.img-text-box {
+    transition: all 1s ease;
+    position: relative;
+    width: 400px;
 }

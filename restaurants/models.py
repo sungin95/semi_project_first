@@ -5,11 +5,11 @@ from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
 category_CHOICES = (
-    ("KR", "한식"),
-    ("WS", "양식"),
-    ("CH", "중식"),
-    ("JP", "일식"),
-    ("Etc", "기타"),
+    ('한식', '한식'),
+    ('양식', '양식'),
+    ('중식', '중식'),
+    ('일식', '일식'),
+    ('기타', '기타'),
 )
 
 # Create your models here.
