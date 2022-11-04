@@ -35,48 +35,54 @@
     </div>
     {% endfor %}
   </div>
+  
 
     <!--검색-->
     <form class="d-flex" action="{% url 'restaurants:search' %}">
-      <input class="form-control me-2" type="search" placeholder="Search" name="search" aria-label="Search" id="search">
+      <input class="form-control" type="search" placeholder="음식점명, 카테고리 " name="search" aria-label="Search" id="search" required>
       <button class="btn btn-outline-warning" type="submit">
-        Search
+        검색
       </button>
     </form>
   
   <!-- 카테고리 -->
   <h3>카테고리</h3>
   <div class="food_cate">
-    <a href="{% url 'restaurants:menu' %}">
-      <div class="a_menu">
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
         <img src="https://cdn-icons-png.flaticon.com/512/4480/4480784.png" alt="한식 카테고리">
         <p>한식</p>
-      </div>
-    </a>
-    <a href="{% url 'restaurants:menu' %}">
-      <div class="a_menu">
+        <input type="text" value="한식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
         <img src="https://cdn-icons-png.flaticon.com/512/3511/3511307.png" alt="양식 카테고리">
         <p>양식</p>
-      </div>
-    </a>
-    <a href="{% url 'restaurants:menu' %}">
-      <div class="a_menu">
+        <input type="text" value="양식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
         <img src="https://cdn-icons-png.flaticon.com/512/2548/2548242.png" alt="중식 카테고리">
         <p>중식</p>
-      </div>
-      <a href="{% url 'restaurants:menu' %}">
-        <div class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
-          <p>일식</p>
-        </div>
-      </a>
-    </a>
-    <a href="{% url 'restaurants:menu' %}">
-      <div class="a_menu">
+        <input type="text" value="중식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
+        <p>일식</p>
+        <input type="text" value="일식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
         <img src="https://cdn-icons-png.flaticon.com/512/7688/7688778.png" alt="기타 카테고리">
         <p>기타</p>
-      </div>
-    </a>
+        <input type="text" value="기타" class="category-value" name="category">
+      </button>
+    </form>
   </div>
 
   <!--음식 그림-->
@@ -87,11 +93,12 @@
     </div>
   </div>
 
-  <!--더 보기 -->
+  <!--음식 섞기 -->
   <button id="shuffle-menu" class="btn btn-primary" type="button">다른 메뉴 보기</button>
   {% comment %} <script src="{% static 'restaurants/js/main.js' %}"></script>  {% endcomment %}
 
 
+<!-- 자바스크립트 -->
   <!-- 랜덤 음식 -->
   <script>
     const row = document.querySelector("#random-food");
@@ -122,19 +129,29 @@
       document.querySelector('.slide-2').classList.add('active')
       document.querySelector('.slide-1').classList.remove('active')
       document.querySelector('.slide-3').classList.remove('active')
-  })
-  document.querySelector('.slide-3').addEventListener('click',()=>{
+    })
+    document.querySelector('.slide-3').addEventListener('click',()=>{
       document.querySelector('.slide-container').style.transform = 'translateX(-200vw)'
       document.querySelector('.slide-3').classList.add('active')
       document.querySelector('.slide-1').classList.remove('active')
       document.querySelector('.slide-2').classList.remove('active')
-  })
-  document.querySelector('.slide-1').addEventListener('click',()=>{
+    })
+    document.querySelector('.slide-1').addEventListener('click',()=>{
       document.querySelector('.slide-container').style.transform = 'translateX(0vw)'
       document.querySelector('.slide-1').classList.add('active')
       document.querySelector('.slide-2').classList.remove('active')
       document.querySelector('.slide-3').classList.remove('active')
-  })
+    })
+  </script>
+
+  <!-- 인기검색어 클릭 -->
+  <script>
+    const populars = document.querySelectorAll('.e1387oiq0');
+    populars.forEach((el)=>{
+      el.addEventListener('click',(e)=>{
+        document.querySelector('#search').value = e.currentTarget.innerText
+      })
+    })
   </script>
   
 {% endblock content %}

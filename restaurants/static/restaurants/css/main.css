@@ -37,6 +37,8 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-style: none;
+    background: white;
 }
 
 .a_menu img {
@@ -45,5 +47,10 @@
 
 .a_menu p {
     text-align: center;
+    margin: auto;
 }
 /* 카테고리 끝 */
+
+.category-value {
+    display: none;
+}
