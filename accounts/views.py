@@ -3,7 +3,11 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import AuthenticationForm, PasswordChangeForm
 from django.contrib.auth import login as auth_login
 from django.contrib.auth import logout as auth_logout
-from .forms import CustomUserCreationForm, CustomUserChangeForm
+from .forms import (
+    CustomUserCreationForm,
+    CustomUserChangeForm,
+    ProfileCustomUserChangeForm,
+)
 from django.contrib.auth.decorators import login_required
 
 
@@ -88,6 +92,22 @@ def update(request):
         "form": form,
     }
     return render(request, "accounts/update.html", context=context)
+
+
+def profile(request):
+    if request.method == "POST":
+        form = ProfileCustomUserChangeForm(
+            request.POST, request.FILES, instance=request.user
+        )
+        if form.is_valid():
+            form.save()
+            return redirect("accounts:index")
+    else:
+        form = ProfileCustomUserChangeForm(instance=request.user)
+    context = {
+        "form": form,
+    }
+    return render(request, "accounts/profile.html", context=context)
 
 
 @login_required
