@@ -1,0 +1,46 @@
+@charset "utf-8";
+
+.r_info {
+    margin-top: 3rem;
+}
+
+.r_header {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+.r_header h1 {
+    font-weight: 600;
+}
+
+.detailed_info {
+    display: flex;
+    flex-flow: row;
+}
+
+.detailed_info img {
+    margin-left: 1.6rem;
+    width: 1.2rem;
+    height: 1.2rem;
+}
+
+.people_views {
+    display: flex;
+    flex-flow: row;
+}
+
+.people_views p {
+    margin-left: 0.5rem;
+}
+
+table {
+    margin-bottom: 5rem;
+}
+
+table th {
+    color: #666666;
+    font-weight: 200;
+    width: 8rem;
+    height: 2rem;
+}
