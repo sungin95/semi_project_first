@@ -3,6 +3,7 @@ from imagekit.models import ProcessedImageField
 from imagekit.processors import Thumbnail
 from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
+from django.template.defaultfilters import slugify
 
 category_CHOICES = (
     ('한식', '한식'),
@@ -38,3 +39,21 @@ class Restaurants(models.Model):
 class Search(models.Model):
     keyword = models.TextField(max_length=30)
     count = models.IntegerField(default=0)
+
+
+def get_image_filename(instance, filename):
+    slugs = slugify("title")
+    # 제목 - 슬러그된 파일이름 형태
+    return "post_images/%s-%s" % (slugs, filename)
+
+class RestaurantImages(models.Model):
+    restaurant = models.ForeignKey(
+        Restaurants, default=None, on_delete=models.CASCADE, related_name="restaurant"
+    )
+    image = models.ImageField(upload_to=get_image_filename, blank=True)
+    class Meta:
+        # 단수
+        verbose_name = "Image"
+        # 복수
+        verbose_name_plural = "Images"
+

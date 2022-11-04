@@ -11,8 +11,14 @@
       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
+        {{ formset.management_form }}
+        {% for form_img in formset %}
+          <div class="review_img me-3">
+            {{ form_img }}
+            <img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" style="width:30px;height:30px" alt="사진 첨부">
+          </div>
+        {% endfor %}
         <div class="button">
-          <!--{% bootstrap_button content='리뷰작성' button_type='submit' button_class="btn-primary" %}-->
           <button class="cancel">
             <a href="{% url 'restaurants:index' %}">취소</a>
           </button>
