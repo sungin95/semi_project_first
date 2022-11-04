@@ -13,6 +13,9 @@ from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator
 from reviews.forms import CommentForm
+from django.http import JsonResponse
+
+
 
 # Create your views here.
 def main(request):
@@ -119,10 +122,10 @@ def like(request, restaurant_pk):
         restaurant.like_users.add(request.user)
         is_like = True
     context = {
-        "is_like": is_like,
-        "liketCount": restaurant.like_users.count(),
+        "isLiked": is_like,
+        "likeCount": restaurant.like_users.count(),
     }
-    return redirect("restaurants:detail", restaurant.pk)
+    return JsonResponse(context)
 
 
 def search(request):

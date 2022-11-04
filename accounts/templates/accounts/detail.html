@@ -2,6 +2,11 @@
 {% load django_bootstrap5 %}
 {% block content %}
   <h1>상세 회원 정보</h1>
+  {% if request.user.pk == user.pk %}
+    <h2>
+      <a href="{% url 'accounts:profile' %}">내 프로필 가기</a>
+    </h2>
+  {% endif %}
   <table class="table">
     <thead>
       <tr>

@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+{% load django_bootstrap5 %}
+{% block content %}
+
+  <h1>profile</h1>
+  <form action="" method="POST" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+      {{ form.image }}
+    </div>
+    <input type="submit" value="제출"/>
+    <button type="button" class="btn btn-outline-dark" onclick="location.href='{% url 'accounts:index' %}' ">돌아가기</button>
+  </form>
+{% endblock content %}
