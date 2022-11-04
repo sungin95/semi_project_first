@@ -48,7 +48,13 @@ def detail(request, restaurant_pk):
 
 
 def menu(request):
-    return render(request, "restaurants/menu.html")
+    category = request.GET.get("category")
+    restaurants = Restaurants.objects.filter(category=category)
+    context = {
+        'category': category,
+        'restaurants': restaurants,
+    }
+    return render(request, "restaurants/menu.html", context)
 
 
 @require_http_methods(["GET", "POST"])
