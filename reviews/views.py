@@ -60,7 +60,7 @@ def update(request, restaurant_pk, review_pk):
     context = {
         "review_form": review_form,
     }
-    return render(request, "reviews/create.html", context)
+    return render(request, "reviews/update.html", context)
 
 
 def detail(request, review_pk, restaurant_pk):

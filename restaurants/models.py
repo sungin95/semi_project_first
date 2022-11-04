@@ -26,7 +26,14 @@ class Restaurants(models.Model):
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_restaurant"
     )
-    
+    hits = models.PositiveIntegerField(default=0)
+
+    @property
+    def click(self):
+        self.hits += 1
+        self.save()
+
+
 class Search(models.Model):
     keyword = models.TextField(max_length=30)
     count = models.IntegerField(default=0)
