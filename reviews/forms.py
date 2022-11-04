@@ -1,5 +1,6 @@
-from .models import Review, Comment
+from .models import Review, Comment, ReviewImages
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 
 class ReviewForm(forms.ModelForm):
@@ -8,7 +9,7 @@ class ReviewForm(forms.ModelForm):
         fields = [
             # "title",
             "content",
-            "image",
+            # "image",
         ]
         widgets = {
             "content": forms.Textarea(
@@ -21,7 +22,7 @@ class ReviewForm(forms.ModelForm):
         labels = {
             # "title": "제목",
             "content": "",
-            "image": "",
+            # "image": "",
         }
 
 
@@ -31,3 +32,12 @@ class CommentForm(forms.ModelForm):
         fields = [
             "content",
         ]
+
+
+class ReviewImageForm(forms.ModelForm):
+    class Meta:
+        model = ReviewImages
+        fields = ("image",)
+        labels = {
+            "image": _("Image"),
+        }
