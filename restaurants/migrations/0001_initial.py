@@ -6,7 +6,6 @@ import django.db.models.deletion
 import phonenumber_field.modelfields
 import restaurants.models
 
-
 class Migration(migrations.Migration):
 
     initial = True

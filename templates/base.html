@@ -37,7 +37,10 @@
 
           {% if request.user.is_authenticated %}
             <div class="navbar-nav d-flex">
-              <p class="nav-link mb-0 fw-bold">{{ request.user }}님 안녕하세요!</p>
+              <p class="nav-link mb-0 fw-bold">
+                <img src="{{ request.user.image.url }}" alt="" style="width: 100px; height: 100px; border-radius: 500px">
+                <a href="{% url 'accounts:detail' request.user.pk %}">{{ request.user }}님 안녕하세요!</a>
+              </p>
               <a class="nav-link" href="{% url 'accounts:logout' %}">로그아웃</a>
             </div>
           {% else %}

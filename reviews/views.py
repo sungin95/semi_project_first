@@ -38,8 +38,6 @@ def create(request, restaurant_pk):
                 if form:
                     # image file
                     image = form["image"]
-                    print(form)
-                    print(form["image"])
                     # review, image file save
                     photo = ReviewImages(review=review, image=image)
                     photo.save()
