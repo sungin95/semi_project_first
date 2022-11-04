@@ -1,16 +1,19 @@
 from urllib import request
 from django.shortcuts import render, redirect
-from .models import Review, Comment
-from .forms import CommentForm, ReviewForm
+from .models import Review, Comment, ReviewImages
+from .forms import CommentForm, ReviewForm, ReviewImageForm
 from django.contrib.auth.decorators import login_required
 from restaurants.models import Restaurants
 from rest_framework.viewsets import ModelViewSet
 from .serializers import ReviewSerializer
+from django.forms import modelformset_factory
+from django.http import HttpResponseRedirect
 
 # Create your views here.
 
 
 def create(request, restaurant_pk):
+    ImageFormSet = modelformset_factory(ReviewImages, form=ReviewImageForm, extra=5)
     restaurant = Restaurants.objects.get(pk=restaurant_pk)
     grade_ = request.POST.get("grade")
     grade = 0
@@ -21,20 +24,38 @@ def create(request, restaurant_pk):
     elif grade_ == "1":
         grade = 1
     if request.method == "POST":
-        review_form = ReviewForm(request.POST, request.FILES)
-        if review_form.is_valid():
+        review_form = ReviewForm(request.POST)
+        formset = ImageFormSet(
+            request.POST, request.FILES, queryset=ReviewImages.objects.none()
+        )
+        if review_form.is_valid() and formset.is_valid():
             review = review_form.save(commit=False)
             review.restaurants = restaurant
             review.user = request.user
             review.grade = grade
             review.save()
+            for form in formset.cleaned_data:
+                if form:
+                    # image file
+                    image = form["image"]
+                    print(form)
+                    print(form["image"])
+                    # review, image file save
+                    photo = ReviewImages(review=review, image=image)
+                    photo.save()
+            # index url 로 요청보냄
             return redirect("restaurants:detail", restaurant.pk)
+            # return HttpResponseRedirect("/")
+        else:
+            print(review_form.errors, formset.errors)
     else:
         review_form = ReviewForm()
+        formset = ImageFormSet(queryset=ReviewImages.objects.none())
     context = {
         "name": restaurant.restaurant_name,
         "review_form": review_form,
         "restaurant": restaurant,
+        "formset": formset,
     }
     return render(request, "reviews/create.html", context)
 

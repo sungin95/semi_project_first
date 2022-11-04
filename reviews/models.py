@@ -45,10 +45,10 @@ class Review(models.Model):
 # filename => 파일에 원래 제공된 파일 이름. 이것은 최종 목적지 경로를 결정할 때 고려되거나 고려되지 않을 수 있음
 def get_image_filename(instance, filename):
     # 해당 Post 모델의 title 을 가져옴
-    title = instance.post.title
+    # title = instance.post.title
     # slug - 의미있는 url 사용을 위한 필드.
     # slugfy 를 사용해서 title을 slug 시켜줌.
-    slug = slugify(title)
+    slug = slugify("title")
     # 제목 - 슬러그된 파일이름 형태
     return "post_images/%s-%s" % (slug, filename)
 
