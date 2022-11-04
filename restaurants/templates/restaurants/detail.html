@@ -2,189 +2,193 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'restaurants/css/detail.css' %}">
 {% endblock css %}
 {% block content %}
-  <container>
+<container>
 
-    <div class="r_info">
-      <div class="r_header">
-        <h1>{{ restaurant.restaurant_name }}</h1>
-        <div class="detailed_info">
-          <img src="https://cdn-icons-png.flaticon.com/512/4422/4422191.png" alt="별점">
-          <div class="people_views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
-            <p>24,310</p>
-          </div>
-          <form method="POST" action="{% url 'restaurants:like' restaurant.pk %}">
-            <a href="{% url 'reviews:create' restaurant.pk %}"><img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
-            {% csrf_token %}
-            {% if request.user.is_authenticated %}
-              {% if request.user in restaurant.like_users.all %}
-                <input type="submit" class="btn btn-dark" value="좋아요 취소">
-              {% else %}
-                <input type="submit" class="btn btn-dark" value="좋아요">
-              {% endif %}
-            {% else %}
-              {% bootstrap_button buton_type="submit" content="로그인이 필요"%}
-            {% endif %}
-            <span class="mx-3" id="like-count">{{review.like.count}}</span>
-          </form>
-          <div>
-            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">가게 정보 수정하기</button>
-          </div>
+  <div class="r_info">
+    <div class="r_header">
+      <h1>{{ restaurant.restaurant_name }}</h1>
+      <div class="detailed_info">
+        <img src="https://cdn-icons-png.flaticon.com/512/4422/4422191.png" alt="별점">
+        <div class="people_views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
+          <p>24,310</p>
         </div>
-      </div>
-      <div>
+        <form method="POST" action="{% url 'restaurants:like' restaurant.pk %}">
+          <a href="{% url 'reviews:create' restaurant.pk %}"><img
+              src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
+          {% csrf_token %}
+          {% if request.user.is_authenticated %}
+          {% if request.user in restaurant.like_users.all %}
+          <input type="submit" class="btn btn-dark" value="좋아요 취소">
+          {% else %}
+          <input type="submit" class="btn btn-dark" value="좋아요">
+          {% endif %}
+          {% else %}
+          {% bootstrap_button buton_type="submit" content="로그인이 필요"%}
+          {% endif %}
+          <span class="mx-3" id="like-count">{{review.like.count}}</span>
+        </form>
         <div>
-          <table>
-            <tr>
-              <th>주소</th>
-              <td>{{ restaurant.address }}</td>
-            </tr>
-            <tr>
-              <th>전화번호</th>
-              <td>{{ restaurant.restaurant_phone_number.as_national }}</td>
-            </tr>
-            <tr>
-              <th>영업시간</th>
-              <td>{{ restaurant.Opening_hours }}</td>
-            </tr>
-            <tr>
-              <th>메뉴</th>
-              <td>{{ restaurant.menu }}</td>
-            </tr>
-            <tr>
-              <th>가격대</th>
-              <td>{{ restaurant.price_avg }}</td>
-            </tr>
-            <tr>
-              <th>주차</th>
-              <td>{{ restaurant.parking }}</td>
-            </tr>
-            <tr>
-              <th>휴일</th>
-              <td>{{ restaurant.day_off }}</td>
-            </tr>
-            <tr>
-              <th>카테고리</th>
-              <td>{{ restaurant.category }}</td>
-            </tr>
-          </table>
+          <button type="button" class="btn btn-dark"
+            onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">가게 정보 수정하기</button>
         </div>
       </div>
-      <p style="margin-top:-12px">
-        <em class="link">
-          <a href="javascript:void(0);" onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
-            혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요.
+    </div>
+    <div>
+      <div>
+        <table>
+          <tr>
+            <th>주소</th>
+            <td>{{ restaurant.address }}</td>
+          </tr>
+          <tr>
+            <th>전화번호</th>
+            <td>{{ restaurant.restaurant_phone_number.as_national }}</td>
+          </tr>
+          <tr>
+            <th>영업시간</th>
+            <td>{{ restaurant.Opening_hours }}</td>
+          </tr>
+          <tr>
+            <th>메뉴</th>
+            <td>{{ restaurant.menu }}</td>
+          </tr>
+          <tr>
+            <th>가격대</th>
+            <td>{{ restaurant.price_avg }}</td>
+          </tr>
+          <tr>
+            <th>주차</th>
+            <td>{{ restaurant.parking }}</td>
+          </tr>
+          <tr>
+            <th>휴일</th>
+            <td>{{ restaurant.day_off }}</td>
+          </tr>
+          <tr>
+            <th>카테고리</th>
+            <td>{{ restaurant.category }}</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+    <p style="margin-top:-12px">
+      <em class="link">
+        <a href="javascript:void(0);"
+          onclick="window.open('http://fiy.daum.net/fiy/map/CsGeneral.daum', '_blank', 'width=981, height=650')">
+          혹시 주소 결과가 잘못 나오는 경우에는 여기에 제보해주세요.
+        </a>
+      </em>
+    </p>
+    <div id="map" style="width:100%;height:350px;"></div>
+  </div>
+  <!-- 메뉴사진 -->
+  <div class="row row-cols-4 g-3">
+    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
+  </div>
+  <div class="row justify-content-center" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
+
+  <!-- 리뷰창 -->
+  <!-- 개인 리뷰 -->
+  {% for review in restaurant.review_set.all %}
+  <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
+    <div class="d-flex justify-content-between p-0 h-auto">
+      <div class="d-flex">
+        <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
+        <div class="rounded-pill" style="background-color:yellow">맛있다</div>
+      </div>
+
+      <div class="rounded-pill" style="background-color:yellow">
+        {% if review.created_string == False %}
+        <td>{{ review.created_string|date:'m월 d일' }}</td>
+        {% else %}
+        <td>{{ review.created_string }}</td>
+        {% endif %}
+      </div>
+    </div>
+    <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
+  </div>
+  {% empty %}
+  <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
+    <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
+  </p>
+  {% endfor %}
+
+  <!-- 페이지네이션 -->
+  <div class="row">
+    <nav aria-label="Page navigation example">
+      <ul class="pagination justify-content-center">
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
           </a>
-        </em>
-      </p>
-      <div id="map" style="width:100%;height:350px;"></div>
-    </div>
-    <!-- 메뉴사진 -->
-    <div class="row row-cols-4 g-3">
-      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-      <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    </div>
-    <div class="row justify-content-center" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
-
-    <!-- 리뷰창 -->
-    <!-- 개인 리뷰 -->
-    {% for review in restaurant.review_set.all %}
-      <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
-        <div class="d-flex justify-content-between p-0 h-auto">
-          <div class="d-flex">
-            <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
-            <div class="rounded-pill" style="background-color:yellow">맛있다</div>
-          </div>
-
-          <div class="rounded-pill" style="background-color:yellow">
-            {% if review.created_string == False %}
-              <td>{{ review.created_string|date:'m월 d일' }}</td>
-            {% else %}
-              <td>{{ review.created_string }}</td>
-            {% endif %}
-          </div>
-        </div>
-        <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
-      </div>
-      {% empty %}
-      <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
-        <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
-      </p>
-    {% endfor %}
-
-    <!-- 페이지네이션 -->
-    <div class="row">
-      <nav aria-label="Page navigation example">
-        <ul class="pagination justify-content-center">
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Previous">
-              <span aria-hidden="true">&laquo;</span>
-            </a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">1</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">2</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#">3</a>
-          </li>
-          <li class="page-item">
-            <a class="page-link" href="#" aria-label="Next">
-              <span aria-hidden="true">&raquo;</span>
-            </a>
-          </li>
-        </ul>
-      </nav>
-    </div>
-  </container>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">1</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">2</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#">3</a>
+        </li>
+        <li class="page-item">
+          <a class="page-link" href="#" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</container>
 
 {% endblock content %}
 
 {% block js %}
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aea428bdeff5956d8b97e187cebe92b9&libraries=services"></script>
-  <script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-      mapOption = {
-        center: new kakao
-          .maps
-          .LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-      };
-    // 지도를 생성합니다
-    var map = new kakao
-      .maps
-      .Map(mapContainer, mapOption);
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao
-      .maps
-      .services
-      .Geocoder();
-    var address = '{{ restaurant.address }}';
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(address, function (result, status) {
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        var coords = new kakao
-          .maps
-          .LatLng(result[0].y, result[0].x);
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao
-          .maps
-          .Marker({map: map, position: coords});
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao
-          .maps
-          .InfoWindow({content: `<div style="width:150px;text-align:center;padding:6px 0;">{{ restaurant.restaurant_name }}</div>`});
-        infowindow.open(map, marker);
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-      }
-    });
-  </script>
+<script type="text/javascript"
+  src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aea428bdeff5956d8b97e187cebe92b9&libraries=services"></script>
+<script>
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+      center: new kakao
+        .maps
+        .LatLng(33.450701, 126.570667), // 지도의 중심좌표
+      level: 3 // 지도의 확대 레벨
+    };
+  // 지도를 생성합니다
+  var map = new kakao
+    .maps
+    .Map(mapContainer, mapOption);
+  // 주소-좌표 변환 객체를 생성합니다
+  var geocoder = new kakao
+    .maps
+    .services
+    .Geocoder();
+  var address = '{{ restaurant.address }}';
+  // 주소로 좌표를 검색합니다
+  geocoder.addressSearch(address, function (result, status) {
+    // 정상적으로 검색이 완료됐으면
+    if (status === kakao.maps.services.Status.OK) {
+      var coords = new kakao
+        .maps
+        .LatLng(result[0].y, result[0].x);
+      // 결과값으로 받은 위치를 마커로 표시합니다
+      var marker = new kakao
+        .maps
+        .Marker({ map: map, position: coords });
+      // 인포윈도우로 장소에 대한 설명을 표시합니다
+      var infowindow = new kakao
+        .maps
+        .InfoWindow({ content: `<div style="width:150px;text-align:center;padding:6px 0;">{{ restaurant.restaurant_name }}</div>` });
+      infowindow.open(map, marker);
+      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      map.setCenter(coords);
+    }
+  });
+</script>
 {% endblock js %}

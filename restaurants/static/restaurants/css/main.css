@@ -1,30 +1,118 @@
 @charset "utf-8";
 
+* {
+    margin: 0;
+}
+
+/* 상단 글자 */
+.upper {
+    margin: 3rem 0 1.2rem;
+}
+
+.upper h1 {
+    font-weight: 700;
+}
+
+.upper p {
+    color: #666666;
+    letter-spacing: 0.5rem;
+    margin-bottom: 0.3rem;
+}
+
+
+/* 캐러셀 */
 .slide-container {
-    width: 300vw;
-    height: 500px;
-    transition: all 1s;
     display: flex;
     flex-direction: row;
+    height: 31.25rem;
+    transition: all 1s;
+    width: 300vw;
 }
 
 .slide-box {
-    width: 100vw;
     height: 100%;
+    width: 100vw;
 }
 
 .slide-box img {
-    width: 100%;
     height: 100%;
+    width: 100%;
 }
 
+
+/* 인기 검색어 */
+.search_popular {
+    display: flex;
+    margin: 3rem 0 0.6rem;
+    font-size: 0.9rem;
+}
+
+.popular_title {
+    background-color: #bfbfbf;
+    border-radius: 1.5rem;
+    color: white;
+    font-weight: 600;
+    margin-right: 2rem;
+    padding: 0.5rem 0.8rem;
+}
+
+.popular_word {
+    background-color: #dcdcdc;
+    border-radius: 1.5rem;
+    margin-right: 1.5rem;
+    padding: 0.4rem 0.8rem;
+}
+
+.hash_mark {
+    margin-right: -0.1rem;
+}
+
+
+/* 검색창 */
+.search {
+    display: flex;
+    margin-bottom: 1rem;
+    position: relative;
+}
+
+.input_form {
+    border: 0.1rem solid #cdcdcd;
+    border-radius: 5rem;
+    margin-right: 0.5rem;
+    padding: 1.2rem 1.5rem;
+    width: 100%;
+}
+
+.button {
+    background-color: transparent;
+    border: 0;
+    border-radius: 0.5rem;
+    position: absolute;
+    right: 1.5rem;
+    top: 1rem;
+    width: 4%;
+}
+
+.button img {
+    opacity: 70%;
+    width: 70%;
+}
+
+
 /* 카테고리 시작 */
+.cate_p {
+    color: #767676;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 5rem 0.4rem 0.4rem 0.2rem;
+}
+
 .food_cate {
     align-items: center;
     display: flex;
     height: 10%;
     justify-content: space-around;
-    margin: 5rem 0 2rem 0;
+    margin: 0 0 5rem;
     width: 100%;
 }
 
@@ -34,23 +122,64 @@
 }
 
 .a_menu {
+    background-color: white;
+    border: 0.1rem solid #cdcdcd;
+    border-radius: 2rem;
     display: flex;
     flex-direction: column;
+    height: 10rem;
     justify-content: center;
-    border-style: none;
-    background: white;
+    /*padding: 1.4rem 3rem;*/
+    width: 11rem;
 }
 
 .a_menu img {
+    margin: 1.2rem 2.4rem 0;
     height: 5rem;
 }
 
 .a_menu p {
     text-align: center;
+    padding-top: 0.2rem;
     margin: auto;
 }
-/* 카테고리 끝 */
 
 .category-value {
     display: none;
+}
+
+
+/* 음식 섞기 */
+.menu_p {
+    display: flex;
+}
+
+.menu_p p {
+    color: #767676;
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin: 0 0.4rem 0.4rem 0.2rem;
+}
+
+.random_button {
+    background-color: transparent;
+    border: none;
+    width: 3%;
+}
+
+.random_button img {
+    opacity: 70%;
+    width: 100%;
+}
+
+.random_food {
+    display: flex;
+    justify-content: space-between;
+}
+
+.random_food img {
+    border-radius: 2rem;
+    height: 10rem;
+    object-fit: cover;
+    width: 11rem;
 }

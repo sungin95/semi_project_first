@@ -3,50 +3,60 @@
 {% load static %}
 
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/main.css' %}">
+<link rel="stylesheet" href="{% static 'restaurants/css/main.css' %}">
 {% endblock css %}
 
 {% block content %}
-  <div class="row">
-    <p class="title">솔직한 맛 평가</p>
-    <h1 class="title">오늘의 플레이트</h1>
-    
-    <!-- 캐러셀-->
-    <div id="carouselExampleIndicators" class="carousel slide p-0" style="overflow: hidden;" data-bs-ride="carousel">
-      <div class="slide-container">
-        <div class="slide-box"><img src="http://placeimg.com/200/200/nature" draggable="false" class="img-fluid"></div>
-        <div class="slide-box"><img src="http://placeimg.com/200/200/natures" draggable="false" class="img-fluid"></div>
-        <div class="slide-box"><img src="http://placeimg.com/200/200/future" draggable="false" class="img-fluid"></div>
-      </div>
-      <div class="carousel-indicators">
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="slide-1 active" aria-current="true" aria-label="Slide 1"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="slide-2" aria-label="Slide 2"></button>
-        <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="slide-3" aria-label="Slide 3"></button>
-      </div>
-    </div>
+<div class="container">
+  <!-- 상단 -->
+  <div class="upper">
+    <!--<p>솔직한 맛 평가</p>-->
+    <p>솔직한 맛을 담은</p>
+    <h1>오늘의 플레이트</h1>
+  </div>
 
-    <!-- 인기 검색어 -->
-  <div class="row">
-    <div class="col">인기검색어</div>
+
+  <!-- 캐러셀-->
+  <div id="carouselExampleIndicators" class="carousel slide p-0" style="overflow: hidden;" data-bs-ride="carousel">
+    <div class="slide-container">
+      <div class="slide-box"><img src="http://placeimg.com/200/200/nature" draggable="false" class="img-fluid"></div>
+      <div class="slide-box"><img src="http://placeimg.com/200/200/natures" draggable="false" class="img-fluid"></div>
+      <div class="slide-box"><img src="http://placeimg.com/200/200/future" draggable="false" class="img-fluid"></div>
+    </div>
+    <div class="carousel-indicators">
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="slide-1 active"
+        aria-current="true" aria-label="Slide 1"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1" class="slide-2"
+        aria-label="Slide 2"></button>
+      <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2" class="slide-3"
+        aria-label="Slide 3"></button>
+    </div>
+  </div>
+
+
+  <!-- 인기 검색어 -->
+  <div class="search_popular">
+    <div class="popular_title">인기검색어</div>
     {% for w in s %}
-    <div class="col">
-      <span>#</span>
+    <div class="popular_word">
+      <span class="hash_mark">#</span>
       <label for="search" class="css-xd55zv e1387oiq0" id="{{w.pk}}">{{ w.keyword }}</label>
     </div>
     {% endfor %}
   </div>
-  
 
-    <!--검색-->
-    <form class="d-flex" action="{% url 'restaurants:search' %}">
-      <input class="form-control" type="search" placeholder="음식점명, 카테고리 " name="search" aria-label="Search" id="search" required>
-      <button class="btn btn-outline-warning" type="submit">
-        검색
-      </button>
-    </form>
-  
+
+  <!--검색-->
+  <form class="search" action="{% url 'restaurants:search' %}">
+    <input class="input_form" type="search" placeholder="식당, 카테고리" name="search" aria-label="Search" id="search"
+      required>
+    <button class="button" type="submit"><img src="https://cdn-icons-png.flaticon.com/512/16/16492.png"
+        alt="검색 아이콘"></button>
+  </form>
+
+
   <!-- 카테고리 -->
-  <h3>카테고리</h3>
+  <p class="cate_p">오늘 먹을 음식은</p>
   <div class="food_cate">
     <form action="{% url 'restaurants:menu' %}">
       <button type="submit" class="a_menu">
@@ -85,58 +95,41 @@
     </form>
   </div>
 
+
   <!--음식 그림-->
-  <div class="row">
-    <h3 class="title">끌리는 음식</h3>
+  <div class="random_menu">
+    <div class="menu_p">
+      <p>어떤 음식을 먹을지 고민 될 땐</p>
+
+      <!--음식 섞기 -->
+      <button id="shuffle-menu" class="random_button" type="button"><img
+          src="https://cdn-icons-png.flaticon.com/512/60/60879.png" alt="랜덤 아이콘"></button>
+      {% comment %}
+      <script src="{% static 'restaurants/js/main.js' %}"></script>
+      {% endcomment %}
+    </div>
     <!-- 지역선택 -->
-    <div class="row row-cols-4" id="random-food">
+    <div class="random_food" id="random-food">
     </div>
   </div>
 
-  <!--음식 섞기 -->
-  <button id="shuffle-menu" class="btn btn-primary" type="button">다른 메뉴 보기</button>
-  {% comment %} <script src="{% static 'restaurants/js/main.js' %}"></script>  {% endcomment %}
 
-
-<!-- 자바스크립트 -->
-  <!-- 랜덤 음식 -->
-  <script>
-    const row = document.querySelector("#random-food");
-    var foodsList = ["떡볶이.jpg", "삼겹살.jpg", "치킨.png", "피자.jpg", "김밥.jpg", '비빔밥.jpg', '죽.jpg', '칼국수.jpg', '물냉면.jpg', '짜장면.jpg', '짬뽕.jpg', '떡갈비.jpg', '갈비찜.jpg', '해물찜.jpg', '계란말이.jpg', '순대국.jpg', '감자탕.jpg',];
-    temp(0);
-
-    function temp(num) {
-        var template = [];
-        for (let i = 0; i < 4; i++) {
-            var a = foodsList[(i + num) % foodsList.length];
-            var url = "{% static 'restaurants/img/change' %}".replace("change", a);
-            template.push(`<div class="col text-center"><img src="${url}" alt="" class="img-fluid rounded-pill"></div>`);
-            row.insertAdjacentHTML("beforeend", template[i]);
-        }
-    }
-
-    const shuffleMenu = document.querySelector("#shuffle-menu");
-    shuffleMenu.addEventListener("click", () => {
-        row.innerHTML = "";
-        temp(Math.floor(Math.random() * (foodsList.length-1 - 0) + 1));
-    });
-  </script>
-
+  <!-- 자바스크립트 -->
   <!-- 캐러셀 -->
   <script>
-    document.querySelector('.slide-2').addEventListener('click',()=>{
+    document.querySelector('.slide-2').addEventListener('click', () => {
       document.querySelector('.slide-container').style.transform = 'translateX(-100vw)'
       document.querySelector('.slide-2').classList.add('active')
       document.querySelector('.slide-1').classList.remove('active')
       document.querySelector('.slide-3').classList.remove('active')
     })
-    document.querySelector('.slide-3').addEventListener('click',()=>{
+    document.querySelector('.slide-3').addEventListener('click', () => {
       document.querySelector('.slide-container').style.transform = 'translateX(-200vw)'
       document.querySelector('.slide-3').classList.add('active')
       document.querySelector('.slide-1').classList.remove('active')
       document.querySelector('.slide-2').classList.remove('active')
     })
-    document.querySelector('.slide-1').addEventListener('click',()=>{
+    document.querySelector('.slide-1').addEventListener('click', () => {
       document.querySelector('.slide-container').style.transform = 'translateX(0vw)'
       document.querySelector('.slide-1').classList.add('active')
       document.querySelector('.slide-2').classList.remove('active')
@@ -144,16 +137,39 @@
     })
   </script>
 
+  <!--랜덤 음식-->
+  <script>
+    const row = document.querySelector("#random-food");
+    var foodsList = ["떡볶이.jpg", "삼겹살.jpg", "치킨.png", "피자.jpg", "김밥.jpg", '비빔밥.jpg', '죽.jpg', '칼국수.jpg', '물냉면.jpg', '짜장면.jpg', '짬뽕.jpg', '떡갈비.jpg', '갈비찜.jpg', '해물찜.jpg', '계란말이.jpg', '순대국.jpg', '감자탕.jpg',];
+    temp(0);
+
+    function temp(num) {
+      var template = [];
+      for (let i = 0; i < 5; i++) {
+        var a = foodsList[(i + num) % foodsList.length];
+        var url = "{% static 'restaurants/img/change' %}".replace("change", a);
+        template.push(`<div class="col text-center"><img src="${url}" alt="음식 이미지" class="img-fluid"></div>`);
+        row.insertAdjacentHTML("beforeend", template[i]);
+      }
+    }
+
+    const shuffleMenu = document.querySelector("#shuffle-menu");
+    shuffleMenu.addEventListener("click", () => {
+      row.innerHTML = "";
+      temp(Math.floor(Math.random() * (foodsList.length - 1 - 0) + 1));
+    });
+  </script>
+
   <!-- 인기검색어 클릭 -->
   <script>
     const populars = document.querySelectorAll('.e1387oiq0');
-    populars.forEach((el)=>{
-      el.addEventListener('click',(e)=>{
+    populars.forEach((el) => {
+      el.addEventListener('click', (e) => {
         document.querySelector('#search').value = e.currentTarget.innerText
       })
     })
   </script>
-  
+</div>
 {% endblock content %}
 
 
@@ -163,7 +179,8 @@
 
 
 <!-- 캐러셀 실패작 -->
-{% comment %} <script>
+<!-- {% comment %}
+  <script>
     var start = 0
     var clicking = false
     var slideBox = document.querySelectorAll('.slide-box')
@@ -173,38 +190,38 @@
     SlideBox(2)
 
     function SlideBox(num) {
-        SlideBoxMouseDown(num)
-        SlideBoxMouseMove(num)
-        SlideBoxMouseUp(num)
-      }
-    
+      SlideBoxMouseDown(num)
+      SlideBoxMouseMove(num)
+      SlideBoxMouseUp(num)
+    }
+
     function SlideBoxMouseDown(num) {
-      slideBox[num].addEventListener('mousedown',(e)=>{
+      slideBox[num].addEventListener('mousedown', (e) => {
         start = e.screenX
         clicking = true
       })
     }
-    function SlideBoxMouseMove(num){
-      slideBox[num].addEventListener('mousemove',(e)=>{
-          if (clicking == true) {
-              document.querySelector('.slide-container').style.transform = `translateX(${(-1)*(num*100)+e.screenX - start}px)`
-          }
+    function SlideBoxMouseMove(num) {
+      slideBox[num].addEventListener('mousemove', (e) => {
+        if (clicking == true) {
+          document.querySelector('.slide-container').style.transform = `translateX(${(-1) * (num * 100) + e.screenX - start}px)`
+        }
       })
     }
     function SlideBoxMouseUp(num) {
-      slideBox[num].addEventListener('mouseup',(e)=>{
-          clicking = false
-          if (e.clientX - start < -100){
-              document.querySelector('.slide-container').style.transform = `translateX(-${((num+1)*100)%300}vw)`
-              document.querySelector('.slide-container').style.transition = 'all 0.5s'
-          } else {
-              document.querySelector('.slide-container').style.transform = `translateX(-${(num*100)%300}vw)`
-              document.querySelector('.slide-container').style.transition = 'all 0.5s'
-          }
-          setTimeout(()=>{
-              document.querySelector('.slide-container').style.transition = 'none'
-          }, 500)
-      })  
+      slideBox[num].addEventListener('mouseup', (e) => {
+        clicking = false
+        if (e.clientX - start < -100) {
+          document.querySelector('.slide-container').style.transform = `translateX(-${((num + 1) * 100) % 300}vw)`
+          document.querySelector('.slide-container').style.transition = 'all 0.5s'
+        } else {
+          document.querySelector('.slide-container').style.transform = `translateX(-${(num * 100) % 300}vw)`
+          document.querySelector('.slide-container').style.transition = 'all 0.5s'
+        }
+        setTimeout(() => {
+          document.querySelector('.slide-container').style.transition = 'none'
+        }, 500)
+      })
     }
     
-  </scrip> {% endcomment %}
+  </scrip > {% endcomment %} -->

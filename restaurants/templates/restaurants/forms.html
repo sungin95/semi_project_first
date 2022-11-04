@@ -1,38 +1,40 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
-{% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
-{% endblock css %}
-{% block content %}
-  <container>
-    {% if request.resolver_match.url_name == 'create' %}
-      <h2 class="welcome_text">음식점 정보등록</h2>
-      <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <div class="button">
-          <!--{% bootstrap_button content='리뷰작성' button_type='submit' button_class="btn-primary" %}-->
-          <button class="cancel">
-            <a href="{% url 'restaurants:index' %}">취소</a>
-          </button>
-          <button type="submit" class="confirm">음식점 등록</button>
-        </div>
-      </form>
 
-    {% else %}
-      <h2 class="welcome_text">음식점 정보수정</h2>
-      <form action="" method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {% bootstrap_form form %}
-        <div class="button">
-          <!--{% bootstrap_button content='수정하기' button_type='submit' button_class="btn-primary" %}-->
-          <button class="cancel">
-            <a href="{% url 'restaurants:index' %}">취소</a>
-          </button>
-          <button type="submit" class="confirm">수정하기</button>
-        </div>
-      </form>
-    {% endif %}
-  </container>
+{% block css %}
+<link rel="stylesheet" href="{% static 'restaurants/css/forms.css' %}">
+{% endblock css %}
+
+{% block content %}
+<container>
+  {% if request.resolver_match.url_name == 'create' %}
+  <h2 class="welcome_text">음식점 정보등록</h2>
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <div class="button">
+      <!--{% bootstrap_button content='리뷰작성' button_type='submit' button_class="btn-primary" %}-->
+      <button class="cancel">
+        <a href="{% url 'restaurants:index' %}">취소</a>
+      </button>
+      <button type="submit" class="confirm">음식점 등록</button>
+    </div>
+  </form>
+
+  {% else %}
+  <h2 class="welcome_text">음식점 정보수정</h2>
+  <form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {% bootstrap_form form %}
+    <div class="button">
+      <!--{% bootstrap_button content='수정하기' button_type='submit' button_class="btn-primary" %}-->
+      <button class="cancel">
+        <a href="{% url 'restaurants:index' %}">취소</a>
+      </button>
+      <button type="submit" class="confirm">수정하기</button>
+    </div>
+  </form>
+  {% endif %}
+</container>
 {% endblock content %}

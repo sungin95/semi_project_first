@@ -1,61 +1,65 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
 {% load static %}
+
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+<link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
 {% endblock css %}
+
 {% block content %}
-  <container>
-    <div class="food_cate">
-      <form action="{% url 'restaurants:menu' %}">
-        <button type="submit" class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/4480/4480784.png" alt="한식 카테고리">
-          <p>한식</p>
-          <input type="text" value="한식" class="category-value" name="category">
-        </button>
-      </form>
-      <form action="{% url 'restaurants:menu' %}">
-        <button type="submit" class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/3511/3511307.png" alt="양식 카테고리">
-          <p>양식</p>
-          <input type="text" value="양식" class="category-value" name="category">
-        </button>
-      </form>
-      <form action="{% url 'restaurants:menu' %}">
-        <button type="submit" class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/2548/2548242.png" alt="중식 카테고리">
-          <p>중식</p>
-          <input type="text" value="중식" class="category-value" name="category">
-        </button>
-      </form>
-      <form action="{% url 'restaurants:menu' %}">
-        <button type="submit" class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
-          <p>일식</p>
-          <input type="text" value="일식" class="category-value" name="category">
-        </button>
-      </form>
-      <form action="{% url 'restaurants:menu' %}">
-        <button type="submit" class="a_menu">
-          <img src="https://cdn-icons-png.flaticon.com/512/7688/7688778.png" alt="기타 카테고리">
-          <p>기타</p>
-          <input type="text" value="기타" class="category-value" name="category">
-        </button>
-      </form>
-    </div>
+<container>
+  <div class="food_cate">
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/4480/4480784.png" alt="한식 카테고리">
+        <p>한식</p>
+        <input type="text" value="한식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/3511/3511307.png" alt="양식 카테고리">
+        <p>양식</p>
+        <input type="text" value="양식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/2548/2548242.png" alt="중식 카테고리">
+        <p>중식</p>
+        <input type="text" value="중식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/5391/5391971.png" alt="일식 카테고리">
+        <p>일식</p>
+        <input type="text" value="일식" class="category-value" name="category">
+      </button>
+    </form>
+    <form action="{% url 'restaurants:menu' %}">
+      <button type="submit" class="a_menu">
+        <img src="https://cdn-icons-png.flaticon.com/512/7688/7688778.png" alt="기타 카테고리">
+        <p>기타</p>
+        <input type="text" value="기타" class="category-value" name="category">
+      </button>
+    </form>
+  </div>
 
-    <h2>{{ category }}</h2>
-    <div class="restaurants">
-      {% for restaurant in restaurants %}
-        <div class="img-text-box">
-          <span id="img-text">{{ restaurant.restaurant_name }}</span>
-          <img src="https://d20aeo683mqd6t.cloudfront.net/ko/articles/title_images/000/039/143/original/IMG_5649%E3%81%AE%E3%82%B3%E3%83%92%E3%82%9A%E3%83%BC.jpg?2019&d=750x400" alt="음식점의 음식 사진">
-        </div>
-      {% endfor %}
+  <h2>{{ category }}</h2>
+  <div class="restaurants">
+    {% for restaurant in restaurants %}
+    <div class="img-text-box">
+      <span id="img-text">{{ restaurant.restaurant_name }}</span>
+      <img
+        src="https://d20aeo683mqd6t.cloudfront.net/ko/articles/title_images/000/039/143/original/IMG_5649%E3%81%AE%E3%82%B3%E3%83%92%E3%82%9A%E3%83%BC.jpg?2019&d=750x400"
+        alt="음식점의 음식 사진">
+    </div>
+    {% endfor %}
 
-    </div>
-    <div class="more">
-      <button type="button">더보기</button>
-    </div>
-  </container>
+  </div>
+  <div class="more">
+    <button type="button">더보기</button>
+  </div>
+</container>
 {% endblock %}
