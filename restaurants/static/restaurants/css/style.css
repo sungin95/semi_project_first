@@ -10,6 +10,7 @@
     display: flex;
     justify-content: space-between;
     margin-bottom: 1rem;
+    align-items: center;
 }
 
 .r_header h1 {
@@ -18,18 +19,18 @@
 
 .detailed_info {
     display: flex;
-    flex-flow: row;
+    align-items: center;
+    margin-left: 3px;
 }
 
 .detailed_info img {
-    margin-left: 1.6rem;
     width: 1.2rem;
     height: 1.2rem;
 }
 
 .people_views {
     display: flex;
-    flex-flow: row;
+    align-items: center;
 }
 
 .people_views p {

@@ -10,7 +10,7 @@ class RestaurantForm(forms.ModelForm):
     class Meta:
         model = Restaurants
         fields = '__all__'
-        exclude = ['like_users',]
+        exclude = ['like_users','users','hits']
         labels = {
                 'restaurant_name': '음식점명',
                 'address': '주소',
