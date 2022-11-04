@@ -27,7 +27,8 @@ class Restaurants(models.Model):
         settings.AUTH_USER_MODEL, related_name="like_restaurant"
     )
     hits = models.PositiveIntegerField(default=0)
-
+    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+    
     @property
     def click(self):
         self.hits += 1
