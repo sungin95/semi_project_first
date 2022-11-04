@@ -5,11 +5,11 @@ from django.conf import settings
 from phonenumber_field.modelfields import PhoneNumberField
 
 category_CHOICES = (
-    ('KR', '한식'),
-    ('WS', '양식'),
-    ('CH', '중식'),
-    ('JP', '일식'),
-    ('Etc', '기타'),
+    ("KR", "한식"),
+    ("WS", "양식"),
+    ("CH", "중식"),
+    ("JP", "일식"),
+    ("Etc", "기타"),
 )
 
 # Create your models here.
@@ -26,7 +26,14 @@ class Restaurants(models.Model):
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_restaurant"
     )
-    
+    hits = models.PositiveIntegerField(default=0)
+
+    @property
+    def click(self):
+        self.hits += 1
+        self.save()
+
+
 class Search(models.Model):
     keyword = models.TextField(max_length=30)
     count = models.IntegerField(default=0)

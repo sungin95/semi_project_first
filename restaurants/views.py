@@ -11,6 +11,7 @@ from django.contrib import messages
 from reviews.models import Review
 from django.db.models import Q
 from datetime import datetime
+from django.core.paginator import Paginator
 
 
 # Create your views here.
@@ -31,6 +32,10 @@ def index(request):
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     reviews = restaurant.review_set.all()
+    k = Review.objects.order_by("id")
+    page = request.GET.get("page", "1")
+    paginator = Paginator(k, 3)
+    page_obj = paginator.get_page(page)
     cnt = 0
     add = 0
     for review in reviews:
@@ -43,6 +48,8 @@ def detail(request, restaurant_pk):
     context = {
         "restaurant": restaurant,
         "grade": grade,
+        "reviews": reviews,
+        "question_list": page_obj,
     }
     return render(request, "restaurants/detail.html", context)
 
@@ -122,7 +129,9 @@ def search(request):
 
         if search:
             search_lists = content_list.filter(
-                Q(restaurant_name__icontains=search) | Q(menu__icontains=search)| Q(category__icontains=search)
+                Q(restaurant_name__icontains=search)
+                | Q(menu__icontains=search)
+                | Q(category__icontains=search)
             )
             context = {
                 "search_lists": search_lists,
