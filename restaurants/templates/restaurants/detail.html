@@ -79,6 +79,33 @@
         <div id="map" style="height:300px;"></div>
       </div>
     </div>
+
+    <div class="row justify-content-center m-2" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
+    <!-- 리뷰창 -->
+    <!-- 개인 리뷰 -->
+    {% for review in question_list %}
+      <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
+        <div class="d-flex justify-content-between p-0 h-auto">
+          <div class="d-flex">
+            <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
+            <div class="rounded-pill" style="background-color:yellow">맛있다</div>
+          </div>
+          <div class="rounded-pill" style="background-color:yellow">
+            {% if review.created_string == False %}
+              <td>{{ review.created_string|date:'m월 d일' }}</td>
+            {% else %}
+              <td>{{ review.created_string }}</td>
+            {% endif %}
+          </div>
+        </div>
+        <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
+        <div class="text-end">
+          {% if review.user.pk == request.user.pk %}
+            <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
+            <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
+          {% endif %}
+        </div>
+
   </div>
   <!-- 메뉴사진 -->
   <div class="row row-cols-4 g-3">
@@ -98,6 +125,7 @@
       <div class="d-flex">
         <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
         <div class="rounded-pill" style="background-color:yellow">맛있다</div>
+
       </div>
       <div class="rounded-pill" style="background-color:yellow">
         {% if review.created_string == False %}

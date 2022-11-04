@@ -12,13 +12,19 @@ from reviews.models import Review
 from django.db.models import Q
 from datetime import datetime
 from django.core.paginator import Paginator
+from reviews.forms import CommentForm
 from django.http import JsonResponse
+
 
 
 # Create your views here.
 def main(request):
-    s = Search.objects.filter().order_by("count")[:3]
-    context = {"s": s}
+    s = Search.objects.filter().order_by("-count")[:3]
+    m = Search.objects.filter().order_by("count")[1:12]
+    context = {
+        "s": s,
+        "m": m,
+    }
     return render(request, "restaurants/main.html", context)
 
 
@@ -37,6 +43,7 @@ def detail(request, restaurant_pk):
     page = request.GET.get("page", "1")
     paginator = Paginator(k, 3)
     page_obj = paginator.get_page(page)
+    comment_form = CommentForm()
     cnt = 0
     add = 0
     for review in reviews:
@@ -51,6 +58,7 @@ def detail(request, restaurant_pk):
         "grade": grade,
         "reviews": reviews,
         "question_list": page_obj,
+        "comment_form": comment_form,
     }
     return render(request, "restaurants/detail.html", context)
 
@@ -59,8 +67,8 @@ def menu(request):
     category = request.GET.get("category")
     restaurants = Restaurants.objects.filter(category=category)
     context = {
-        'category': category,
-        'restaurants': restaurants,
+        "category": category,
+        "restaurants": restaurants,
     }
     return render(request, "restaurants/menu.html", context)
 
