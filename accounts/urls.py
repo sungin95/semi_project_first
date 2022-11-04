@@ -11,6 +11,7 @@ urlpatterns = [
     path("<int:pk>/", views.detail, name="detail"),
     path("delete/", views.delete, name="user_delete"),
     path("update/", views.update, name="update"),
+    path("profile/", views.profile, name="profile"),
     path("password/", views.change_password, name="change_password"),
     path("<int:user_pk>/follow/", views.follow, name="follow"),
 ]
