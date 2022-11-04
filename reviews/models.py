@@ -57,7 +57,7 @@ class ReviewImages(models.Model):
     review = models.ForeignKey(
         Review, default=None, on_delete=models.CASCADE, related_name="image"
     )
-    image = models.ImageField(upload_to=get_image_filename)
+    image = models.ImageField(upload_to=get_image_filename, blank=True)
     # admin 에서 모델이름
     class Meta:
         # 단수

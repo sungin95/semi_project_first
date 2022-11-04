@@ -1,6 +1,8 @@
 from django import forms
 from .models import Restaurants
 from phonenumber_field.formfields import PhoneNumberField
+from .models import RestaurantImages
+from django.utils.translation import gettext_lazy as _
 
 class RestaurantForm(forms.ModelForm):
     restaurant_phone_number = PhoneNumberField(
@@ -22,4 +24,11 @@ class RestaurantForm(forms.ModelForm):
                 'restaurant_phone_number': '전화번호',
                 'category': '카테고리',
             }
-        
+
+class RestaurantImageForm(forms.ModelForm): 
+    class Meta:
+        model = RestaurantImages
+        fields = ("image",)
+        labels = {
+            "image": _("Image"),
+        }

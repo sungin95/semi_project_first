@@ -5,8 +5,8 @@ from django.views.decorators.http import (
     require_POST,
 )
 from django.contrib.auth.decorators import login_required
-from .models import Restaurants, Search
-from .forms import RestaurantForm
+from .models import Restaurants, Search, RestaurantImages
+from .forms import RestaurantForm, RestaurantImageForm
 from django.contrib import messages
 from reviews.models import Review
 from django.db.models import Q
@@ -14,6 +14,7 @@ from datetime import datetime
 from django.core.paginator import Paginator
 from reviews.forms import CommentForm
 from django.http import JsonResponse
+from django.forms import modelformset_factory
 
 
 
@@ -75,17 +76,36 @@ def menu(request):
 
 @require_http_methods(["GET", "POST"])
 def create(request):
+    ImageFormSet = modelformset_factory(RestaurantImages, form=RestaurantImageForm, extra=5)
     if request.method == "POST":
-        form = RestaurantForm(request.POST, files=request.FILES)
-        if form.is_valid():
+        form = RestaurantForm(request.POST)
+        formset = ImageFormSet(
+            request.POST, request.FILES, queryset=RestaurantImages.objects.none()
+        )
+        if form.is_valid() and formset.is_valid():
             restaurant = form.save(commit=False)
             restaurant.user = request.user
             restaurant.save()
+            for forms in formset.cleaned_data:
+                if forms:
+                    # image file
+                    image = forms["image"]
+                    print(forms)
+                    print(forms["image"])
+                    # review, image file save
+                    photo = RestaurantImages(restaurant=restaurant, image=image)
+                    print(photo)
+                    photo.save()
             messages.success(request, "글 작성이 완료되었습니다.")
             return redirect("restaurants:main")
-    form = RestaurantForm()
+        else:
+            print(form.errors, formset.errors)
+    else:
+        form = RestaurantForm()
+        formset = ImageFormSet(queryset=RestaurantImages.objects.none())
     context = {
         "form": form,
+        "formset": formset,
     }
     return render(request, "restaurants/forms.html", context)
 
