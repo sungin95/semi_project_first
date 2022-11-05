@@ -173,7 +173,7 @@
           <hr>
           <!-- 리뷰에 댓글 달기 -->
           <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">답글</button>
-          <div id="write-comment"></div>
+          <div id="write-comment{{ review.pk }}"></div>
           {% for comment in review.comment_set.all %}
             <div class="rounded-pill" style="background-color:yellow">
               {% if comment.user.image %}
@@ -273,19 +273,21 @@
   </script>
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
-    const reviewComment = document.querySelector("#review-comment")
-    reviewComment.addEventListener("click", function (event) {
-      event.preventDefault()
-      const reviewId = event.target.dataset.reviewId
-      const writeComment = document.querySelector("#write-comment")
-      writeComment.insertAdjacentHTML('beforeEnd', `
-          <form class='' action="/reviews/${reviewId}/comments/" method="POST">
-            {% csrf_token %}
-            {% bootstrap_form comment_form %}
-            <input type="submit" class='btn btn-dark' value='답글'>
-          </form>
-          <hr>`)
-    })
+    const reviewComments = document.querySelectorAll(`#review-comment`)
+    for (const reviewComment of reviewComments) {
+      reviewComment.addEventListener("click", function (event) {
+        const reviewId = event.target.dataset.reviewId;
+        event.preventDefault()
+        const writeComment = document.querySelector(`#write-comment${reviewId}`)
+        writeComment.insertAdjacentHTML('beforeEnd', `
+              <form class='' action="/reviews/${reviewId}/comments/" method="POST">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                <input type="submit" class='btn btn-dark' value='답글'>
+              </form>
+              <hr>`)
+      })
+    }
   </script>
 
 {% endblock js %}
