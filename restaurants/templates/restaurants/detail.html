@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'restaurants/css/detail.css' %}">
 {% endblock css %}
 
 {% block content %}
@@ -14,127 +14,167 @@
         {{ grade }}
       </h1>
       <div class="detailed_info">
-        <!-- 중복 -->
-        <div class="people_views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
-          <div>{{ restaurant.hits }}</div>
-          <div class="d-none">{{ restaurant.click }}</div>
+        <!-- 조회수 -->
+        <div class="people_views">
+          <img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
+          <span>{{ restaurant.hits }}</span>
         </div>
+        <!-- 로그인된 유저만 보이기 -->
         {% if request.user.is_authenticated %}
-          <a href="{% url 'reviews:create' restaurant.pk %}"><img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘"></a>
+          <!-- 리뷰쓰기 버튼 -->
+          <div id="review-create-btn">
+            <a href="{% url 'reviews:create' restaurant.pk %}">
+              <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘">
+              <span>리뷰작성</span>
+            </a>
+          </div>
           <!-- 북마크 -->
-          <!-- 중복 : 별 이미지로 바꾸기 -->
-          <span id="like-count">{{ restaurant.like_users.count }}</span>
-          {% if request.user in restaurant.like_users.all %}
-            <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill"></i>
-          {% else %}
-            <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star"></i>
-          {% endif %}
-          {% if request.user.pk == restaurant.user.pk %}
-            <button type="button" class="btn btn-dark" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">가게 정보 수정하기</button>
-          {% endif %}
+          <div class="bookmark">
+            <span id="like-count">{{ restaurant.like_users.count }}</span>
+            {% if request.user in restaurant.like_users.all %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill"></i>
+            {% else %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star"></i>
+            {% endif %}
+            <!-- 가게정보수정 -->
+            {% if request.user.pk == restaurant.user.pk %}
+              <button type="button" class="btn btn-dark" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">정보수정</button>
+            {% endif %}
+          </div>
+          <!-- 로그인 안했을 때 -->
         {% else %}
-          <input type="submit" class="btn btn-dark" value="좋아요" disabled="disabled">
-        {% endif %}
+          <div class="bookmark">
+            <span id="like-count">{{ restaurant.like_users.count }}</span>
+            {% if request.user in restaurant.like_users.all %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill" disabled="disabled"></i>
+            {% else %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star" disabled="disabled"></i>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
     </div>
 
     <!-- 지도 -->
-    <div class="row">
-      <div class="col-7">
-        <!-- 음식점 정보테이블 -->
-        <table>
-          <tr>
-            <th>주소</th>
-            <td>{{ restaurant.address }}</td>
-          </tr>
-          <tr>
-            <th>전화번호</th>
-            <td>{{ restaurant.restaurant_phone_number.as_national }}</td>
-          </tr>
-          <tr>
-            <th>영업시간</th>
-            <td>{{ restaurant.Opening_hours }}</td>
-          </tr>
-          <tr>
-            <th>메뉴</th>
-            <td>{{ restaurant.menu }}</td>
-          </tr>
-          <tr>
-            <th>가격대</th>
-            <td>{{ restaurant.price_avg }}</td>
-          </tr>
-          <tr>
-            <th>주차</th>
-            <td>{{ restaurant.parking }}</td>
-          </tr>
-          <tr>
-            <th>휴일</th>
-            <td>{{ restaurant.day_off }}</td>
-          </tr>
-          <tr>
-            <th>카테고리</th>
-            <td>{{ restaurant.category }}</td>
-          </tr>
-        </table>
-      </div>
-      <div class="col-5">
-        <div id="map" style="height:300px;"></div>
-      </div>
+
+    <div class="col-7">
+      <!-- 음식점 정보테이블 -->
+      <table>
+        <tr>
+          <th>주소</th>
+          <td>{{ restaurant.address }}</td>
+        </tr>
+        <tr>
+          <th>전화번호</th>
+          <td>{{ restaurant.restaurant_phone_number.as_national }}</td>
+        </tr>
+        <tr>
+          <th>영업시간</th>
+          <td>{{ restaurant.Opening_hours }}</td>
+        </tr>
+        <tr>
+          <th>메뉴</th>
+          <td>{{ restaurant.menu }}</td>
+        </tr>
+        <tr>
+          <th>가격대</th>
+          <td>{{ restaurant.price_avg }}</td>
+        </tr>
+        <tr>
+          <th>주차</th>
+          <td>{{ restaurant.parking }}</td>
+        </tr>
+        <tr>
+          <th>휴일</th>
+          <td>{{ restaurant.day_off }}</td>
+        </tr>
+        <tr>
+          <th>카테고리</th>
+          <td>{{ restaurant.category }}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-5 p-0">
+      <div id="map" style="height:300px;"></div>
     </div>
   </div>
 
-  <!-- 메뉴사진 -->
-  <div class="row row-cols-4 g-3">
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-    <div class="col text-center"><img src="http://placeimg.com/200/200/nature" alt="" class="img-fluid"></div>
-  </div>
-  <div class="row justify-content-center m-2" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
+  <hr>
 
+  <!-- 메뉴사진 -->
+  <div class="row justify-content-center m-2" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
+  <div class="slide-wrapper">
+    <ul class="slides">
+      {% for img in restaurant.restaurant.all %}
+        <li><img src="{{ img.image.url }}" alt="" class="slide-img"></li>
+      {% endfor %}
+    </ul>
+  </div>
+  <!-- 메뉴 컨트롤러 -->
+  <p class="controls">
+    <span class="prev">prev</span>
+    <span class="next">next</span>
+  </p>
+  <hr>
   <!-- 리뷰창 -->
   <!-- 개인 리뷰 -->
-  {% for review in question_list %}
-    <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
-      <div class="d-flex justify-content-between p-0 h-auto">
-        <div class="d-flex">
-          <div class="rounded-pill" style="background-color:yellow">
+  <div class="row justify-content-between p-3" style="background-color:lightgrey;">
+    {% for review in question_list %}
+      <div>
+        <!-- 리뷰 상단 -->
+        <div class="d-flex justify-content-between p-1 h-auto">
+          <!-- 프로필/맛있다 -->
+          <div class="d-flex">
+            <div class="rounded-pill" style="background-color:yellow">
             {% if review.user.image %}
               <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
             {% else %}
               <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
             {% endif %}
+            </div>
+            <div class="rounded-pill" style="background-color:yellow">닉네임</div>
+            <div class="rounded-pill" style="background-color:yellow">
+              <!-- 아래 이모티콘을 채워주세요~ -->
+              {% if review.grade == 5 %}
+                <div>555</div>
+              {% elif review.grade == 3 %}
+                <div>333</div>
+              {% elif review.grade == 1 %}
+                <div>111</div>
+              {% endif %}
+            </div>
           </div>
-          <div class="rounded-pill" style="background-color:yellow">
-            <!-- 아래 이모티콘을 채워주세요~ -->
-            {% if review.grade == 5 %}
-              <div>555</div>
-            {% elif review.grade == 3 %}
-              <div>333</div>
-            {% elif review.grade == 1 %}
-              <div>111</div>
+          
+          <!-- 시간 -->
+          <div>
+            {% if review.created_string == False %}
+              <td>{{ review.created_string|date:'m월 d일' }}</td>
+            {% else %}
+              <td>{{ review.created_string }}</td>
             {% endif %}
-            {{ review.grade }}
           </div>
         </div>
-        <div class="rounded-pill" style="background-color:yellow">
-          {% if review.created_string == False %}
-            <td>{{ review.created_string|date:'m월 d일' }}</td>
-          {% else %}
-            <td>{{ review.created_string }}</td>
-          {% endif %}
+        
+        <!-- 리뷰내용 -->
+        <div class="review-contents">
+          <div class="review-content">{{ review.content }}</div>
+          <div class="d-flex">
+            {% for review_img in review.image.all %}
+              <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
+              {%endfor%}
+            </div>
+          </div>
+          <div class="text-end">
+            {% if review.user.pk == request.user.pk %}
+              <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
+              <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
+            {% endif %}
+          </div>
+          <hr>
         </div>
-      </div>
-      <div style="background-color:grey;" class="p-0 h-75">{{ review.content }}</div>
-      <div class="text-end">
-        {% if review.user.pk == request.user.pk %}
-          <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
-          <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
-        {% endif %}
-      </div>
+      {% endfor %}
     </div>
   </div>
-  {%endfor%}
 
   <!-- 페이징처리 시작 -->
   <ul class="pagination justify-content-center">
@@ -171,12 +211,13 @@
       </li>
     {% endif %}
   </ul>
-  <!-- 페이징처리 끝 -->
 {% endblock content %}
 
 <!-- 자바스크립트 -->
-<!-- 지도 -->
 {% block js %}
+  <script src="{% static 'restaurants/js/detail.js' %}"></script>
+
+  <!-- 지도 -->
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aea428bdeff5956d8b97e187cebe92b9&libraries=services"></script>
   <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
@@ -215,35 +256,6 @@
         // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
         map.setCenter(coords);
       }
-    });
-  </script>
-
-  <script>
-    const likeBtn = document.querySelector("#like-btn");
-    likeBtn.addEventListener("click", function (e) {
-      axios({method: "get", url: `/${e.target.dataset.restaurantId}/like/`}).then((res) => {
-        if (res.data.isLiked === true) {
-          e
-            .target
-            .classList
-            .add("bi-star-fill");
-          e
-            .target
-            .classList
-            .remove("bi-star");
-        } else {
-          e
-            .target
-            .classList
-            .add("bi-star");
-          e
-            .target
-            .classList
-            .remove("bi-star-fill");
-        }
-        const likeCount = document.querySelector("#like-count");
-        likeCount.innerText = res.data.likeCount;
-      });
     });
   </script>
 
