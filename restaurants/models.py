@@ -13,16 +13,23 @@ category_CHOICES = (
     ('기타', '기타'),
 )
 
+parking_CHOICES = (
+    ('주차공간없음', '주차공간없음'),
+    ('유료주차 가능', '유료주차 가능'),
+    ('무료주차 가능', '무료주차 가능'),
+    ('기타', '기타'),
+)
+
 # Create your models here.
 class Restaurants(models.Model):
     restaurant_name = models.CharField(max_length=50)
+    전화번호 = PhoneNumberField(blank=True)
     address = models.TextField()
     Opening_hours = models.TextField()
     menu = models.TextField()
     price_avg = models.TextField()
-    parking = models.CharField(max_length=50)
     day_off = models.CharField(max_length=40)
-    restaurant_phone_number = PhoneNumberField(blank=True)
+    parking = models.CharField(max_length=50, choices=parking_CHOICES)
     category = models.CharField(max_length=50, choices=category_CHOICES)
     like_users = models.ManyToManyField(
         settings.AUTH_USER_MODEL, related_name="like_restaurant"
