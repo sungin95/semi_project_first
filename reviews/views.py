@@ -7,7 +7,7 @@ from restaurants.models import Restaurants
 from rest_framework.viewsets import ModelViewSet
 from .serializers import ReviewSerializer
 from django.forms import modelformset_factory
-from django.http import HttpResponseRedirect
+from django.http import HttpResponseRedirect, JsonResponse
 
 # Create your views here.
 
@@ -127,8 +127,8 @@ def comments(request, review_pk):
             comment_review.review = review
             comment_review.user = request.user
             comment_review.save()
-
-    return redirect("restaurants:detail", review.pk)
+    context = {"comment_review_content": comment_review.content}
+    return JsonResponse(context)
 
 
 @login_required
