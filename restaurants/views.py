@@ -17,7 +17,6 @@ from django.http import JsonResponse
 from django.forms import modelformset_factory
 
 
-
 # Create your views here.
 def main(request):
     s = Search.objects.filter().order_by("-count")[:3]
@@ -40,9 +39,9 @@ def index(request):
 def detail(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     reviews = restaurant.review_set.all()
-    k = Review.objects.order_by("id")
+    # k = Review.objects.order_by("id")
     page = request.GET.get("page", "1")
-    paginator = Paginator(k, 3)
+    paginator = Paginator(reviews, 3)
     page_obj = paginator.get_page(page)
     comment_form = CommentForm()
     cnt = 0
@@ -76,7 +75,9 @@ def menu(request):
 
 @require_http_methods(["GET", "POST"])
 def create(request):
-    ImageFormSet = modelformset_factory(RestaurantImages, form=RestaurantImageForm, extra=5)
+    ImageFormSet = modelformset_factory(
+        RestaurantImages, form=RestaurantImageForm, extra=5
+    )
     if request.method == "POST":
         form = RestaurantForm(request.POST)
         formset = ImageFormSet(

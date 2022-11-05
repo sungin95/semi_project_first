@@ -10,7 +10,9 @@
   <div class="row r_info">
     <!-- 음식점 정보 헤더 -->
     <div class="r_header">
-      <h1>{{ restaurant.restaurant_name }}</h1>
+      <h1>{{ restaurant.restaurant_name }}
+        {{ grade }}
+      </h1>
       <div class="detailed_info">
         <!-- 중복 -->
         <div class="people_views"><img src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
@@ -96,8 +98,24 @@
     <div class="row justify-content-between p-3" style="background-color:lightgrey; height: 300px;">
       <div class="d-flex justify-content-between p-0 h-auto">
         <div class="d-flex">
-          <div class="rounded-pill" style="background-color:yellow">프로필사진</div>
-          <div class="rounded-pill" style="background-color:yellow">맛있다</div>
+          <div class="rounded-pill" style="background-color:yellow">
+            {% if review.user.image %}
+              <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+            {% else %}
+              <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+            {% endif %}
+          </div>
+          <div class="rounded-pill" style="background-color:yellow">
+            <!-- 아래 이모티콘을 채워주세요~ -->
+            {% if review.grade == 5 %}
+              <div>555</div>
+            {% elif review.grade == 3 %}
+              <div>333</div>
+            {% elif review.grade == 1 %}
+              <div>111</div>
+            {% endif %}
+            {{ review.grade }}
+          </div>
         </div>
         <div class="rounded-pill" style="background-color:yellow">
           {% if review.created_string == False %}
