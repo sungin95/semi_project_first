@@ -73,10 +73,6 @@
             <td>{{ restaurant.Opening_hours }}</td>
           </tr>
           <tr>
-            <th>메뉴</th>
-            <td>{{ restaurant.menu }}</td>
-          </tr>
-          <tr>
             <th>가격대</th>
             <td>{{ restaurant.price_avg }}</td>
           </tr>
@@ -91,6 +87,23 @@
           <tr>
             <th>카테고리</th>
             <td>{{ restaurant.category }}</td>
+          </tr>
+          <tr>
+            <th>메뉴</th>
+            <td>
+              <div class="d-flex justify-content-between">
+                <div class="">
+                  {% for restaurant_menu_left_ in restaurant_menu_left %}
+                    <p>{{ restaurant_menu_left_ }}</p>
+                  {% endfor %}
+                </div>
+                <div class="">
+                  {% for restaurant_menu_right_ in restaurant_menu_right %}
+                    <p>{{ restaurant_menu_right_ }}</p>
+                  {% endfor %}
+                </div>
+              </div>
+            </td>
           </tr>
         </table>
       </div>
