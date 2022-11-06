@@ -22,6 +22,12 @@
 }
 
 
+/* placeholder 글자 크기 줄임 */
+.form-control::placeholder {
+    font-size: 0.9rem;
+}
+
+
 /* 제출 버튼 조절 */
 .login {
     background-color: #666666;
