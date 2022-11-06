@@ -37,16 +37,14 @@ def signup(request):
 
 def login(request):
     if request.user.is_authenticated:  # 로그인이 된 상태에서는 로그인 화면에 들어갈 수 없다.
-        return redirect("accounts:index")
+        return redirect("restaurants:main")
     if request.method == "POST":
         form = AuthenticationForm(
             request, data=request.POST
         )  # request가 없어도 잘 돌아가는거 같음 하지만 대부분이 request를 필수적으로 받아 가지고 편의상 넣겠음
         if form.is_valid():
-            auth_login(request, form.get_user())  # login을 가져와야 한다.
-            return redirect(
-                request.GET.get("next") or "accounts:index"
-            )  # login_required를 사용하기 위해
+            auth_login(request, form.get_user())
+            return redirect(request.GET.get("next") or "restaurants:main")
     else:
         form = AuthenticationForm()
     context = {
