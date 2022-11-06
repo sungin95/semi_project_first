@@ -2,39 +2,37 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'restaurants/css/index.css' %}">
 {% endblock css %}
 {% block content %}
-<container>
-  <div class="r_list">
+  <div class="row row-cols-2 row-cols-lg-3 g-5 mt-3">
     {% for restaurant in restaurants %}
-    <div class="a_restaurant">
-      <div class="direction">
-        <img src="https://cdn-icons-png.flaticon.com/512/4519/4519622.png" alt="위치 아이콘">
-        <!-- 위치 끼워 넣을 수 있으면 변경 -->
-        <p>위치 정보</p>
+      <div class="col a_restaurant">
+        <div class="direction">
+          <img src="https://cdn-icons-png.flaticon.com/512/4519/4519622.png" alt="위치 아이콘">
+          <!-- 위치 끼워 넣을 수 있으면 변경 -->
+          <p>{{ restaurant.address }}</p>
+        </div>
+        <div class="r_img">
+          {% if restaurant.image %}
+            <img src="{{ restaurant.image.url }}" alt="음식점의 음식 사진">
+          {% else %}
+            <img src="https://www.dummyimage.com/300X300/000/fff"/>
+          {% endif %}
+        </div>
+        <!-- 실제 해시로 변경 -->
+        <div class="hash">
+          <p>#양식</p>
+          <p>#사람들이_많이_찾는</p>
+          <p>#패스트_푸드</p>
+        </div>
+        <div class="info_text">
+          <p class="name">
+            <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
+          </p>
+          <!--<p class="total_view">3,234 view</p>-->
+        </div>
       </div>
-      <div class="r_img">
-        <!-- 실제 음식 사진으로 변경해야 함 -->
-        <img
-          src="https://d20aeo683mqd6t.cloudfront.net/ko/articles/title_images/000/039/143/original/IMG_5649%E3%81%AE%E3%82%B3%E3%83%92%E3%82%9A%E3%83%BC.jpg?2019&d=750x400"
-          alt="음식점의 음식 사진">
-      </div>
-      <!-- 실제 해시로 변경 -->
-      <div class="hash">
-        <p>#양식</p>
-        <p>#사람들이_많이_찾는</p>
-        <p>#패스트_푸드</p>
-      </div>
-      <div class="info_text">
-        <p class="name">
-          <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
-        </p>
-        <!--<p class="total_view">3,234 view</p>-->
-      </div>
-      <!--<a class="btn btn-primary" href="{% url 'restaurants:detail' restaurant.pk %}">자세히보기</a>-->
-    </div>
     {% endfor %}
   </div>
-</container>
 {% endblock content %}

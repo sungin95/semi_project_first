@@ -183,5 +183,6 @@ def search(request):
             context = {
                 "search_lists": search_lists,
                 "s": s,
+                'search': search,
             }
             return render(request, "restaurants/search.html", context)

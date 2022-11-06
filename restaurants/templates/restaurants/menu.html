@@ -2,7 +2,7 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'restaurants/css/menu.css' %}">
 {% endblock css %}
 {% block content %}
   <container>
@@ -48,8 +48,12 @@
     <div class="restaurants">
       {% for restaurant in restaurants %}
         <div class="img-text-box">
-          <span id="img-text">{{ restaurant.restaurant_name }}</span>
-          <img src="https://d20aeo683mqd6t.cloudfront.net/ko/articles/title_images/000/039/143/original/IMG_5649%E3%81%AE%E3%82%B3%E3%83%92%E3%82%9A%E3%83%BC.jpg?2019&d=750x400" alt="음식점의 음식 사진">
+          <p id="img-text">{{ restaurant.restaurant_name }}</p>
+          {% if restaurant.image %}
+            <img src="{{ restaurant.image.url }}" alt="음식점의 음식 사진">
+          {% else %}
+            <img src="https://www.dummyimage.com/300X300/000/fff"/>
+          {% endif %}
         </div>
       {% endfor %}
 

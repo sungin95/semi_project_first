@@ -16,15 +16,15 @@ class RestaurantForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["like_users", "user", "hits", "address"]
         labels = {
-            "restaurant_name": "음식점명",
-            "Opening_hours": "영업시간",
-            "menu": "메뉴",
-            "price_avg": "가격대",
-            "parking": "주차",
-            "day_off": "휴일",
-            "category": "카테고리",
-        }
-
+                'restaurant_name': '음식점명',
+                'Opening_hours': '영업시간',
+                'menu': '메뉴',
+                'price_avg': '가격대',
+                'parking': '주차',
+                'day_off': '휴일',
+                'category': '카테고리',
+                'image': '가게 썸네일',
+            }
 
 class RestaurantImageForm(forms.ModelForm):
     class Meta:
