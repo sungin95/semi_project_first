@@ -126,11 +126,11 @@
           <!-- 프로필/맛있다 -->
           <div class="d-flex">
             <div class="rounded-pill" style="background-color:yellow">
-            {% if review.user.image %}
-              <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-            {% else %}
-              <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-            {% endif %}
+              {% if review.user.image %}
+                <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+              {% else %}
+                <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+              {% endif %}
             </div>
             <div class="rounded-pill" style="background-color:yellow">닉네임</div>
             <div class="rounded-pill" style="background-color:yellow">
@@ -144,7 +144,7 @@
               {% endif %}
             </div>
           </div>
-          
+
           <!-- 시간 -->
           <div>
             {% if review.created_string == False %}
@@ -154,7 +154,7 @@
             {% endif %}
           </div>
         </div>
-        
+
         <!-- 리뷰내용 -->
         <div class="review-contents">
           <div class="review-content">{{ review.content }}</div>
@@ -171,6 +171,30 @@
             {% endif %}
           </div>
           <hr>
+          <!-- 리뷰에 댓글 달기 -->
+          <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">답글</button>
+          <div id="write-comment{{ review.pk }}" class="hidden">
+            <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
+              {% csrf_token %}
+              {% bootstrap_form comment_form %}
+              <input type="submit" class='btn btn-dark' value='답글'>
+            </form>
+          </div>
+          <div id="comment-create{{review.pk}}">
+            <div class="text-primary text-opacity-25">
+              .
+            </div>
+          </div>
+          {% for comment in review.comment_set.all %}
+            <div class="rounded-pill" style="background-color:yellow">
+              {% if comment.user.image %}
+                <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+              {% else %}
+                <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+              {% endif %}
+              <p>{{comment.content}}</p>
+            </div>
+          {% endfor %}
         </div>
       {% endfor %}
     </div>
@@ -257,6 +281,54 @@
         map.setCenter(coords);
       }
     });
+  </script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script>
+    const reviewComments = document.querySelectorAll(`#review-comment`)
+    for (const reviewComment of reviewComments) {
+      reviewComment.addEventListener("click", function (event) {
+        const reviewId = event.target.dataset.reviewId;
+        event.preventDefault()
+        const writeComment = document.querySelector(`#write-comment${reviewId}`)
+        writeComment
+          .classList
+          .toggle("hidden")
+      })
+    }
+    const commentForms = document.querySelectorAll("#commentForm")
+    for (const commentForm of commentForms) {
+      commentForm.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const csrftoken = document
+          .querySelector('[name=csrfmiddlewaretoken]')
+          .value;
+        const reviewId = event
+          .target
+          .dataset
+          .reviewId
+          axios({
+            method: "post",
+            url: `/reviews/${reviewId}/comments/`,
+            headers: {
+              'X-CSRFToken': csrftoken
+            },
+            data: new FormData(commentForm)
+          })
+          .then((response) => {
+            const comments = document.querySelector(`#comment-create${reviewId}`)
+            comments.insertAdjacentHTML('beforeend', `
+          <div class="rounded-pill" style="background-color:yellow">
+            {% if comment.user.image %}
+              <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+            {% else %}
+              <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+            {% endif %}
+            <p>${response.data.comment_review_content}</p>
+          </div>`)
+            commentForm.reset()
+          })
+      })
+    }
   </script>
 
 {% endblock js %}
