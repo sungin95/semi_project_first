@@ -39,12 +39,26 @@ def index(request):
 
 
 def detail(request, restaurant_pk):
-    # 기존 SECRET_KEY 대신 사용합니다.
     load_dotenv()
     JSMAPKEY = os.getenv("JSMAPKEY")
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
+    # 메뉴를 - 와 , 기준으로 분리하는 작업
+    aa = restaurant.menu.split(",")
+    bbb = []
+    restaurant_menu = []
+    for a in aa:
+        bbb.append(a.split("-"))
+    for bb in bbb:
+        for b in bb:
+            restaurant_menu.append(b.strip())
+    restaurant_menu_left = []
+    restaurant_menu_right = []
+    for i in range(len(restaurant_menu)):
+        if (i % 2) == 0:
+            restaurant_menu_left.append(restaurant_menu[i])
+        else:
+            restaurant_menu_right.append(restaurant_menu[i])
     reviews = restaurant.review_set.all()
-    # k = Review.objects.order_by("id")
     page = request.GET.get("page", "1")
     paginator = Paginator(reviews, 3)
     page_obj = paginator.get_page(page)
@@ -61,10 +75,11 @@ def detail(request, restaurant_pk):
     context = {
         "restaurant": restaurant,
         "grade": grade,
-        "reviews": reviews,
         "question_list": page_obj,
         "comment_form": comment_form,
         "JSMAPKEY": JSMAPKEY,
+        "restaurant_menu_left": restaurant_menu_left,
+        "restaurant_menu_right": restaurant_menu_right,
     }
     return render(request, "restaurants/detail.html", context)
 
