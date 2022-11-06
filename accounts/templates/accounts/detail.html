@@ -43,6 +43,10 @@
     {% endfor %}
   </table>
   <h2>작성한 댓글</h2>
-
+  {% for user_all_review in user_all_reviews %}
+    <p>
+      {{user_all_review.content}}
+    </p>
+  {% endfor %}
   <button type="button" class="btn btn-outline-dark" onclick="location.href='{% url 'accounts:index' %}' ">돌아가기</button>
 {% endblock content %}

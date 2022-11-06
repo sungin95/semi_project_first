@@ -64,9 +64,12 @@ def logout(request):
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     like_restaurant = user.like_restaurant.all()
+    user_all_reviews = user.review_set.all()
+    print(user_all_reviews)
     context = {
         "user": user,
         "like_restaurants": like_restaurant,
+        "user_all_reviews": user_all_reviews,
     }
     return render(request, "accounts/detail.html", context)
 
