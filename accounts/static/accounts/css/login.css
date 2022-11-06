@@ -1,13 +1,12 @@
 @charset "utf-8";
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
 
-/* 가입을 환영합니다 */
+/* 어서오세요! */
 .title {
     font-family: 'Noto Sans KR', sans-serif;
     margin: 4rem auto 1.5rem;
     width: 60%;
 }
-
 
 /* 폼 폭 조절 */
 .form {
@@ -16,7 +15,6 @@
     width: 60%;
 }
 
-
 /* 폼 간격 조절 + 이름 진하게 */
 .form-label {
     font-weight: 600;
@@ -24,14 +22,8 @@
 }
 
 
-/* placeholder 글자 크기 줄임 */
-.form-control::placeholder {
-    font-size: 0.9rem;
-}
-
-
 /* 제출 버튼 조절 */
-.submit {
+.login {
     background-color: #666666;
     border: none;
     border-radius: 2rem;
@@ -42,6 +34,23 @@
 
 
 /* 제출 버튼 색 변경 */
-.submit:hover {
+.login:hover {
     background-color: #ffa704;
+}
+
+.new {
+    background-color: none;
+    border: 0 #666666;
+    border-radius: 2rem;
+    margin: 1.5rem 0 0 1.7rem;
+    padding: 0.7rem 1rem;
+}
+
+.new:hover {
+    background-color: #adadad;
+    border: none;
+    border-radius: 2rem;
+    color: white;
+    margin-top: 1.5rem;
+    padding: 0.7rem 1rem;
 }

@@ -1,13 +1,22 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/login.css' %}">
+{% endblock css %}
+
 {% block content %}
-  <h1>login</h1>
-  <form action="{% url 'accounts:login' %}" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <div class="d-flex">
-      <button type="submit" class="btn btn-outline-dark">로그인</button>
-      <button type="button" class="btn btn-outline-dark mx-3" onclick="location.href='{% url 'accounts:signup' %}' ">회원가입</button>
-    </div>
-  </form>
+<div class="container">
+  <h2 class="title">어서오세요 :D</h2>
+  <div class="form">
+    <form action="{% url 'accounts:login' %}" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <div class="d-flex">
+        <button type="submit" class="login">로그인</button>
+        <button type="button" class="new" onclick="location.href='{% url 'accounts:signup' %}' ">회원가입</button>
+      </div>
+    </form>
+  </div>
+</div>
 {% endblock content %}

@@ -1,13 +1,19 @@
 {% extends 'base.html' %}
 {% load django_bootstrap5 %}
-{% block content %}
+{% load static %}
+{% block css %}
+<link rel="stylesheet" href="{% static 'accounts/css/signup.css' %}">
+{% endblock css %}
 
+{% block content %}
 <div class="container">
   <h2 class="title">가입을 환영합니다!</h2>
-  <form action="" method="POST">
-    {% csrf_token %}
-    {% bootstrap_form form %}
-    <button type="submit" class="btn btn-outline-dark">제출</button>
-  </form>
+  <div class="form">
+    <form action="" method="POST">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      <button type="submit" class="submit">가입하기</button>
+    </form>
+  </div>
 </div>
 {% endblock content %}
