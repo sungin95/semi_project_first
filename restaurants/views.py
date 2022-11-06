@@ -15,6 +15,8 @@ from django.core.paginator import Paginator
 from reviews.forms import CommentForm
 from django.http import JsonResponse
 from django.forms import modelformset_factory
+from dotenv import load_dotenv
+import os
 
 
 # Create your views here.
@@ -37,6 +39,9 @@ def index(request):
 
 
 def detail(request, restaurant_pk):
+    # 기존 SECRET_KEY 대신 사용합니다.
+    load_dotenv()
+    JSMAPKEY = os.getenv("JSMAPKEY")
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     reviews = restaurant.review_set.all()
     # k = Review.objects.order_by("id")
@@ -59,6 +64,7 @@ def detail(request, restaurant_pk):
         "reviews": reviews,
         "question_list": page_obj,
         "comment_form": comment_form,
+        "JSMAPKEY": JSMAPKEY,
     }
     return render(request, "restaurants/detail.html", context)
 
