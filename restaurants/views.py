@@ -15,6 +15,8 @@ from django.core.paginator import Paginator
 from reviews.forms import CommentForm
 from django.http import JsonResponse
 from django.forms import modelformset_factory
+from dotenv import load_dotenv
+import os
 
 
 # Create your views here.
@@ -37,6 +39,9 @@ def index(request):
 
 
 def detail(request, restaurant_pk):
+    # 기존 SECRET_KEY 대신 사용합니다.
+    load_dotenv()
+    JSMAPKEY = os.getenv("JSMAPKEY")
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     reviews = restaurant.review_set.all()
     # k = Review.objects.order_by("id")
@@ -59,6 +64,7 @@ def detail(request, restaurant_pk):
         "reviews": reviews,
         "question_list": page_obj,
         "comment_form": comment_form,
+        "JSMAPKEY": JSMAPKEY,
     }
     return render(request, "restaurants/detail.html", context)
 
@@ -80,11 +86,13 @@ def create(request):
     )
     if request.method == "POST":
         form = RestaurantForm(request.POST)
+        address = request.POST.get("address")
         formset = ImageFormSet(
             request.POST, request.FILES, queryset=RestaurantImages.objects.none()
         )
         if form.is_valid() and formset.is_valid():
             restaurant = form.save(commit=False)
+            restaurant.address = address
             restaurant.user = request.user
             restaurant.save()
             for forms in formset.cleaned_data:
@@ -116,8 +124,11 @@ def update(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     if request.method == "POST":
         form = RestaurantForm(request.POST, request.FILES, instance=restaurant)
+        address = request.POST.get("address")
         if form.is_valid():
-            form.save()
+            restaurant = form.save(commit=False)
+            restaurant.address = address
+            restaurant.save()
             return redirect("restaurants:detail", restaurant.pk)
     else:
         form = RestaurantForm(instance=restaurant)
