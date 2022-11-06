@@ -100,7 +100,7 @@ def create(request):
         RestaurantImages, form=RestaurantImageForm, extra=5
     )
     if request.method == "POST":
-        form = RestaurantForm(request.POST)
+        form = RestaurantForm(request.POST, request.FILES)
         address = request.POST.get("address")
         formset = ImageFormSet(
             request.POST, request.FILES, queryset=RestaurantImages.objects.none()

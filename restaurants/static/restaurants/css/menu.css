@@ -56,6 +56,7 @@
 
 #img-text {
     color: white;
+    transform: translate(-50%, -50%);
     position: absolute;
     font-size: 30px;
     top: 50%;
