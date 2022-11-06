@@ -2,28 +2,42 @@
 {% load django_bootstrap5 %}
 {% block content %}
   <h1>{{user}}님의 회원정보</h1>
+  <p>{{ user.pk }}
+    {{ user.last_name }}
+    {{ user.first_name }}
+    {{ user.email }}
+  </p>
+
   {% if request.user.pk == user.pk %}
-    <h2>
+    <button>
       <a href="{% url 'accounts:profile' %}">프로필사진 설정</a>
-    </h2>
+    </button>
+    <button>
+      <a href="{% url 'accounts:update' %}">프로필 정보수정</a>
+    </button>
+    <button>
+      <a href="{% url 'accounts:change_password' %}">비밀번호 수정</a>
+    </button>
   {% endif %}
   <h2>북마크한 음식점</h2>
   <table class="table">
     <thead>
       <tr>
-        <th scope="col">restaurant_name</th>
-        <th scope="col">address</th>
-        <th scope="col">menu</th>
+        <th scope="col">음식점명</th>
+        <th scope="col">주소</th>
+        <th scope="col">전화번호</th>
+        <th scope="col">카테고리</th>
       </tr>
     </thead>
     {% for like_restaurant in like_restaurants %}
       <tbody>
         <tr>
           <th scope="row">
-            <a href="{% url 'restaurants:detail' like_restaurant.pk %}">{{ like_restaurant.restaurant_name}}</a>
+            <a href="{% url 'restaurants:detail' like_restaurant.pk %}">{{ like_restaurant.restaurant_name }}</a>
           </th>
-          <td>{{ like_restaurant.address}}</td>
-          <td>{{ like_restaurant.menu}}</td>
+          <td>{{ like_restaurant.address }}</td>
+          <td>{{ like_restaurant.전화번호 }}</td>
+          <td>{{ like_restaurant.category }}</td>
         </tr>
       </tbody>
     {% endfor %}
