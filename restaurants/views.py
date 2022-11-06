@@ -97,7 +97,7 @@ def menu(request):
 @require_http_methods(["GET", "POST"])
 def create(request):
     ImageFormSet = modelformset_factory(
-        RestaurantImages, form=RestaurantImageForm, extra=5
+        RestaurantImages, form=RestaurantImageForm, extra=8
     )
     if request.method == "POST":
         form = RestaurantForm(request.POST, request.FILES)
@@ -198,6 +198,6 @@ def search(request):
             context = {
                 "search_lists": search_lists,
                 "s": s,
-                'search': search,
+                "search": search,
             }
             return render(request, "restaurants/search.html", context)
