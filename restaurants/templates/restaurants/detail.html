@@ -122,6 +122,7 @@
   <div class="row justify-content-between p-3" style="background-color:lightgrey;">
     {% for review in question_list %}
       <div>
+        <hr>
         <!-- 리뷰 상단 -->
         <div class="d-flex justify-content-between p-1 h-auto">
           <!-- 프로필/맛있다 -->
@@ -133,15 +134,15 @@
                 <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
               {% endif %}
             </div>
-            <div class="rounded-pill" style="background-color:yellow">닉네임</div>
-            <div class="rounded-pill" style="background-color:yellow">
+            <div class="">{{ review.user.username }}</div>
+            <div class="">
               <!-- 아래 이모티콘을 채워주세요~ -->
               {% if review.grade == 5 %}
-                <div>555</div>
+                <div>😋<span>맛있어요</span></div>
               {% elif review.grade == 3 %}
-                <div>333</div>
+                <div>🙂<span>괜찮아요</span></div>
               {% elif review.grade == 1 %}
-                <div>111</div>
+                <div>😖<span>별루에요</span></div>
               {% endif %}
             </div>
           </div>
@@ -171,31 +172,33 @@
               <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
             {% endif %}
           </div>
-          <hr>
           <!-- 리뷰에 댓글 달기 -->
-          <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">답글</button>
-          <div id="write-comment{{ review.pk }}" class="hidden">
-            <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
-              {% csrf_token %}
-              {% bootstrap_form comment_form %}
-              <input type="submit" class='btn btn-dark' value='답글'>
-            </form>
-          </div>
-          <div id="comment-create{{review.pk}}">
-            <div class="text-primary text-opacity-25">
-              .
+          <div class="rounded-5" style="background:white">
+            <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">댓글달기</button>
+            <div id="write-comment{{ review.pk }}" class="hidden">
+              <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                <input type="submit" class='btn btn-dark' value='답글'>
+              </form>
             </div>
-          </div>
-          {% for comment in review.comment_set.all %}
-            <div class="rounded-pill" style="background-color:yellow">
-              {% if comment.user.image %}
-                <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-              {% else %}
-                <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-              {% endif %}
-              <p>{{comment.content}}</p>
+            <div id="comment-create{{review.pk}}">
+              <div class="text-primary text-opacity-25">
+                .
+              </div>
             </div>
-          {% endfor %}
+            {% for comment in review.comment_set.all %}
+              <div>
+                {% if comment.user.image %}
+                  <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                {% else %}
+                  <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                {% endif %}
+                <span>{{comment.user}}</span>
+                <span>{{comment.content}}</span>
+              </div>
+            {% endfor %}
+          </div>
         </div>
       {% endfor %}
     </div>
