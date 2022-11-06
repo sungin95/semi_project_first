@@ -36,7 +36,13 @@ class Restaurants(models.Model):
     )
     hits = models.PositiveIntegerField(default=0)
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
-    
+    image = ProcessedImageField(
+        blank = True,
+        processors = [Thumbnail(300, 300)],
+        format = 'JPEG',
+        options = {'quality': 90},
+    )
+
     @property
     def click(self):
         self.hits += 1

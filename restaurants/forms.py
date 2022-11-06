@@ -22,6 +22,7 @@ class RestaurantForm(forms.ModelForm):
                 'parking': '주차',
                 'day_off': '휴일',
                 'category': '카테고리',
+                'image': '가게 썸네일',
             }
 
 class RestaurantImageForm(forms.ModelForm): 
