@@ -243,7 +243,7 @@
   <script src="{% static 'restaurants/js/detail.js' %}"></script>
 
   <!-- 지도 -->
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=aea428bdeff5956d8b97e187cebe92b9&libraries=services"></script>
+  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ JSMAPKEY }}&libraries=services"></script>
   <script>
     var mapContainer = document.getElementById('map'), // 지도를 표시할 div
       mapOption = {

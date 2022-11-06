@@ -4,27 +4,29 @@ from phonenumber_field.formfields import PhoneNumberField
 from .models import RestaurantImages
 from django.utils.translation import gettext_lazy as _
 
+
 class RestaurantForm(forms.ModelForm):
     전화번호 = PhoneNumberField(
         region="KR",
         required=False,
     )
+
     class Meta:
         model = Restaurants
-        fields = '__all__'
-        exclude = ['like_users','user','hits',]
+        fields = "__all__"
+        exclude = ["like_users", "user", "hits", "address"]
         labels = {
-                'restaurant_name': '음식점명',
-                'address': '주소',
-                'Opening_hours': '영업시간',
-                'menu': '메뉴',
-                'price_avg': '가격대',
-                'parking': '주차',
-                'day_off': '휴일',
-                'category': '카테고리',
-            }
+            "restaurant_name": "음식점명",
+            "Opening_hours": "영업시간",
+            "menu": "메뉴",
+            "price_avg": "가격대",
+            "parking": "주차",
+            "day_off": "휴일",
+            "category": "카테고리",
+        }
 
-class RestaurantImageForm(forms.ModelForm): 
+
+class RestaurantImageForm(forms.ModelForm):
     class Meta:
         model = RestaurantImages
         fields = ("image",)
