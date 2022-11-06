@@ -286,6 +286,7 @@
       }
     });
   </script>
+
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
     const reviewComments = document.querySelectorAll(`#review-comment`)
@@ -321,13 +322,13 @@
           .then((response) => {
             const comments = document.querySelector(`#comment-create${reviewId}`)
             comments.insertAdjacentHTML('beforeend', `
-          <div class="rounded-pill" style="background-color:yellow">
+          <div>
             {% if comment.user.image %}
               <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
             {% else %}
               <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
             {% endif %}
-            <p>${response.data.comment_review_content}</p>
+            <span>${response.data.comment_review_content}</span>
           </div>`)
             commentForm.reset()
           })

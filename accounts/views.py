@@ -64,7 +64,6 @@ def logout(request):
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     like_restaurant = user.like_restaurant.all()
-
     context = {
         "user": user,
         "like_restaurants": like_restaurant,

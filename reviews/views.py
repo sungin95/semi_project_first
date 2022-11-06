@@ -127,7 +127,9 @@ def comments(request, review_pk):
             comment_review.review = review
             comment_review.user = request.user
             comment_review.save()
-    context = {"comment_review_content": comment_review.content}
+    context = {
+        "comment_review_content": comment_review.content,
+    }
     return JsonResponse(context)
 
 
