@@ -56,46 +56,47 @@
     </div>
 
     <!-- 지도 -->
-
-    <div class="col-7">
-      <!-- 음식점 정보테이블 -->
-      <table>
-        <tr>
-          <th>주소</th>
-          <td>{{ restaurant.address }}</td>
-        </tr>
-        <tr>
-          <th>전화번호</th>
-          <td>{{ restaurant.restaurant_phone_number.as_national }}</td>
-        </tr>
-        <tr>
-          <th>영업시간</th>
-          <td>{{ restaurant.Opening_hours }}</td>
-        </tr>
-        <tr>
-          <th>메뉴</th>
-          <td>{{ restaurant.menu }}</td>
-        </tr>
-        <tr>
-          <th>가격대</th>
-          <td>{{ restaurant.price_avg }}</td>
-        </tr>
-        <tr>
-          <th>주차</th>
-          <td>{{ restaurant.parking }}</td>
-        </tr>
-        <tr>
-          <th>휴일</th>
-          <td>{{ restaurant.day_off }}</td>
-        </tr>
-        <tr>
-          <th>카테고리</th>
-          <td>{{ restaurant.category }}</td>
-        </tr>
-      </table>
-    </div>
-    <div class="col-5 p-0">
-      <div id="map" style="height:300px;"></div>
+    <div class="row">
+      <div class="col-7">
+        <!-- 음식점 정보테이블 -->
+        <table>
+          <tr>
+            <th>주소</th>
+            <td>{{ restaurant.address }}</td>
+          </tr>
+          <tr>
+            <th>전화번호</th>
+            <td>{{ restaurant.restaurant_phone_number.as_national }}</td>
+          </tr>
+          <tr>
+            <th>영업시간</th>
+            <td>{{ restaurant.Opening_hours }}</td>
+          </tr>
+          <tr>
+            <th>메뉴</th>
+            <td>{{ restaurant.menu }}</td>
+          </tr>
+          <tr>
+            <th>가격대</th>
+            <td>{{ restaurant.price_avg }}</td>
+          </tr>
+          <tr>
+            <th>주차</th>
+            <td>{{ restaurant.parking }}</td>
+          </tr>
+          <tr>
+            <th>휴일</th>
+            <td>{{ restaurant.day_off }}</td>
+          </tr>
+          <tr>
+            <th>카테고리</th>
+            <td>{{ restaurant.category }}</td>
+          </tr>
+        </table>
+      </div>
+      <div class="col-5 p-0">
+        <div id="map" style="height:300px;"></div>
+      </div>
     </div>
   </div>
 
