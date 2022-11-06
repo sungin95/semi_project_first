@@ -49,7 +49,6 @@
 
   <!-- 카테고리 -->
   <p class="cate_p">오늘 먹을 음식은</p>
-  <h3>카테고리</h3>
   <div class="food_cate">
     <form action="{% url 'restaurants:menu' %}">
       <button type="submit" class="a_menu">
@@ -115,10 +114,10 @@
 
     function temp(num) {
       var template = [];
-      for (let i = 0; i < 4; i++) {
+      for (let i = 0; i < 5; i++) {
         var a = foodsList[(i + num) % foodsList.length];
         var url = "{% static 'restaurants/img/change' %}".replace("change", a);
-        template.push(`<div class="col text-center"><img src="${url}" alt="" class="img-fluid rounded-pill"></div>`);
+        template.push(`<div class="col text-center"><img src="${url}" alt="" class="img-fluid"></div>`);
         row.insertAdjacentHTML("beforeend", template[i]);
       }
     }

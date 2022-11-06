@@ -1,0 +1,14 @@
+@charset "utf-8";
+
+.title {
+    margin: 4rem 0 2rem;
+}
+
+.my_profile {
+    color: black;
+    text-decoration: none;
+}
+
+.my_profile:hover {
+    color: #f78c00;
+}
