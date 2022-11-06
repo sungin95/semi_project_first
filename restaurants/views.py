@@ -80,11 +80,13 @@ def create(request):
     )
     if request.method == "POST":
         form = RestaurantForm(request.POST)
+        address = request.POST.get("address")
         formset = ImageFormSet(
             request.POST, request.FILES, queryset=RestaurantImages.objects.none()
         )
         if form.is_valid() and formset.is_valid():
             restaurant = form.save(commit=False)
+            restaurant.address = address
             restaurant.user = request.user
             restaurant.save()
             for forms in formset.cleaned_data:
@@ -116,8 +118,11 @@ def update(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
     if request.method == "POST":
         form = RestaurantForm(request.POST, request.FILES, instance=restaurant)
+        address = request.POST.get("address")
         if form.is_valid():
-            form.save()
+            restaurant = form.save(commit=False)
+            restaurant.address = address
+            restaurant.save()
             return redirect("restaurants:detail", restaurant.pk)
     else:
         form = RestaurantForm(instance=restaurant)
