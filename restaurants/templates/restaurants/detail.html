@@ -123,70 +123,86 @@
       </div>
     </div>
   </div>
-
-  <!-- 메뉴사진 -->
-  <div class="slide-wrapper">
-    <ul class="slides">
-      {% for img in restaurant.restaurant.all %}
-        <li><img src="{{ img.image.url }}" alt="" class="slide-img"></li>
-      {% endfor %}
-    </ul>
-  </div>
-  <!-- 메뉴 컨트롤러 -->
-  <p class="controls">
-    <span class="prev"><img src="https://cdn-icons-png.flaticon.com/512/151/151846.png" alt="이전"></span>
-    <span class="next"><img src="https://cdn-icons-png.flaticon.com/512/151/151858.png" alt="다음"></span>
-  </p>
-  <hr class="separator">
-  <!-- 리뷰창 -->
-  <!-- 개인 리뷰 -->
-  <div class="row justify-content-between p-3" style="background-color:lightgrey;">
-    {% for review in question_list %}
-      <div>
-        <hr>
-        <!-- 리뷰 상단 -->
-        <div class="d-flex justify-content-between p-1 h-auto">
-          <!-- 프로필/맛있다 -->
-          <div class="d-flex">
-            <div class="rounded-pill" style="background-color:yellow">
-              {% if review.user.image %}
-                <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-              {% else %}
-                <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-              {% endif %}
-            </div>
-            <div class="">{{ review.user.username }}</div>
-            <div class="">
-              <!-- 아래 이모티콘을 채워주세요~ -->
-              {% if review.grade == 5 %}
-                <div>😋<span>맛있어요</span></div>
-              {% elif review.grade == 3 %}
-                <div>🙂<span>괜찮아요</span></div>
-              {% elif review.grade == 1 %}
-                <div>😖<span>별루에요</span></div>
-              {% endif %}
-            </div>
-          </div>
-
-          <!-- 시간 -->
-          <div>
-            {% if review.created_string == False %}
-              <td>{{ review.created_string|date:'m월 d일' }}</td>
-            {% else %}
-              <td>{{ review.created_string }}</td>
-            {% endif %}
-          </div>
+<!-- 메뉴사진 -->
+<div class="slide-wrapper">
+  <ul class="slides">
+    {% for img in restaurant.restaurant.all %}
+    <li><img src="{{ img.image.url }}" alt="" class="slide-img"></li>
+    {% endfor %}
+  </ul>
+</div>
+<!-- 메뉴 컨트롤러 -->
+<p class="controls">
+  <span class="prev"><img src="https://cdn-icons-png.flaticon.com/512/151/151846.png" alt="이전"></span>
+  <span class="next"><img src="https://cdn-icons-png.flaticon.com/512/151/151858.png" alt="다음"></span>
+</p>
+<hr class="separator">
+<!-- 리뷰창 -->
+<!-- 개인 리뷰 -->
+<div class="comments justify-content-between p-3">
+  {% for review in question_list %}
+  <div class="a-comment">
+    <!-- 리뷰 상단 -->
+    <div class="reviews-header">
+      <!-- 프로필/맛있다 -->
+      <div class="d-flex">
+        <div class="rounded-pill" style="background-color:yellow">
+          {% if review.user.image %}
+          <img src="{{ review.user.image.url }}" alt="프로필 사진" style="width: 50px; height: 50px; border-radius: 500px">
+          {% else %}
+          <img src="https://www.dummyimage.com/600x400/000/fff" alt="후기 이미지"
+            style="width: 50px; height: 50px; border-radius: 500px">
+          {% endif %}
+        </div>
+        <div class="user-name">{{ review.user.username }}</div>
+        <div class="rate">
+          <!-- 아래 이모티콘을 채워주세요~ -->
+          {% if review.grade == 5 %}
+          <div>😋<span> 맛있어요</span></div>
+          {% elif review.grade == 3 %}
+          <div>🙂<span> 괜찮아요</span></div>
+          {% elif review.grade == 1 %}
+          <div>😖<span> 별루에요</span></div>
+          {% endif %}
         </div>
 
-        <!-- 리뷰내용 -->
-        <div class="review-contents">
-          <div class="review-content">{{ review.content }}</div>
-          <div class="d-flex">
-            {% for review_img in review.image.all %}
-              <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
-              {%endfor%}
-            </div>
-          </div>
+      <!-- 시간 -->
+      <div class="time">
+        {% if review.created_string == False %}
+        <td>{{ review.created_string|date:'m월 d일' }}</td>
+        {% else %}
+        <td>{{ review.created_string }}</td>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- 리뷰내용 -->
+    <div class="review-contents">
+      <div class="review-content">{{ review.content }}</div>
+      <div class="d-flex">
+        {% for review_img in review.image.all %}
+        <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
+        {%endfor%}
+      </div>
+    </div>
+    <div class="text-end">
+      {% if review.user.pk == request.user.pk %}
+      <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
+      <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
+      {% endif %}
+    </div>
+    <!-- 리뷰에 댓글 달기 -->
+    <div class="re-comment">
+      <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">댓글</button>
+      <div id="write-comment{{ review.pk }}" class="hidden">
+        <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
+          {% csrf_token %}
+          {% bootstrap_form comment_form %}
+          <input type="submit" class='btn' value='입력'>
+        </form>
+      </div>
+      <div id="comment-create{{review.pk}}">
+        <div class="text-primary text-opacity-25">
           <div class="d-flex justify-content-between">
             <div>
               <!-- 로그인된 유저만 보이기 -->
@@ -214,19 +230,6 @@
               {% endif %}
             </div>
           </div>
-          <!-- 리뷰에 댓글 달기 -->
-          <div class="rounded-5" style="background:white">
-            <button id="" type="button" class="btn btn-primary review-comment" data-review-id="{{ review.pk }}">댓글달기</button>
-            <div id="" class="hidden write-comment{{ review.pk }}">
-              <form class="commentForm" method="POST" data-review-id="{{ review.pk }}">
-                {% csrf_token %}
-                {% bootstrap_form comment_form %}
-                <input type="submit" class='btn btn-dark' value='답글'>
-              </form>
-            </div>
-            <div class="comment-create{{review.pk}}">
-              <div class="text-primary text-opacity-25">
-                .
               </div>
             </div>
             {% for comment in review.comment_set.all %}
