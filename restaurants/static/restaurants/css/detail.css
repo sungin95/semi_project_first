@@ -2,14 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
 
 .r_info {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 .r_header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.7rem;
-    padding-left: 0;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+  padding-left: 0;
 }
 
 
@@ -101,22 +101,23 @@
 
 .separator {
     margin: 3rem 0;
+
 }
 
 table {
-    margin-bottom: 5rem;
+  margin-bottom: 5rem;
 }
 
 table th {
-    color: #666666;
-    font-weight: 200;
-    width: 8rem;
-    height: 2rem;
+  color: #666666;
+  font-weight: 200;
+  width: 8rem;
+  height: 2rem;
 }
 
 /* 캐러셀 */
 li {
-    list-style: none;
+  list-style: none;
 }
 
 .slide-wrapper {
@@ -128,17 +129,17 @@ li {
 }
 
 .slide-img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .slides {
-    padding: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: left 0.5s ease-out;
-    display: flex;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: left 0.5s ease-out;
+  display: flex;
 }
 
 .slides li:not(:last-child) {
@@ -157,11 +158,11 @@ li {
 }
 
 .controls span.prev {
-    right: calc(100% + 50px);
+  right: calc(100% + 50px);
 }
 
 .controls span.next {
-    right: calc(100% + 50px);
+  right: calc(100% + 50px);
 }
 
 .controls img {
@@ -170,19 +171,20 @@ li {
 }
 
 .slides li {
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  height: 300px;
 }
 
 .review-contents {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 200px;
-    padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  padding-top: 10px;
 }
 
 /* 화면 숨김 */
 .hidden {
-    display: none;
+  display: none;
 }
+

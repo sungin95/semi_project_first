@@ -1,5 +1,5 @@
 from urllib import request
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Review, Comment, ReviewImages
 from .forms import CommentForm, ReviewForm, ReviewImageForm
 from django.contrib.auth.decorators import login_required
@@ -103,7 +103,8 @@ def delete(request, review_pk, restaurant_pk):
 
 
 @login_required
-def like(request, review_pk):
+def like(request, review_pk, restaurant_pk):
+    restaurant = Restaurants.objects.get(pk=restaurant_pk)
     review = Review.objects.get(pk=review_pk)
     if review.like.filter(pk=request.user.pk).exists():
         review.like.remove(request.user)
@@ -115,9 +116,10 @@ def like(request, review_pk):
         "is_like": is_like,
         "liketCount": review.like.count(),
     }
-    return redirect("reviews.detail", review.pk)
+    return JsonResponse(context)
 
 
+@login_required
 def comments(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
@@ -129,6 +131,8 @@ def comments(request, review_pk):
             comment_review.save()
     context = {
         "comment_review_content": comment_review.content,
+        "comment_review_user": comment_review.user.username,
+        "comment_review_pk": comment_review.pk,
     }
     return JsonResponse(context)
 
@@ -144,7 +148,7 @@ def comment_update(request, review_pk, comment_pk):
     if request.method == "POST":
         update_comment = request.POST.get("update_comment")
         comment.content = update_comment
-        comment.review = review
+        # comment.review = review
         comment.save()
     return redirect("restaurants:detail", review.pk)
 
@@ -156,4 +160,5 @@ def comment_delete(request, review_pk, comment_pk):
         return redirect("restaurants:detail", review_pk)
     if request.method == "POST":
         comment.delete()
-    return redirect("restaurants:detail", review_pk)
+    context = {}
+    return JsonResponse(context)
