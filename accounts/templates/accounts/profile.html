@@ -2,26 +2,21 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
+  <link rel="stylesheet" href="{% static 'accounts/css/profile.css' %}">
 {% endblock css %}
 
 {% block content %}
-<h2 class="title">프로필 사진</h2>
-<div class="profile">
-  <img src="https://cdn-icons-png.flaticon.com/512/754/754989.png" alt="접시 아이콘">
-  <div class="form">
-    <form action="" method="POST" enctype="multipart/form-data">
-      {% csrf_token %}
-      <div>
+  <h2 class="title">프로필 사진</h2>
+  <div class="profile">
+    <img src="https://cdn-icons-png.flaticon.com/512/754/754989.png" alt="접시 아이콘">
+    <div class="form">
+      <form action="" method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
         {{ form.image }}
-      </div>
-    </form>
-    <img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" alt="사진 추가 아이콘" class="upload_icon">
+      </form>
+      <img src="https://cdn-icons-png.flaticon.com/512/3524/3524388.png" alt="사진 추가 아이콘" class="upload_icon">
 
-    <!--<input type="submit" value="제출" />
-    <button type="button" class="btn btn-outline-dark"
-      onclick="location.href='{% url 'accounts:index' %}' ">돌아가기</button>
-    -->
+      <!--<input type="submit" value="제출" /> <button type="button" class="btn btn-outline-dark" onclick="location.href='{% url 'accounts:index' %}' ">돌아가기</button> -->
+    </div>
   </div>
-</div>
 {% endblock content %}

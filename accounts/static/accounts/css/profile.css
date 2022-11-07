@@ -1,13 +1,12 @@
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
 
 /* 프로필 사진 */
 .title {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     margin: 4rem auto 2rem;
     width: 60%;
 }
-
 
 /* test */
 .profile {
@@ -18,25 +17,32 @@
     width: 60%;
 }
 
-
 /* 폼 간격 조절 */
 .form {
-    align-items: center;
-    justify-content: center;
-    margin: 9rem auto;
     position: absolute;
+    top: 50%;
+    left: 50%;
     width: 60%;
+    transform: translate(-50%, -50%);
 }
 
 #id_image {
+    z-index: 5;
     border-radius: 20rem;
     height: 10rem;
-    opacity: 100;
-    position: absolute;
     width: 10rem;
+    transform: translate(-50%, -40%);
+    opacity: 0;
+    top: 53%;
+    left: 50%;
+    position: absolute;
     background-color: red;
 }
 
 .upload_icon {
     width: 5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -40%);
 }
