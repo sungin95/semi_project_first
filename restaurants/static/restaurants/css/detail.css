@@ -99,6 +99,10 @@
     margin-left: 0.2rem;
 }
 
+.like-review input {
+    padding: 0.5rem;
+}
+
 .separator {
     margin: 3rem 0;
 
@@ -232,15 +236,59 @@ li {
 }
 
 .re-comment input {
-    background-color: #666666;
+    background-color: #f2f2f2;
     border: none;
     border-radius: 2rem;
-    color: white;
-    padding: 0.7rem 1rem;
+    color: black;
+    font-size: 0.9rem;
+    margin: 0.5rem;
+    padding: 0.3rem 0.5rem;
 }
 
 .re-comment input:hover {
-    background-color: #ffa704;
+    background-color: #ffc861;
+}
+
+.text-end {
+    margin-right: 1rem;
+}
+
+.text-end a {
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.text-end a.link-secondary {
+    color: #9a9a9a;
+    margin-right: 1rem;
+}
+
+.text-end a.link-danger {
+    filter: opacity(0.6) drop-shadow(0 0 0 #fffb00);
+}
+
+.text-end a.link-danger:hover {
+    filter: opacity(0.6) drop-shadow(0 0 0 #fffb00);
+}
+
+.user-c-name {
+    font-weight: 600;
+}
+
+.comment-delete button {
+    background-color: transparent;
+    border: none;
+    color: #ffa704;
+    font-size: 0.9rem;
+    margin-right: -0.9rem;
+}
+
+.comment-delete button:hover {
+    background-color: transparent;
+    border: none;
+    color: #ffa704;
+    font-size: 0.9rem;
+    margin-right: -0.9rem;
 }
 
 /* 화면 숨김 */
