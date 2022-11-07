@@ -2,7 +2,6 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-
   <link rel="stylesheet" href="{% static 'reviews/css/style_create.css' %}">
 {% endblock css %}
 {% block content %}
@@ -14,7 +13,7 @@
         </span>에 대해 어떻게 생각하세요?
       </p>
     </div>
-    <form action="" method="POST" enctype="multipart/form-data">
+    <form class="form-form" action="" method="POST" enctype="multipart/form-data">
       {% csrf_token %}
       <!--{% bootstrap_form review_form %}-->
       <div class="review_content">{{review_form.title}}</div>

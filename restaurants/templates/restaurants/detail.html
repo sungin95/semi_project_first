@@ -19,6 +19,39 @@
         <img class="m-1" src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
         <span>{{ restaurant.hits }}</span>
         <div class="d-none">{{ restaurant.click }}</div>
+        <!-- 로그인된 유저만 보이기 -->
+        {% if request.user.is_authenticated %}
+          <!-- 리뷰쓰기 버튼 -->
+          <div id="review-create-btn">
+            <a class="link-secondary" href="{% url 'reviews:create' restaurant.pk %}">
+              <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘">
+              <span class="link-secondary">리뷰작성</span>
+            </a>
+          </div>
+          <!-- 북마크 -->
+          <div class="bookmark">
+            {% if request.user in restaurant.like_users.all %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill"></i>
+            {% else %}
+              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star"></i>
+            {% endif %}
+            <span class="m-1" id="like-count">{{ restaurant.like_users.count }}</span>
+            <!-- 가게정보수정 -->
+            {% if request.user.pk == restaurant.user.pk %}
+              <a type="submit" class="link-dark m-2" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">정보수정</a>
+            {% endif %}
+          </div>
+          <!-- 로그인 안했을 때 -->
+        {% else %}
+          <div class="bookmark">
+            <span id="like-count">{{ restaurant.like_users.count }}</span>
+            {% if request.user in restaurant.like_users.all %}
+              <iclass="bi bi-star-fill"></iclass=>
+            {% else %}
+              <iclass="bi bi-star"></i>
+            {% endif %}
+          {% endif %}
+        </div>
       </div>
       <p class="division">┃</p>
 

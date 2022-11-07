@@ -9,12 +9,12 @@
   <h5>검색어 :
     {{ search }}</h5>
     최근 검색어 : {% for h in s %}
-    <span style="background-color: #ffeb7c; font: black"  class="badge">#{{ h.keyword }}</span>
+    <span style="background-color: #ffeb7c; color: black;"  class="badge">#{{ h.keyword }}</span>
   {% endfor %}
 </div>
-  <div class="row row-cols-2 row-cols-lg-3 g-5">
+  <div class="container">
     {% for restaurant in search_lists %}
-      <div class="col a_restaurant">
+      <div class="a_restaurant">
         <div class="direction">
           <img src="https://cdn-icons-png.flaticon.com/512/4519/4519622.png" alt="위치 아이콘">
           <p>{{ restaurant.address }}</p>
@@ -28,9 +28,24 @@
         </div>
         <!-- 실제 해시로 변경 -->
         <div class="hash">
-          <p>#양식</p>
-          <p>#사람들이_많이_찾는</p>
-          <p>#패스트_푸드</p>
+          <form action="{% url 'restaurants:menu' %}">
+            <button type="submit" class="a_menu">
+              <p>#{{ restaurant.category }}</p>
+              <input type="text" value="{{ restaurant.category }}" class="category-value" name="category">
+            </button>
+          </form>
+          <form action="{% url 'restaurants:search' %}">
+            <button type="submit" class="a_menu">
+              <p>#{{ restaurant.price_avg }}</p>
+              <input type="search" value="{{ restaurant.price_avg }}" name="search" aria-label="Search" id="search" class="category-value"/>
+            </button>
+          </form>
+          <form action="{% url 'restaurants:search' %}">
+            <button type="submit" class="a_menu">
+              <p>#{{ restaurant.parking }}</p>
+              <input type="search" value="{{ restaurant.parking }}" name="search" aria-label="Search" id="search" class="category-value"/>
+            </button>
+          </form>
         </div>
         <div class="info_text">
           <p class="name">
