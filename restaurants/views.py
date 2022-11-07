@@ -132,7 +132,6 @@ def create(request):
 @require_http_methods(["GET", "POST"])
 def update(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
-    restaurantImages = restaurant.restaurant.all()
     ImageFormSet = modelformset_factory(
         RestaurantImages, form=RestaurantImageForm, extra=8
     )
@@ -171,6 +170,14 @@ def update(request, restaurant_pk):
         "address_": address_,
     }
     return render(request, "restaurants/forms.html", context)
+
+
+def image_delete(request, restaurant_pk):
+    restaurant = Restaurants.objects.get(pk=restaurant_pk)
+    images = restaurant.restaurant.all()
+    for image in images:
+        image.delete()
+    return redirect("restaurants:update", restaurant.pk)
 
 
 def delete(request, restaurant_pk):
