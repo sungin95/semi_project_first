@@ -2,24 +2,23 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/detail.css' %}">
+<link rel="stylesheet" href="{% static 'restaurants/css/detail.css' %}">
 {% endblock css %}
 
 {% block content %}
-  <!-- 음식점 정보 -->
-  <div class="row r_info">
-    <!-- 음식점 정보 헤더 -->
-    <div class="r_header">
-      <h1>{{ restaurant.restaurant_name }}
-        {{ grade }}
-      </h1>
-      <div class="detailed_info">
-        <!-- 조회수 -->
-        <div class="people_views">
-          <img class="m-1" src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
-          <span>{{ restaurant.hits }}</span>
-          <div class="d-none">{{ restaurant.click }}</div>
-        </div>
+<!-- 음식점 정보 -->
+<div class="row r_info">
+  <!-- 음식점 정보 헤더 -->
+  <div class="r_header">
+    <h2>{{ restaurant.restaurant_name }}
+      <span class="grade">{{ grade }}</span>
+    </h2>
+    <div class="detailed_info">
+      <!-- 조회수 -->
+      <div class="people_views">
+        <img class="m-1" src="https://cdn-icons-png.flaticon.com/512/159/159604.png" alt="조회수 아이콘">
+        <span>{{ restaurant.hits }}</span>
+        <div class="d-none">{{ restaurant.click }}</div>
         <!-- 로그인된 유저만 보이기 -->
         {% if request.user.is_authenticated %}
           <!-- 리뷰쓰기 버튼 -->
@@ -54,291 +53,336 @@
           {% endif %}
         </div>
       </div>
-    </div>
+      <p class="division">┃</p>
 
-    <!-- 지도 -->
-    <div class="row">
-      <div class="col-7">
-        <!-- 음식점 정보테이블 -->
-        <table>
-          <tr>
-            <th>주소</th>
-            <td>{{ restaurant.address }}</td>
-          </tr>
-          <tr>
-            <th>전화번호</th>
-            <td>{{ restaurant.전화번호.as_national }}</td>
-          </tr>
-          <tr>
-            <th>영업시간</th>
-            <td>{{ restaurant.Opening_hours }}</td>
-          </tr>
-          <tr>
-            <th>가격대</th>
-            <td>{{ restaurant.price_avg }}</td>
-          </tr>
-          <tr>
-            <th>주차</th>
-            <td>{{ restaurant.parking }}</td>
-          </tr>
-          <tr>
-            <th>휴일</th>
-            <td>{{ restaurant.day_off }}</td>
-          </tr>
-          <tr>
-            <th>카테고리</th>
-            <td>{{ restaurant.category }}</td>
-          </tr>
-          <tr>
-            <th>메뉴</th>
-            <td>
-              <div class="d-flex justify-content-between">
-                <div class="">
-                  {% for restaurant_menu_left_ in restaurant_menu_left %}
-                    <p>{{ restaurant_menu_left_ }}</p>
-                  {% endfor %}
-                </div>
-                <div class="">
-                  {% for restaurant_menu_right_ in restaurant_menu_right %}
-                    <p>{{ restaurant_menu_right_ }}</p>
-                  {% endfor %}
-                </div>
-              </div>
-            </td>
-          </tr>
-        </table>
+      <!-- 로그인된 유저만 보이기 -->
+      {% if request.user.is_authenticated %}
+      <!-- 리뷰쓰기 버튼 -->
+      <div class="review_create">
+        <a href="{% url 'reviews:create' restaurant.pk %}">
+          <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="리뷰 아이콘">
+          <span class="review_creation">리뷰작성</span>
+        </a>
       </div>
-      <div class="col-5 p-0">
-        <div id="map" style="height:300px;"></div>
+      <p class="division">┃</p>
+
+      <!-- 북마크 -->
+      <div class="bookmark">
+        {% if request.user in restaurant.like_users.all %}
+        <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill"></i>
+        {% else %}
+        <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star"></i>
+        {% endif %}
+        <span class="like_count">{{ restaurant.like_users.count }}</span>
       </div>
-    </div>
-  </div>
+      <p class="division">┃</p>
 
-  <hr>
 
-  <!-- 메뉴사진 -->
-  <div class="slide-wrapper">
-    <ul class="slides">
-      {% for img in restaurant.restaurant.all %}
-        <li><img src="{{ img.image.url }}" alt="" class="slide-img"></li>
-      {% endfor %}
-    </ul>
-  </div>
-  <!-- 메뉴 컨트롤러 -->
-  <p class="controls">
-    <span class="prev">prev</span>
-    <span class="next">next</span>
-  </p>
-  <hr>
-  <!-- 리뷰창 -->
-  <!-- 개인 리뷰 -->
-  <div class="row justify-content-between p-3" style="background-color:lightgrey;">
-    {% for review in question_list %}
-      <div>
-        <hr>
-        <!-- 리뷰 상단 -->
-        <div class="d-flex justify-content-between p-1 h-auto">
-          <!-- 프로필/맛있다 -->
-          <div class="d-flex">
-            <div class="rounded-pill" style="background-color:yellow">
-              {% if review.user.image %}
-                <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-              {% else %}
-                <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-              {% endif %}
-            </div>
-            <div class="">{{ review.user.username }}</div>
-            <div class="">
-              <!-- 아래 이모티콘을 채워주세요~ -->
-              {% if review.grade == 5 %}
-                <div>😋<span>맛있어요</span></div>
-              {% elif review.grade == 3 %}
-                <div>🙂<span>괜찮아요</span></div>
-              {% elif review.grade == 1 %}
-                <div>😖<span>별루에요</span></div>
-              {% endif %}
-            </div>
-          </div>
+      <!-- 가게정보수정 -->
+      <div class="correction">
+        {% if request.user.pk == restaurant.user.pk %}
+        <img src="https://cdn-icons-png.flaticon.com/512/5258/5258991.png" alt="정보 수정 아이콘">
+        <a type="submit" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">정보수정</a>
+        {% endif %}
+      </div>
 
-          <!-- 시간 -->
-          <div>
-            {% if review.created_string == False %}
-              <td>{{ review.created_string|date:'m월 d일' }}</td>
-            {% else %}
-              <td>{{ review.created_string }}</td>
-            {% endif %}
-          </div>
-        </div>
-
-        <!-- 리뷰내용 -->
-        <div class="review-contents">
-          <div class="review-content">{{ review.content }}</div>
-          <div class="d-flex">
-            {% for review_img in review.image.all %}
-              <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
-              {%endfor%}
-            </div>
-          </div>
-          <div class="text-end">
-            {% if review.user.pk == request.user.pk %}
-              <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
-              <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
-            {% endif %}
-          </div>
-          <!-- 리뷰에 댓글 달기 -->
-          <div class="rounded-5" style="background:white">
-            <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">댓글달기</button>
-            <div id="write-comment{{ review.pk }}" class="hidden">
-              <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
-                {% csrf_token %}
-                {% bootstrap_form comment_form %}
-                <input type="submit" class='btn btn-dark' value='답글'>
-              </form>
-            </div>
-            <div id="comment-create{{review.pk}}">
-              <div class="text-primary text-opacity-25">
-                .
-              </div>
-            </div>
-            {% for comment in review.comment_set.all %}
-              <div>
-                {% if comment.user.image %}
-                  <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-                {% else %}
-                  <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-                {% endif %}
-                <span>{{comment.user}}</span>
-                <span>{{comment.content}}</span>
-              </div>
-            {% endfor %}
-          </div>
-        </div>
-        {% empty %}
-        <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
-          <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
-        </p>
-      {% endfor %}
-    </div>
-  </div>
-
-  <!-- 페이징처리 시작 -->
-  <ul class="pagination justify-content-center">
-    <!-- 이전페이지 -->
-    {% if question_list.has_previous %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
-      </li>
-    {% else %}
-      <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
-      </li>
-    {% endif %}
-    <!-- 페이지리스트 -->
-    {% for page_number in question_list.paginator.page_range %}
-      {% if page_number == question_list.number %}
-        <li class="page-item active" aria-current="page">
-          <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-        </li>
+      <!-- 로그인 안했을 때 -->
       {% else %}
-        <li class="page-item">
-          <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
-        </li>
-      {% endif %}
+      <div class="bookmark">
+        <span id="like-count">{{ restaurant.like_users.count }}</span>
+        {% if request.user in restaurant.like_users.all %}
+        <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill" disabled="disabled"></i>
+        {% else %}
+        <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star" disabled="disabled"></i>
+        {% endif %}
+        {% endif %}
+      </div>
+    </div>
+  </div>
+  <hr class="separator">
+  <!-- 지도 -->
+  <div class="row">
+    <div class="col-7">
+      <!-- 음식점 정보테이블 -->
+      <table>
+        <tr>
+          <th>주소</th>
+          <td>{{ restaurant.address }}</td>
+        </tr>
+        <tr>
+          <th>전화번호</th>
+          <td>{{ restaurant.전화번호.as_national }}</td>
+        </tr>
+        <tr>
+          <th>영업시간</th>
+          <td>{{ restaurant.Opening_hours }}</td>
+        </tr>
+        <tr>
+          <th>가격대</th>
+          <td>{{ restaurant.price_avg }}</td>
+        </tr>
+        <tr>
+          <th>주차</th>
+          <td>{{ restaurant.parking }}</td>
+        </tr>
+        <tr>
+          <th>휴일</th>
+          <td>{{ restaurant.day_off }}</td>
+        </tr>
+        <tr>
+          <th>카테고리</th>
+          <td>{{ restaurant.category }}</td>
+        </tr>
+        <tr>
+          <th>메뉴</th>
+          <td>
+            <div class="d-flex justify-content-between">
+              <div class="">
+                {% for restaurant_menu_left_ in restaurant_menu_left %}
+                <p>{{ restaurant_menu_left_ }}</p>
+                {% endfor %}
+              </div>
+              <div class="">
+                {% for restaurant_menu_right_ in restaurant_menu_right %}
+                <p>{{ restaurant_menu_right_ }}</p>
+                {% endfor %}
+              </div>
+            </div>
+          </td>
+        </tr>
+      </table>
+    </div>
+    <div class="col-5 p-0">
+      <div id="map" style="height:300px;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- 메뉴사진 -->
+<div class="slide-wrapper">
+  <ul class="slides">
+    {% for img in restaurant.restaurant.all %}
+    <li><img src="{{ img.image.url }}" alt="" class="slide-img"></li>
     {% endfor %}
-    <!-- 다음페이지 -->
-    {% if question_list.has_next %}
-      <li class="page-item">
-        <a class="page-link" href="?page={{ question_list.next_page_number }}">다음</a>
-      </li>
-    {% else %}
-      <li class="page-item disabled">
-        <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
-      </li>
-    {% endif %}
   </ul>
+</div>
+<!-- 메뉴 컨트롤러 -->
+<p class="controls">
+  <span class="prev"><img src="https://cdn-icons-png.flaticon.com/512/151/151846.png" alt="이전"></span>
+  <span class="next"><img src="https://cdn-icons-png.flaticon.com/512/151/151858.png" alt="다음"></span>
+</p>
+<hr class="separator">
+<!-- 리뷰창 -->
+<!-- 개인 리뷰 -->
+<div class="row justify-content-between p-3" style="background-color:lightgrey;">
+  {% for review in question_list %}
+  <div>
+    <hr>
+    <!-- 리뷰 상단 -->
+    <div class="d-flex justify-content-between p-1 h-auto">
+      <!-- 프로필/맛있다 -->
+      <div class="d-flex">
+        <div class="rounded-pill" style="background-color:yellow">
+          {% if review.user.image %}
+          <img src="{{ review.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+          {% else %}
+          <img src="https://www.dummyimage.com/600x400/000/fff" alt=""
+            style="width: 50px; height: 50px; border-radius: 500px">
+          {% endif %}
+        </div>
+        <div class="">{{ review.user.username }}</div>
+        <div class="">
+          <!-- 아래 이모티콘을 채워주세요~ -->
+          {% if review.grade == 5 %}
+          <div>😋<span>맛있어요</span></div>
+          {% elif review.grade == 3 %}
+          <div>🙂<span>괜찮아요</span></div>
+          {% elif review.grade == 1 %}
+          <div>😖<span>별루에요</span></div>
+          {% endif %}
+        </div>
+      </div>
+
+      <!-- 시간 -->
+      <div>
+        {% if review.created_string == False %}
+        <td>{{ review.created_string|date:'m월 d일' }}</td>
+        {% else %}
+        <td>{{ review.created_string }}</td>
+        {% endif %}
+      </div>
+    </div>
+
+    <!-- 리뷰내용 -->
+    <div class="review-contents">
+      <div class="review-content">{{ review.content }}</div>
+      <div class="d-flex">
+        {% for review_img in review.image.all %}
+        <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
+        {%endfor%}
+      </div>
+    </div>
+    <div class="text-end">
+      {% if review.user.pk == request.user.pk %}
+      <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
+      <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
+      {% endif %}
+    </div>
+    <!-- 리뷰에 댓글 달기 -->
+    <div class="rounded-5" style="background:white">
+      <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">댓글달기</button>
+      <div id="write-comment{{ review.pk }}" class="hidden">
+        <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
+          {% csrf_token %}
+          {% bootstrap_form comment_form %}
+          <input type="submit" class='btn btn-dark' value='답글'>
+        </form>
+      </div>
+      <div id="comment-create{{review.pk}}">
+        <div class="text-primary text-opacity-25">
+          .
+        </div>
+      </div>
+      {% for comment in review.comment_set.all %}
+      <div>
+        {% if comment.user.image %}
+        <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+        {% else %}
+        <img src="https://www.dummyimage.com/600x400/000/fff" alt=""
+          style="width: 50px; height: 50px; border-radius: 500px">
+        {% endif %}
+        <span>{{comment.user}}</span>
+        <span>{{comment.content}}</span>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+  {% empty %}
+  <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
+    <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
+  </p>
+  {% endfor %}
+</div>
+</div>
+
+<!-- 페이징처리 시작 -->
+<ul class="pagination justify-content-center">
+  <!-- 이전페이지 -->
+  {% if question_list.has_previous %}
+  <li class="page-item">
+    <a class="page-link" href="?page={{ question_list.previous_page_number }}">이전</a>
+  </li>
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">이전</a>
+  </li>
+  {% endif %}
+  <!-- 페이지리스트 -->
+  {% for page_number in question_list.paginator.page_range %}
+  {% if page_number == question_list.number %}
+  <li class="page-item active" aria-current="page">
+    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+  </li>
+  {% else %}
+  <li class="page-item">
+    <a class="page-link" href="?page={{ page_number }}">{{ page_number }}</a>
+  </li>
+  {% endif %}
+  {% endfor %}
+  <!-- 다음페이지 -->
+  {% if question_list.has_next %}
+  <li class="page-item">
+    <a class="page-link" href="?page={{ question_list.next_page_number }}">다음</a>
+  </li>
+  {% else %}
+  <li class="page-item disabled">
+    <a class="page-link" tabindex="-1" aria-disabled="true" href="#">다음</a>
+  </li>
+  {% endif %}
+</ul>
 {% endblock content %}
 
 <!-- 자바스크립트 -->
 {% block js %}
-  <script src="{% static 'restaurants/js/detail.js' %}"></script>
+<script src="{% static 'restaurants/js/detail.js' %}"></script>
 
-  <!-- 지도 -->
-  <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ JSMAPKEY }}&libraries=services"></script>
-  <script>
-    var mapContainer = document.getElementById('map'), // 지도를 표시할 div
-      mapOption = {
-        center: new kakao
-          .maps
-          .LatLng(33.450701, 126.570667), // 지도의 중심좌표
-        level: 3 // 지도의 확대 레벨
-      };
-    // 지도를 생성합니다
-    var map = new kakao
-      .maps
-      .Map(mapContainer, mapOption);
-    // 주소-좌표 변환 객체를 생성합니다
-    var geocoder = new kakao
-      .maps
-      .services
-      .Geocoder();
-    var address = '{{ restaurant.address }}';
-    // 주소로 좌표를 검색합니다
-    geocoder.addressSearch(address, function (result, status) {
-      // 정상적으로 검색이 완료됐으면
-      if (status === kakao.maps.services.Status.OK) {
-        var coords = new kakao
-          .maps
-          .LatLng(result[0].y, result[0].x);
-        // 결과값으로 받은 위치를 마커로 표시합니다
-        var marker = new kakao
-          .maps
-          .Marker({map: map, position: coords});
-        // 인포윈도우로 장소에 대한 설명을 표시합니다
-        var infowindow = new kakao
-          .maps
-          .InfoWindow({content: `<div style="width:150px;text-align:center;padding:6px 0;">{{ restaurant.restaurant_name }}</div>`});
-        infowindow.open(map, marker);
-        // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
-        map.setCenter(coords);
-      }
-    });
-  </script>
-
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-  <script>
-    const reviewComments = document.querySelectorAll(`#review-comment`)
-    for (const reviewComment of reviewComments) {
-      reviewComment.addEventListener("click", function (event) {
-        const reviewId = event.target.dataset.reviewId;
-        event.preventDefault()
-        const writeComment = document.querySelector(`#write-comment${reviewId}`)
-        writeComment
-          .classList
-          .toggle("hidden")
-      })
+<!-- 지도 -->
+<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ JSMAPKEY }}&libraries=services"></script>
+<script>
+  var mapContainer = document.getElementById('map'), // 지도를 표시할 div
+    mapOption = {
+      center: new kakao
+        .maps
+        .LatLng(33.450701, 126.570667), // 지도의 중심좌표
+      level: 3 // 지도의 확대 레벨
+    };
+  // 지도를 생성합니다
+  var map = new kakao
+    .maps
+    .Map(mapContainer, mapOption);
+  // 주소-좌표 변환 객체를 생성합니다
+  var geocoder = new kakao
+    .maps
+    .services
+    .Geocoder();
+  var address = '{{ restaurant.address }}';
+  // 주소로 좌표를 검색합니다
+  geocoder.addressSearch(address, function (result, status) {
+    // 정상적으로 검색이 완료됐으면
+    if (status === kakao.maps.services.Status.OK) {
+      var coords = new kakao
+        .maps
+        .LatLng(result[0].y, result[0].x);
+      // 결과값으로 받은 위치를 마커로 표시합니다
+      var marker = new kakao
+        .maps
+        .Marker({ map: map, position: coords });
+      // 인포윈도우로 장소에 대한 설명을 표시합니다
+      var infowindow = new kakao
+        .maps
+        .InfoWindow({ content: `<div style="width:150px;text-align:center;padding:6px 0;">{{ restaurant.restaurant_name }}</div>` });
+      infowindow.open(map, marker);
+      // 지도의 중심을 결과값으로 받은 위치로 이동시킵니다
+      map.setCenter(coords);
     }
-    const commentForms = document.querySelectorAll("#commentForm")
-    for (const commentForm of commentForms) {
-      commentForm.addEventListener('submit', function (event) {
-        event.preventDefault();
-        const csrftoken = document
-          .querySelector('[name=csrfmiddlewaretoken]')
-          .value;
-        const reviewId = event
-          .target
-          .dataset
-          .reviewId
-          axios({
-            method: "post",
-            url: `/reviews/${reviewId}/comments/`,
-            headers: {
-              'X-CSRFToken': csrftoken
-            },
-            data: new FormData(commentForm)
-          })
-          .then((response) => {
-            const comments = document.querySelector(`#comment-create${reviewId}`)
-            comments.insertAdjacentHTML('beforeend', `
+  });
+</script>
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script>
+  const reviewComments = document.querySelectorAll(`#review-comment`)
+  for (const reviewComment of reviewComments) {
+    reviewComment.addEventListener("click", function (event) {
+      const reviewId = event.target.dataset.reviewId;
+      event.preventDefault()
+      const writeComment = document.querySelector(`#write-comment${reviewId}`)
+      writeComment
+        .classList
+        .toggle("hidden")
+    })
+  }
+  const commentForms = document.querySelectorAll("#commentForm")
+  for (const commentForm of commentForms) {
+    commentForm.addEventListener('submit', function (event) {
+      event.preventDefault();
+      const csrftoken = document
+        .querySelector('[name=csrfmiddlewaretoken]')
+        .value;
+      const reviewId = event
+        .target
+        .dataset
+        .reviewId
+      axios({
+        method: "post",
+        url: `/reviews/${reviewId}/comments/`,
+        headers: {
+          'X-CSRFToken': csrftoken
+        },
+        data: new FormData(commentForm)
+      })
+        .then((response) => {
+          const comments = document.querySelector(`#comment-create${reviewId}`)
+          comments.insertAdjacentHTML('beforeend', `
           <div>
             {% if comment.user.image %}
               <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
@@ -347,10 +391,10 @@
             {% endif %}
             <span>${response.data.comment_review_content}</span>
           </div>`)
-            commentForm.reset()
-          })
-      })
-    }
-  </script>
+          commentForm.reset()
+        })
+    })
+  }
+</script>
 
 {% endblock js %}
