@@ -97,10 +97,6 @@
     margin-left: 0.2rem;
 }
 
-.like-review input {
-    padding: 0.5rem;
-}
-
 .separator {
     margin: 3rem 0;
 }
@@ -277,7 +273,7 @@ li {
     vertical-align: middle;
 }
 
-.text-end a {
+.text-no-end a {
     font-size: 0.9rem;
     text-decoration: none;
 }
@@ -293,25 +289,6 @@ li {
 
 .text-no-end a.link-danger:hover {
     filter: opacity(0.6) drop-shadow(0 0 0 #fffb00);
-
-.user-c-name {
-    font-weight: 600;
-}
-
-.comment-delete button {
-    background-color: transparent;
-    border: none;
-    color: #ffa704;
-    font-size: 0.9rem;
-    margin-right: -0.9rem;
-}
-
-.comment-delete button:hover {
-    background-color: transparent;
-    border: none;
-    color: #ffa704;
-    font-size: 0.9rem;
-    margin-right: -0.9rem;
 }
 
 /* 화면 숨김 */
