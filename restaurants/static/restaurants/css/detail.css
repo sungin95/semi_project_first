@@ -1,5 +1,5 @@
 @charset "utf-8";
-@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap");
 
 .r_info {
     margin-top: 3rem;
@@ -12,13 +12,11 @@
     padding-left: 0;
 }
 
-
 /* 음식점 이름과 평점 */
 .r_header h2 {
-    font-family: 'Noto Sans KR', sans-serif;
+    font-family: "Noto Sans KR", sans-serif;
     margin: 4rem 0 0;
 }
-
 
 /* 평점에 색 */
 .grade {
@@ -101,7 +99,6 @@
 
 .separator {
     margin: 3rem 0;
-
 }
 
 table {
@@ -159,7 +156,7 @@ li {
 }
 
 .controls span.prev {
-    right: calc(100% + 50px);
+    right: calc(50% + 50px);
 }
 
 .controls span.next {
@@ -189,6 +186,10 @@ li {
     justify-content: space-between;
     padding: 1rem;
     height: auto;
+    background-color: #fafafa;
+    border-radius: 15px;
+    box-shadow: 0.5rem 0.5rem 0.5rem #e2e2e2, -0.5rem -0.5rem 0.5rem #e2e2e2;
+    margin: 0.5rem 1rem;
 }
 
 .review-contents {
@@ -197,6 +198,9 @@ li {
     justify-content: space-between;
     min-height: 200px;
     padding: 1rem;
+    background-color: #fafafa;
+    border-radius: 15px;
+    margin: 0.5rem 1rem;
 }
 
 .user-name {
@@ -204,6 +208,26 @@ li {
     display: flex;
     font-weight: 600;
     margin: 0 0.5rem;
+}
+
+.user-c-name {
+    font-weight: 600;
+}
+
+.comment-delete button {
+    background-color: transparent;
+    border: none;
+    color: #ffa704;
+    font-size: 0.9rem;
+    margin-right: -0.9rem;
+}
+
+.comment-delete button:hover {
+    background-color: transparent;
+    border: none;
+    color: #ffa704;
+    font-size: 0.9rem;
+    margin-right: -0.9rem;
 }
 
 .rate {
@@ -220,7 +244,7 @@ li {
     padding: 1rem;
 }
 
-#review-comment {
+#comment-btn {
     background-color: transparent;
     border: none;
     color: black;
@@ -232,15 +256,39 @@ li {
 }
 
 .re-comment input {
-    background-color: #666666;
+    background-color: #f2f2f2;
     border: none;
     border-radius: 2rem;
-    color: white;
-    padding: 0.7rem 1rem;
+    color: black;
+    font-size: 0.9rem;
+    margin: 0.5rem;
+    padding: 0.3rem 0.5rem;
 }
 
 .re-comment input:hover {
-    background-color: #ffa704;
+    background-color: #ffc861;
+}
+
+.text-no-end {
+    vertical-align: middle;
+}
+
+.text-no-end a {
+    font-size: 0.9rem;
+    text-decoration: none;
+}
+
+.text-no-end a.link-secondary {
+    color: #9a9a9a;
+    margin-right: 1rem;
+}
+
+.text-no-end a.link-danger {
+    filter: opacity(0.6) drop-shadow(0 0 0 #fffb00);
+}
+
+.text-no-end a.link-danger:hover {
+    filter: opacity(0.6) drop-shadow(0 0 0 #fffb00);
 }
 
 /* 화면 숨김 */

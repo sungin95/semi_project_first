@@ -33,12 +33,12 @@
               <input type="search" value="{{ restaurant.price_avg }}" name="search" aria-label="Search" id="search" class="category-value"/>
             </button>
           </form>
-          <form action="{% url 'restaurants:search' %}">
-            <button type="submit" class="a_menu">
-              <p>#{{ restaurant.parking }}</p>
-              <input type="search" value="{{ restaurant.parking }}" name="search" aria-label="Search" id="search" class="category-value"/>
-            </button>
-          </form>
+
+          <button type="submit" class="a_menu">
+            <p>#{{ restaurant.parking }}</p>
+
+          </button>
+
         </div>
         <div class="info_text">
           <p class="name">
