@@ -20,6 +20,14 @@ parking_CHOICES = (
     ('기타', '기타'),
 )
 
+price_avg_CHOICES = (
+    ('만원 미만', '만원 미만'),
+    ('1만원-2만원', '1만원-2만원'),
+    ('2만원-3만원', '2만원-3만원'),
+    ('3만원-5만원', '3만원-5만원'),
+    ('5만원 이상', '5만원 이상'),
+)
+
 # Create your models here.
 class Restaurants(models.Model):
     restaurant_name = models.CharField(max_length=50)
@@ -27,8 +35,8 @@ class Restaurants(models.Model):
     address = models.TextField()
     Opening_hours = models.TextField()
     menu = models.TextField()
-    price_avg = models.TextField()
     day_off = models.CharField(max_length=40)
+    price_avg = models.CharField(max_length=50, choices=price_avg_CHOICES)
     parking = models.CharField(max_length=50, choices=parking_CHOICES)
     category = models.CharField(max_length=50, choices=category_CHOICES)
     like_users = models.ManyToManyField(
