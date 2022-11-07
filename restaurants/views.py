@@ -112,13 +112,8 @@ def create(request):
             restaurant.save()
             for forms in formset.cleaned_data:
                 if forms:
-                    # image file
                     image = forms["image"]
-                    print(forms)
-                    print(forms["image"])
-                    # review, image file save
                     photo = RestaurantImages(restaurant=restaurant, image=image)
-                    print(photo)
                     photo.save()
             messages.success(request, "글 작성이 완료되었습니다.")
             return redirect("restaurants:main")
@@ -137,19 +132,43 @@ def create(request):
 @require_http_methods(["GET", "POST"])
 def update(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
+    restaurantImages = restaurant.restaurant.all()
+    ImageFormSet = modelformset_factory(
+        RestaurantImages, form=RestaurantImageForm, extra=8
+    )
     if request.method == "POST":
         form = RestaurantForm(request.POST, request.FILES, instance=restaurant)
         address = request.POST.get("address")
-        if form.is_valid():
-            restaurant = form.save(commit=False)
-            restaurant.address = address
-            restaurant.save()
+        formset = ImageFormSet(
+            request.POST,
+            request.FILES,
+            queryset=RestaurantImages.objects.none(),
+        )
+        if form.is_valid() and formset.is_valid():
+            restaurant_ = form.save(commit=False)
+            restaurant_.address = address
+            restaurant_.user = request.user
+            restaurant_.save()
+            for forms in formset.cleaned_data:
+                if forms:
+                    image = forms["image"]
+                    photo = RestaurantImages(restaurant=restaurant, image=image)
+                    photo.save()
+            messages.success(request, "글 작성이 완료되었습니다.")
             return redirect("restaurants:detail", restaurant.pk)
+        else:
+            print(form.errors, formset.errors)
     else:
         form = RestaurantForm(instance=restaurant)
+        address_ = restaurant.address
+        formset = ImageFormSet(
+            queryset=RestaurantImages.objects.none(),
+        )
     context = {
         "restaurant": restaurant,
         "form": form,
+        "formset": formset,
+        "address_": address_,
     }
     return render(request, "restaurants/forms.html", context)
 
