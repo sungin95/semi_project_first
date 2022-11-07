@@ -1,13 +1,18 @@
 @charset "utf-8";
 
-/* index.html */
+/* search.html */
 
+/* 레스토랑 제일 바깥 템플릿 */
 .a_restaurant {
     background-color: #fafafa;
     border-radius: 15px;
     box-shadow: -7px 7px 5px #e2e2e2;
+    margin: 1.5rem;
+    max-width: 28%;
+    padding: 0.6rem 0;
 }
 
+/* 상단 위치 정보 */
 .direction {
     display: flex;
     flex-flow: row;
@@ -15,8 +20,8 @@
 }
 
 .direction img {
+    filter: opacity(0.6) drop-shadow(0 0 0 #fbff0c);
     height: 5.3%;
-    opacity: 0.5;
     width: 5.3%;
 }
 
@@ -25,32 +30,45 @@
     margin: 0 0 0 0.3rem;
 }
 
+/* 음식점 이미지 */
 .r_img img {
     height: 19rem;
     object-fit: cover;
     width: 100%;
 }
 
+/* 해시태그 */
 .hash {
     display: flex;
     flex-wrap: wrap;
     margin-top: 0.7rem;
 }
 
+.hash a {
+    color: black;
+    text-decoration: none;
+}
+
+.hash a:hover {
+    color: black;
+    text-decoration: none;
+}
+
 .hash p {
-    background-color: #e2e2e2;
+    background-color: #ffeb7c;
     border-radius: 10px;
     font-size: 0.8rem;
-    font-weight: 600;
     margin: 0.1rem 0.5rem;
     padding: 0.2rem 0.5rem;
 }
 
+/* 가게 이름 */
 .info_text {
     margin: 0.5rem 0.5rem 1.5rem;
 }
 
 .name {
+    font-family: "Noto Sans KR", sans-serif;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.1rem;
@@ -62,9 +80,23 @@
 }
 
 .name a:hover {
-    color: #909090;
+    color: #f78c00;
 }
 
-.total_view {
-    font-size: 0.9rem;
+/* 해시태그 */
+.a_menu {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    border-style: none;
+    background: white;
+}
+
+.category-value {
+    display: none;
+}
+
+.a_menu p {
+    text-align: center;
+    margin: 0;
 }
