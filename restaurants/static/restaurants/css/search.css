@@ -1,6 +1,12 @@
 @charset "utf-8";
 
 /* search.html */
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
 
 /* 레스토랑 제일 바깥 템플릿 */
 .a_restaurant {
