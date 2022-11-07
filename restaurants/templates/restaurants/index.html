@@ -20,14 +20,17 @@
       <img src="https://www.dummyimage.com/300X300/000/fff" />
       {% endif %}
     </div>
-    <div class="small_things">
-      <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill"></i>
+    <div class="hash">
+      <a href="{% url 'restaurants:menu' %}">
+        <p>#{{ restaurant.category }}</p>
+      </a>
+      <p>#{{ restaurant.price_avg }}</p>
+      <p>#{{ restaurant.parking }}</p>
     </div>
     <div class="info_text">
       <p class="name">
         <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
       </p>
-      <!--<p class="total_view">3,234 view</p>-->
     </div>
   </div>
   {% endfor %}
