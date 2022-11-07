@@ -10,8 +10,13 @@ urlpatterns = [
     path("create/", views.create, name="create"),
     path("<int:restaurant_pk>/detail/", views.detail, name="detail"),
     path("<int:restaurant_pk>/update/", views.update, name="update"),
+    path(
+        "<int:restaurant_pk>/update/image_delete/",
+        views.image_delete,
+        name="image_delete",
+    ),
     path("<int:restaurant_pk>/delete/", views.delete, name="delete"),
     path("<int:restaurant_pk>/like/", views.like, name="like"),
-    path("search/", views.search, name='search'),
-    path("<int:restaurant_pk>/like/", views.like, name='like'),
+    path("search/", views.search, name="search"),
+    path("<int:restaurant_pk>/like/", views.like, name="like"),
 ]

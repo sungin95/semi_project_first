@@ -33,6 +33,10 @@
 
     {% else %}
       <h2 class="welcome_text">음식점 정보수정</h2>
+      <form action="{% url 'restaurants:image_delete' restaurant.pk %}" method="POST">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-danger">사진 리셋</button>
+      </form>
       <form action="" method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {% bootstrap_form form %}
