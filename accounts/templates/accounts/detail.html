@@ -2,75 +2,116 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'accounts/css/detail.css' %}">
+  <link rel="stylesheet" href="{% static 'accounts/css/detail.css' %}">
 {% endblock css %}
 
 {% block content %}
-<div class="container">
-  <h2 class="title"><span class="user">{{user}}</span> 님의 정보</h2>
+  <div class="container">
+    <h2 class="title">
+      <span class="user">{{user}}</span>
+      님의 정보</h2>
 
-  <div class="infos">
-    <div class="small_info">
-      <!-- {{ user.pk }}-->
-      <p><span class="name">{{ user.last_name }}
-          {{ user.first_name }}</span><br>
-        {{ user.email }}</p>
+    <div class="infos">
+      <div class="small_info">
+        <!-- {{ user.pk }}-->
+        <p>
+          <span class="name">
+            {{ user.last_name }}
+            {{ user.first_name }}</span><br>
+          {{ user.email }}</p>
+      </div>
+
+      <div class="user_buttons">
+        {% if request.user.pk == user.pk %}
+          <button>
+            <a href="{% url 'accounts:profile' %}">프로필<br>사진 설정</a>
+          </button>
+          <button>
+            <a href="{% url 'accounts:update' %}">프로필<br>정보 수정</a>
+          </button>
+          <button>
+            <a href="{% url 'accounts:change_password' %}">비밀번호<br>수정</a>
+          </button>
+        {% endif %}
+      </div>
     </div>
 
-    <div class="user_buttons">
-      {% if request.user.pk == user.pk %}
-      <button>
-        <a href="{% url 'accounts:profile' %}">프로필<br>사진 설정</a>
-      </button>
-      <button>
-        <a href="{% url 'accounts:update' %}">프로필<br>정보 수정</a>
-      </button>
-      <button>
-        <a href="{% url 'accounts:change_password' %}">비밀번호<br>수정</a>
-      </button>
-      {% endif %}
+    <hr class="hr">
+    <div class="bookmarked">
+      <p class="bookmarked_p">북마크한 음식점</p>
+      <p class="explanation">*음식점 이름을 누르면 해당 음식점의 자세한 정보를 볼 수 있습니다.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">음식점명</th>
+            <th scope="col">주소</th>
+            <th scope="col">전화번호</th>
+            <th scope="col">카테고리</th>
+          </tr>
+        </thead>
+        {% for like_restaurant in like_restaurants %}
+          <tbody>
+            <tr>
+              <th scope="row">
+                <a href="{% url 'restaurants:detail' like_restaurant.pk %}">
+                  {{ like_restaurant.restaurant_name }}</a>
+              </th>
+              <td>{{ like_restaurant.address }}</td>
+              <td>{{ like_restaurant.전화번호 }}</td>
+              <td>{{ like_restaurant.category }}</td>
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
     </div>
-  </div>
 
+    <hr class="hr">
+    <div class="restaurant">
+      <p class="restaurant_p">등록한 음식점</p>
+      <p class="explanation">*음식점 이름을 누르면 해당 음식점의 자세한 정보를 볼 수 있습니다.</p>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">음식점명</th>
+            <th scope="col">주소</th>
+            <th scope="col">전화번호</th>
+            <th scope="col">카테고리</th>
+          </tr>
+        </thead>
+        {% for make_restaurant in user.restaurants_set.all %}
+          <tbody>
+            <tr>
+              <th scope="row">
+                <a href="{% url 'restaurants:detail' make_restaurant.pk %}">
+                  {{ make_restaurant.restaurant_name }}</a>
+              </th>
+              <td>{{ make_restaurant.address }}</td>
+              <td>{{ make_restaurant.전화번호 }}</td>
+              <td>{{ make_restaurant.category }}</td>
+            </tr>
+          </tbody>
+        {% endfor %}
+      </table>
+    </div>
 
-  <hr class="hr">
-  <div class="bookmarked">
-    <p class="bookmarked_p">북마크한 음식점</p>
-    <p class="explanation">*음식점 이름을 누르면 해당 음식점의 자세한 정보를 볼 수 있습니다.</p>
-    <table class="table">
-      <thead>
-        <tr>
-          <th scope="col">음식점명</th>
-          <th scope="col">주소</th>
-          <th scope="col">전화번호</th>
-          <th scope="col">카테고리</th>
-        </tr>
-      </thead>
-      {% for like_restaurant in like_restaurants %}
-      <tbody>
-        <tr>
-          <th scope="row">
-            <a href="{% url 'restaurants:detail' like_restaurant.pk %}">
-              {{ like_restaurant.restaurant_name }}</a>
-          </th>
-          <td>{{ like_restaurant.address }}</td>
-          <td>{{ like_restaurant.전화번호 }}</td>
-          <td>{{ like_restaurant.category }}</td>
-        </tr>
-      </tbody>
+    <hr class="hr">
+    <div class="comments">
+      <p class="comments_p">작성한 댓글</p>
+      {% for user_all_review in user_all_reviews %}
+        <p>
+          {{user_all_review.content}}
+        </p>
       {% endfor %}
-    </table>
+    </div>
   </div>
-
 
   <hr class="hr">
-  <div class="comments">
-    <p class="comments_p">작성한 댓글</p>
-    {% for user_all_review in user_all_reviews %}
-    <p>
-      {{user_all_review.content}}
-    </p>
+  <div class="review">
+    <p class="review_p">작성한 대댓글</p>
+    {% for comment in user.comment_set.all %}
+      <p>
+        {{ comment.content }}
+      </p>
     {% endfor %}
-  </div>
-</div>
-{% endblock content %}
+
+  {% endblock content %}
