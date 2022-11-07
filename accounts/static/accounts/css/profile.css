@@ -47,13 +47,13 @@
     transform: translate(-50%, -40%);
 }
 
-
 /* 등록 버튼 위치 수정 */
 .buttons {
-    left: 30%;
-    position: absolute;
+    position: relative;
+    transform: translateY(400%);
+    display: flex;
+    justify-content: center;
 }
-
 
 /* 제출 버튼 조절 */
 .submit {
@@ -61,23 +61,20 @@
     border: none;
     border-radius: 2rem;
     color: white;
-    margin-top: 1.5rem;
     padding: 0.7rem 1rem;
 }
-
 
 /* 제출 버튼 색 변경 */
 .submit:hover {
     background-color: #ffa704;
 }
 
-
 /* 뒤로가기 버튼 */
 .back {
     background-color: none;
     border: 0 #666666;
     border-radius: 2rem;
-    margin: 1.5rem 0 0 1.7rem;
+    margin-left: 1.7rem;
     padding: 0.7rem 1rem;
 }
 
@@ -86,6 +83,16 @@
     border: none;
     border-radius: 2rem;
     color: white;
-    margin-top: 1.5rem;
     padding: 0.7rem 1rem;
+}
+
+#image-clear_id {
+    opacity: 0;
+}
+
+#profile-form label {
+    opacity: 0;
+}
+#profile-form a {
+    opacity: 0;
 }
