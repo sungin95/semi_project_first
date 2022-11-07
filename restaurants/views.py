@@ -220,6 +220,7 @@ def search(request):
                 Q(restaurant_name__icontains=search)
                 | Q(menu__icontains=search)
                 | Q(category__icontains=search)
+                | Q(price_avg=search)
             )
             context = {
                 "search_lists": search_lists,

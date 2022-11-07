@@ -66,6 +66,7 @@
     </div>
   </div>
   <hr class="separator">
+
   <!-- 지도 -->
   <div class="row">
     <div class="col-7">
@@ -140,7 +141,7 @@
 
 <!-- 리뷰창 -->
 <!-- 개인 리뷰 -->
-<div class="comments justify-content-between p-3">
+<div>
   {% for review in question_list %}
   <div class="a-comment">
     <!-- 리뷰 상단 -->
@@ -170,7 +171,7 @@
           {% endif %}
         </div>
       </div>
-
+      
       <!-- 시간 -->
       <div class="time">
         {% if review.created_string == False %}
@@ -180,89 +181,93 @@
         {% endif %}
       </div>
     </div>
-
-    <!-- 리뷰내용 -->
-    <div class="review-contents">
-      <div class="review-content">{{ review.content }}</div>
-      <div class="d-flex">
-        {% for review_img in review.image.all %}
-        <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
-        {%endfor%}
-      </div>
-    </div>
-    <div class="text-end">
-      {% if review.user.pk == request.user.pk %}
-      <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
-      <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
-      {% endif %}
-    </div>
-    <!-- 리뷰에 댓글 달기 -->
-    <div class="re-comment">
-      <button type="button" class="btn btn-primary review-comment" data-review-id="{{ review.pk }}">댓글</button>
-      <div class="hidden write-comment{{ review.pk }}">
-        <form class="commentForm" method="POST" data-review-id="{{ review.pk }}">
-          {% csrf_token %}
-          {% bootstrap_form comment_form %}
-          <input type="submit" class='btn' value='입력'>
-        </form>
-      </div>
-      <div class="comment-create{{review.pk}}">
-        <div class="text-primary text-opacity-25">
-          <div class="d-flex justify-content-between">
-            <div>
-              <!-- 로그인된 유저만 보이기 -->
-
-              <!-- 리뷰 좋아요 -->
-              <div>
-                <form class="like-review" data-reviewa-id="{{ review.pk }}" data-restauranta-id="{{ restaurant.pk }}"
-                  method="POST">
-                  {% csrf_token %}
-                  {% if request.user.is_authenticated %}
-                  {% if request.user in review.like.all %}
-                  <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요 취소">
-                  {% else %}
-                  <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요">
-                  {% endif %}
-                  {% else %}
-                  {% endif %}
-                  <span class="mx-3 like-count-review{{ review.pk }}" id="">{{review.like.count}}</span>
-                </form>
-              </div>
+    
+        <!-- 리뷰내용 -->
+        <div class="review-contents">
+          <div class="review-content">{{ review.content }}</div>
+          <div class="d-flex">
+            {% for review_img in review.image.all %}
+              <img src="{{ review_img.image.url }}" style="width: 150px; height: 150px; border-radius: 25px;">
+              {%endfor%}
             </div>
           </div>
+
+          <!-- 리뷰에 댓글 달기 -->
+          <div class="comment-create{{review.pk}} re-comment">
+            <div class='d-flex justify-content-between'>
+              <div class='d-flex'>
+                <button id="comment-btn" type="button" class="btn btn-sm btn-secondary review-comment" data-review-id="{{ review.pk }}">댓글달기</button>
+                <div>
+                  <div class="text-primary text-opacity-25">
+                    <div class="d-flex justify-content-between">
+                      <div>
+                        <!-- 로그인된 유저만 보이기 -->
+                        <!-- 리뷰 좋아요 -->
+                        <div>
+                          <form class="like-review" data-reviewa-id="{{ review.pk }}" data-restauranta-id="{{ restaurant.pk }}" method="POST">
+                            {% csrf_token %}
+                            {% if request.user.is_authenticated %}
+                              {% if request.user in review.like.all %}
+                                <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요 취소">
+                              {% else %}
+                                <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요">
+                              {% endif %}
+                            {% else %}
+                              <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요" disabled="disabled">
+                            {% endif %}
+                            <span class="like-count-review{{ review.pk }}" id="">{{review.like.count}}</span>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="text-no-end">
+                {% if review.user.pk == request.user.pk %}
+                  <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
+                  <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
+                {% endif %}
+              </div>
+            </div>
+            <div class="hidden write-comment{{ review.pk }}">
+              <form class="commentForm" method="POST" data-review-id="{{ review.pk }}">
+                {% csrf_token %}
+                {% bootstrap_form comment_form %}
+                <input type="submit" class='btn' value='입력'>
+              </form>
+            </div>
+            <hr>
+            {% for comment in review.comment_set.all %}
+              <div class="d-flex justify-content-between">
+                <div class="">
+                  {% if comment.user.image %}
+                    <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                    {% else %}
+                  <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요">
+                  {% endif %}
+                  <span class="user-c-name">{{comment.user}}</span>
+                  <span>{{comment.content}}</span>
+                </div>
+                <div>
+                  {% if request.user.pk == comment.user.pk %}
+                    <form class="comment-delete" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <button type=" submit" class="btn btn-danger">삭제</button>
+                    </form>
+                  {% endif %}
+                  </div>
+              </div>
+            {% endfor %}
+          </div>
         </div>
-      </div>
-      {% for comment in review.comment_set.all %}
-      <div class="d-flex justify-content-between">
-        <div class="">
-          {% if comment.user.image %}
-          <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-          {% else %}
-          <img src="https://www.dummyimage.com/600x400/000/fff" alt=""
-            style="width: 50px; height: 50px; border-radius: 500px">
-          {% endif %}
-          <span class="user-c-name">{{comment.user}}</span>
-          <span>{{comment.content}}</span>
-        </div>
-        <div>
-          {% if request.user.pk == comment.user.pk %}
-          <form class="comment-delete" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
-            {% csrf_token %}
-            <button type=" submit" class="btn btn-danger">삭제</button>
-          </form>
-          {% endif %}
-        </div>
-      </div>
+        {% empty %}
+        <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
+          <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
+        </p>
       {% endfor %}
     </div>
   </div>
-  {% empty %}
-  <p class="text-center">아직 리뷰가 없습니다. 리뷰를 남겨
-    <b>{{ restaurant.restaurant_name }}</b>의 첫번째 리뷰를 남겨보세요.
-  </p>
-  {% endfor %}
-</div>
-</div>
 
 <!-- 페이징처리 시작 -->
 <ul class="pagination justify-content-center">
@@ -389,7 +394,7 @@
                   {% else %}
                     <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
                   {% endif %}
-                  <span>${response.data.comment_review_user}</span>
+                  <span class="user-c-name">${response.data.comment_review_user}</span>
                   <span>${response.data.comment_review_content}</span>
                 </div>
                 <div>
