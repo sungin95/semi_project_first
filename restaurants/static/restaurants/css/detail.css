@@ -1,137 +1,137 @@
 @charset "utf-8";
 
 .r_info {
-    margin-top: 3rem;
+  margin-top: 3rem;
 }
 
 .r_header {
-    display: flex;
-    justify-content: space-between;
-    margin-bottom: 0.7rem;
-    padding-left: 0;
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 0.7rem;
+  padding-left: 0;
 }
 
 .r_header h1 {
-    font-weight: 600;
+  font-weight: 600;
 }
 
 .r_header div {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 .detailed_info {
-    display: flex;
-    flex-flow: row;
+  display: flex;
+  flex-flow: row;
 }
 
 .detailed_info img {
-    margin-left: 1.6rem;
-    width: 1.2rem;
-    height: 1.2rem;
+  margin-left: 1.6rem;
+  width: 1.2rem;
+  height: 1.2rem;
 }
 
 .people_views {
-    display: flex;
-    flex-flow: row;
-    align-items: center;
+  display: flex;
+  flex-flow: row;
+  align-items: center;
 }
 
 .people_views img {
-    margin: 0;
+  margin: 0;
 }
 
 #review-create-btn {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 #review-create-btn a img {
-    margin: 0;
+  margin: 0;
 }
 
 .bookmark {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 table {
-    margin-bottom: 5rem;
+  margin-bottom: 5rem;
 }
 
 table th {
-    color: #666666;
-    font-weight: 200;
-    width: 8rem;
-    height: 2rem;
+  color: #666666;
+  font-weight: 200;
+  width: 8rem;
+  height: 2rem;
 }
 
 /* 캐러셀 */
 li {
-    list-style: none;
+  list-style: none;
 }
 
 .slide-wrapper {
-    position: relative;
-    width: 1320px;
-    margin: 0 auto;
-    height: 300px;
-    overflow: hidden;
+  position: relative;
+  width: 1320px;
+  margin: 0 auto;
+  height: 300px;
+  overflow: hidden;
 }
 
 .slide-img {
-    width: 100%;
-    height: 100%;
+  width: 100%;
+  height: 100%;
 }
 
 .slides {
-    padding: 0;
-    position: absolute;
-    left: 0;
-    top: 0;
-    transition: left 0.5s ease-out;
-    display: flex;
+  padding: 0;
+  position: absolute;
+  left: 0;
+  top: 0;
+  transition: left 0.5s ease-out;
+  display: flex;
 }
 
 .slides li:not(:last-child) {
-    margin-right: 30px;
+  margin-right: 30px;
 }
 
 .controls {
-    text-align: center;
-    margin-top: 30px;
+  text-align: center;
+  margin-top: 30px;
 }
 
 .controls span {
-    background: #333;
-    color: #fff;
-    padding: 10px 20px;
-    margin: 0 10px;
-    top: 50%;
-    transform: translateY(-50%);
+  background: #333;
+  color: #fff;
+  padding: 10px 20px;
+  margin: 0 10px;
+  top: 50%;
+  transform: translateY(-50%);
 }
 
 .controls span.prev {
-    right: calc(100% + 50px);
+  right: calc(100% + 50px);
 }
 
 .controls span.next {
-    right: calc(100% + 50px);
+  right: calc(100% + 50px);
 }
 
 .slides li {
-    width: 300px;
-    height: 300px;
+  width: 300px;
+  height: 300px;
 }
 
 .review-contents {
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    min-height: 200px;
-    padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-height: 200px;
+  padding-top: 10px;
 }
 
 /* 화면 숨김 */
 .hidden {
-    display: none;
+  display: none;
 }

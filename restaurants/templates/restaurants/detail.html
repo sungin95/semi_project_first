@@ -202,14 +202,24 @@
               </div>
             </div>
             {% for comment in review.comment_set.all %}
-              <div>
-                {% if comment.user.image %}
-                  <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-                {% else %}
-                  <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-                {% endif %}
-                <span>{{comment.user}}</span>
-                <span>{{comment.content}}</span>
+              <div class="d-flex justify-content-between">
+                <div class="">
+                  {% if comment.user.image %}
+                    <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                  {% else %}
+                    <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                  {% endif %}
+                  <span>{{comment.user}}</span>
+                  <span>{{comment.content}}</span>
+                </div>
+                <div>
+                  {% if request.user.pk == comment.user.pk %}
+                    <form id="comment-delete" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                      {% csrf_token %}
+                      <button type=" submit" class="btn btn-danger">삭제</button>
+                    </form>
+                  {% endif %}
+                </div>
               </div>
             {% endfor %}
           </div>
@@ -340,17 +350,49 @@
           .then((response) => {
             const comments = document.querySelector(`#comment-create${reviewId}`)
             comments.insertAdjacentHTML('beforeend', `
-          <div>
-            {% if comment.user.image %}
-              <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-            {% else %}
-              <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
-            {% endif %}
-            <span>${response.data.comment_review_content}</span>
-          </div>`)
+            <div class="d-flex justify-content-between">
+                <div>
+                  {% if comment.user.image %}
+                    <img src="{{ comment.user.image.url }}" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                  {% else %}
+                    <img src="https://www.dummyimage.com/600x400/000/fff" alt="" style="width: 50px; height: 50px; border-radius: 500px">
+                  {% endif %}
+                  <span>${response.data.comment_review_user}</span>
+                  <span>${response.data.comment_review_content}</span>
+                </div>
+                <div>
+                    <form id="comment" data-review-id="${reviewId}" data-comment-id="${response.data.comment_review_pk}">
+                      {% csrf_token %}
+                      <button type="submit" class="btn btn-danger">삭제</button>
+                    </form>
+                </div>
+              </div>`);
             commentForm.reset()
           })
       })
+    }
+    const commentDeletes = document.querySelectorAll("#comment-delete");
+    for (const commentDelete of commentDeletes) {
+      commentDelete.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const csrftoken = document
+          .querySelector('[name=csrfmiddlewaretoken]')
+          .value;
+        const reviewId = event.target.dataset.reviewId;
+        const commentId = event.target.dataset.commentId;
+        axios({
+          method: "post",
+          url: `/reviews/${reviewId}/comments/${commentId}/delete/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          },
+          data: new FormData(commentForm)
+        }).then((response) => {
+          commentDelete.parentNode.parentNode.innerHTML = ""
+        })
+
+      })
+
     }
   </script>
 

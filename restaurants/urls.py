@@ -18,5 +18,4 @@ urlpatterns = [
     path("<int:restaurant_pk>/delete/", views.delete, name="delete"),
     path("<int:restaurant_pk>/like/", views.like, name="like"),
     path("search/", views.search, name="search"),
-    path("<int:restaurant_pk>/like/", views.like, name="like"),
 ]

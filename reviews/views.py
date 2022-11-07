@@ -118,6 +118,7 @@ def like(request, review_pk):
     return redirect("reviews.detail", review.pk)
 
 
+@login_required
 def comments(request, review_pk):
     review = Review.objects.get(pk=review_pk)
     if request.method == "POST":
@@ -129,6 +130,8 @@ def comments(request, review_pk):
             comment_review.save()
     context = {
         "comment_review_content": comment_review.content,
+        "comment_review_user": comment_review.user.username,
+        "comment_review_pk": comment_review.pk,
     }
     return JsonResponse(context)
 
@@ -144,7 +147,7 @@ def comment_update(request, review_pk, comment_pk):
     if request.method == "POST":
         update_comment = request.POST.get("update_comment")
         comment.content = update_comment
-        comment.review = review
+        # comment.review = review
         comment.save()
     return redirect("restaurants:detail", review.pk)
 
@@ -156,4 +159,5 @@ def comment_delete(request, review_pk, comment_pk):
         return redirect("restaurants:detail", review_pk)
     if request.method == "POST":
         comment.delete()
-    return redirect("restaurants:detail", review_pk)
+    context = {}
+    return JsonResponse(context)
