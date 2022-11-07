@@ -65,7 +65,7 @@
 
 /* 중간 선*/
 .hr {
-    margin: 1.8rem auto;
+    margin: 1.8rem auto 2.3rem;
     width: 60%;
 }
 
@@ -86,7 +86,7 @@
 
 /* 북마크 아래 설명 */
 .explanation {
-    color: #606060;
+    color: #969696;
     font-size: 0.8rem;
     margin-bottom: 0.8rem;
 }
