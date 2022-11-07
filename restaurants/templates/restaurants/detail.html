@@ -40,7 +40,7 @@
             {% else %}
               <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star"></i>
             {% endif %}
-            <span class="like_count">{{ restaurant.like_users.count }}</span>
+            <span id="like-count">{{ restaurant.like_users.count }}</span>
           </div>
           <p class="division">┃</p>
 
@@ -55,12 +55,12 @@
           <!-- 로그인 안했을 때 -->
         {% else %}
           <div class="bookmark">
-            <span id="like-count">{{ restaurant.like_users.count }}</span>
             {% if request.user in restaurant.like_users.all %}
               <i class="bi bi-star-fill" disabled="disabled"></i>
             {% else %}
               <i class="bi bi-star" disabled="disabled"></i>
             {% endif %}
+            <span>{{ restaurant.like_users.count }}</span>
           {% endif %}
         </div>
       </div>
