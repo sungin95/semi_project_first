@@ -2,37 +2,36 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-  <link rel="stylesheet" href="{% static 'restaurants/css/index.css' %}">
+<link rel="stylesheet" href="{% static 'restaurants/css/index.css' %}">
 {% endblock css %}
 {% block content %}
-  <div class="row row-cols-2 row-cols-lg-3 g-5 mt-3">
-    {% for restaurant in restaurants %}
-      <div class="col a_restaurant">
-        <div class="direction">
-          <img src="https://cdn-icons-png.flaticon.com/512/4519/4519622.png" alt="위치 아이콘">
-          <!-- 위치 끼워 넣을 수 있으면 변경 -->
-          <p>{{ restaurant.address }}</p>
-        </div>
-        <div class="r_img">
-          {% if restaurant.image %}
-            <img src="{{ restaurant.image.url }}" alt="음식점의 음식 사진">
-          {% else %}
-            <img src="https://www.dummyimage.com/300X300/000/fff"/>
-          {% endif %}
-        </div>
-        <!-- 실제 해시로 변경 -->
-        <div class="hash">
-          <p>#양식</p>
-          <p>#사람들이_많이_찾는</p>
-          <p>#패스트_푸드</p>
-        </div>
-        <div class="info_text">
-          <p class="name">
-            <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
-          </p>
-          <!--<p class="total_view">3,234 view</p>-->
-        </div>
-      </div>
-    {% endfor %}
+<div class="row row-cols-2 row-cols-lg-3 g-5 mt-3">
+  {% for restaurant in restaurants %}
+  <div class="a_restaurant">
+    <div class="direction">
+      <img src="https://cdn-icons-png.flaticon.com/512/5582/5582962.png" alt="위치 아이콘">
+      <p>{{ restaurant.address }}</p>
+    </div>
+    <div class="r_img">
+      {% if restaurant.image %}
+      <img src="{{ restaurant.image.url }}" alt="음식점 썸네일 사진">
+      {% else %}
+      <img src="https://www.dummyimage.com/300X300/000/fff" />
+      {% endif %}
+    </div>
+    <!-- 실제 해시로 변경 -->
+    <div class="hash">
+      <p>#양식</p>
+      <p>#사람들이_많이_찾는</p>
+      <p>#패스트_푸드</p>
+    </div>
+    <div class="info_text">
+      <p class="name">
+        <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
+      </p>
+      <!--<p class="total_view">3,234 view</p>-->
+    </div>
   </div>
+  {% endfor %}
+</div>
 {% endblock content %}

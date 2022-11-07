@@ -1,13 +1,14 @@
 @charset "utf-8";
 
-/* index.html */
-
+/* 레스토랑 제일 바깥 템플릿 */
 .a_restaurant {
     background-color: #fafafa;
     border-radius: 15px;
     box-shadow: -7px 7px 5px #e2e2e2;
 }
 
+
+/* 상단 위치 정보 */
 .direction {
     display: flex;
     flex-flow: row;
@@ -15,8 +16,8 @@
 }
 
 .direction img {
+    filter: opacity(0.6) drop-shadow(0 0 0 #fbff0c);
     height: 5.3%;
-    opacity: 0.5;
     width: 5.3%;
 }
 
@@ -25,6 +26,8 @@
     margin: 0 0 0 0.3rem;
 }
 
+
+/* 음식점 이미지 */
 .r_img img {
     height: 19rem;
     object-fit: cover;
