@@ -4,8 +4,9 @@
 {% block css %}
 <link rel="stylesheet" href="{% static 'restaurants/css/index.css' %}">
 {% endblock css %}
+
 {% block content %}
-<div class="row row-cols-2 row-cols-lg-3 g-5 mt-3">
+<div class="container">
   {% for restaurant in restaurants %}
   <div class="a_restaurant">
     <div class="direction">
@@ -19,11 +20,8 @@
       <img src="https://www.dummyimage.com/300X300/000/fff" />
       {% endif %}
     </div>
-    <!-- 실제 해시로 변경 -->
-    <div class="hash">
-      <p>#양식</p>
-      <p>#사람들이_많이_찾는</p>
-      <p>#패스트_푸드</p>
+    <div class="small_things">
+      <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill"></i>
     </div>
     <div class="info_text">
       <p class="name">
