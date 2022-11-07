@@ -1,10 +1,21 @@
 @charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
+
+.container {
+    display: flex;
+    justify-content: center;
+    margin-top: 3rem;
+    flex-wrap: wrap;
+}
 
 /* 레스토랑 제일 바깥 템플릿 */
 .a_restaurant {
     background-color: #fafafa;
     border-radius: 15px;
     box-shadow: -7px 7px 5px #e2e2e2;
+    margin: 1.5rem;
+    max-width: 28%;
+    padding: 0.6rem 0;
 }
 
 
@@ -34,6 +45,10 @@
     width: 100%;
 }
 
+.m-1 {
+    width: 5%;
+}
+
 .hash {
     display: flex;
     flex-wrap: wrap;
@@ -54,6 +69,7 @@
 }
 
 .name {
+    font-family: 'Noto Sans KR', sans-serif;
     font-size: 2rem;
     font-weight: 700;
     margin-bottom: 0.1rem;
