@@ -1,5 +1,5 @@
 from urllib import request
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from .models import Review, Comment, ReviewImages
 from .forms import CommentForm, ReviewForm, ReviewImageForm
 from django.contrib.auth.decorators import login_required
@@ -103,7 +103,8 @@ def delete(request, review_pk, restaurant_pk):
 
 
 @login_required
-def like(request, review_pk):
+def like(request, review_pk, restaurant_pk):
+    restaurant = Restaurants.objects.get(pk=restaurant_pk)
     review = Review.objects.get(pk=review_pk)
     if review.like.filter(pk=request.user.pk).exists():
         review.like.remove(request.user)
@@ -115,7 +116,7 @@ def like(request, review_pk):
         "is_like": is_like,
         "liketCount": review.like.count(),
     }
-    return redirect("reviews.detail", review.pk)
+    return JsonResponse(context)
 
 
 @login_required

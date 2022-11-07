@@ -180,23 +180,44 @@
               {%endfor%}
             </div>
           </div>
-          <div class="text-end">
-            {% if review.user.pk == request.user.pk %}
-              <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
-              <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
-            {% endif %}
+          <div class="d-flex justify-content-between">
+            <div>
+              <!-- 로그인된 유저만 보이기 -->
+
+              <!-- 리뷰 좋아요 -->
+              <div>
+                <form class="like-review" data-reviewa-id="{{ review.pk }}" data-restauranta-id="{{ restaurant.pk }}" method="POST">
+                  {% csrf_token %}
+                  {% if request.user.is_authenticated %}
+                    {% if request.user in review.like.all %}
+                      <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요 취소">
+                    {% else %}
+                      <input type="submit" class="btn btn-dark review-like{{ review.pk }}" value="좋아요">
+                    {% endif %}
+                  {% else %}
+                  {% endif %}
+                  <span class="mx-3 like-count-review{{ review.pk }}" id="">{{review.like.count}}</span>
+                </form>
+              </div>
+            </div>
+            <div>
+              {% if review.user.pk == request.user.pk %}
+                <a href="{% url 'reviews:update' review.pk restaurant.pk %}" class="link-secondary">수정</a>
+                <a href="{% url 'reviews:delete' review.pk restaurant.pk %}" class="link-danger">삭제</a>
+              {% endif %}
+            </div>
           </div>
           <!-- 리뷰에 댓글 달기 -->
           <div class="rounded-5" style="background:white">
-            <button id="review-comment" type="button" class="btn btn-primary" data-review-id="{{ review.pk }}">댓글달기</button>
-            <div id="write-comment{{ review.pk }}" class="hidden">
-              <form id="commentForm" method="POST" data-review-id="{{ review.pk }}">
+            <button id="" type="button" class="btn btn-primary review-comment" data-review-id="{{ review.pk }}">댓글달기</button>
+            <div id="" class="hidden write-comment{{ review.pk }}">
+              <form class="commentForm" method="POST" data-review-id="{{ review.pk }}">
                 {% csrf_token %}
                 {% bootstrap_form comment_form %}
                 <input type="submit" class='btn btn-dark' value='답글'>
               </form>
             </div>
-            <div id="comment-create{{review.pk}}">
+            <div class="comment-create{{review.pk}}">
               <div class="text-primary text-opacity-25">
                 .
               </div>
@@ -214,7 +235,7 @@
                 </div>
                 <div>
                   {% if request.user.pk == comment.user.pk %}
-                    <form id="comment-delete" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
+                    <form class="comment-delete" data-review-id="{{ review.pk }}" data-comment-id="{{ comment.pk }}">
                       {% csrf_token %}
                       <button type=" submit" class="btn btn-danger">삭제</button>
                     </form>
@@ -317,18 +338,18 @@
 
   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   <script>
-    const reviewComments = document.querySelectorAll(`#review-comment`)
+    const reviewComments = document.querySelectorAll(`.review-comment`)
     for (const reviewComment of reviewComments) {
       reviewComment.addEventListener("click", function (event) {
         const reviewId = event.target.dataset.reviewId;
         event.preventDefault()
-        const writeComment = document.querySelector(`#write-comment${reviewId}`)
+        const writeComment = document.querySelector(`.write-comment${reviewId}`)
         writeComment
           .classList
           .toggle("hidden")
       })
     }
-    const commentForms = document.querySelectorAll("#commentForm")
+    const commentForms = document.querySelectorAll(".commentForm")
     for (const commentForm of commentForms) {
       commentForm.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -348,8 +369,8 @@
             data: new FormData(commentForm)
           })
           .then((response) => {
-            const comments = document.querySelector(`#comment-create${reviewId}`)
-            comments.insertAdjacentHTML('beforeend', `
+            const comments = document.querySelector(`.comment-create${reviewId}`)
+            comments.insertAdjacentHTML('afterbegin', `
             <div class="d-flex justify-content-between">
                 <div>
                   {% if comment.user.image %}
@@ -361,7 +382,7 @@
                   <span>${response.data.comment_review_content}</span>
                 </div>
                 <div>
-                    <form id="comment" data-review-id="${reviewId}" data-comment-id="${response.data.comment_review_pk}">
+                    <form class="comment-delete" data-review-id="${reviewId}" data-comment-id="${response.data.comment_review_pk}">
                       {% csrf_token %}
                       <button type="submit" class="btn btn-danger">삭제</button>
                     </form>
@@ -371,7 +392,7 @@
           })
       })
     }
-    const commentDeletes = document.querySelectorAll("#comment-delete");
+    const commentDeletes = document.querySelectorAll(".comment-delete");
     for (const commentDelete of commentDeletes) {
       commentDelete.addEventListener('submit', function (event) {
         event.preventDefault();
@@ -386,13 +407,42 @@
           headers: {
             'X-CSRFToken': csrftoken
           },
-          data: new FormData(commentForm)
+          data: new FormData(commentDelete)
         }).then((response) => {
           commentDelete.parentNode.parentNode.innerHTML = ""
         })
-
       })
+    }
+  </script>
+  <script>
+    const csrftoken = document
+      .querySelector('[name=csrfmiddlewaretoken]')
+      .value
+    const likeReviews = document.querySelectorAll(".like-review")
+    for (const likeReview of likeReviews) {
+      likeReview.addEventListener('submit', function (event) {
+        event.preventDefault();
+        const reviewId = event.target.dataset.reviewaId;
+        const restaurantId = event.target.dataset.restaurantaId;
+        axios({
+          method: "post",
+          url: `/reviews/${reviewId}/${restaurantId}/like/`,
+          headers: {
+            'X-CSRFToken': csrftoken
+          }
+        }).then((response) => {
+          const likeCount = document.querySelector(`.like-count-review${reviewId}`)
+          const is_like = response.data.is_like
+          const likeBtn = document.querySelector(`.review-like${reviewId}`)
+          if (is_like === true) {
+            likeBtn.value = '좋아요 취소'
+          } else {
+            likeBtn.value = '좋아요'
+          }
+          likeCount.innerText = response.data.liketCount
 
+        })
+      })
     }
   </script>
 
