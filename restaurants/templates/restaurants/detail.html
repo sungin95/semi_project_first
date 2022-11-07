@@ -47,9 +47,9 @@
           <div class="bookmark">
             <span id="like-count">{{ restaurant.like_users.count }}</span>
             {% if request.user in restaurant.like_users.all %}
-              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill" disabled="disabled"></i>
+              <iclass="bi bi-star-fill"></iclass=>
             {% else %}
-              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star" disabled="disabled"></i>
+              <iclass="bi bi-star"></i>
             {% endif %}
           {% endif %}
         </div>
