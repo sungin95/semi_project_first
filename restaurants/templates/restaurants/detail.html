@@ -10,9 +10,9 @@
   <div class="row r_info">
     <!-- 음식점 정보 헤더 -->
     <div class="r_header">
-      <h1>{{ restaurant.restaurant_name }}
-        {{ grade }}
-      </h1>
+      <h2>{{ restaurant.restaurant_name }}
+        <span class="grade">{{ grade }}</span>
+      </h2>
       <div class="detailed_info">
         <!-- 조회수 -->
         <div class="people_views">
@@ -20,15 +20,19 @@
           <span>{{ restaurant.hits }}</span>
           <div class="d-none">{{ restaurant.click }}</div>
         </div>
+        <p class="division">┃</p>
+
         <!-- 로그인된 유저만 보이기 -->
         {% if request.user.is_authenticated %}
           <!-- 리뷰쓰기 버튼 -->
-          <div id="review-create-btn">
-            <a class="link-secondary" href="{% url 'reviews:create' restaurant.pk %}">
-              <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="수정 아이콘">
-              <span class="link-secondary">리뷰작성</span>
+          <div class="review_create">
+            <a href="{% url 'reviews:create' restaurant.pk %}">
+              <img src="https://cdn-icons-png.flaticon.com/512/1159/1159633.png" alt="리뷰 아이콘">
+              <span class="review_creation">리뷰작성</span>
             </a>
           </div>
+          <p class="division">┃</p>
+
           <!-- 북마크 -->
           <div class="bookmark">
             {% if request.user in restaurant.like_users.all %}
@@ -36,26 +40,32 @@
             {% else %}
               <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star"></i>
             {% endif %}
-            <span class="m-1" id="like-count">{{ restaurant.like_users.count }}</span>
-            <!-- 가게정보수정 -->
+            <span class="like_count">{{ restaurant.like_users.count }}</span>
+          </div>
+          <p class="division">┃</p>
+
+          <!-- 가게정보수정 -->
+          <div class="correction">
             {% if request.user.pk == restaurant.user.pk %}
-              <a type="submit" class="link-dark m-2" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">정보수정</a>
+              <img src="https://cdn-icons-png.flaticon.com/512/5258/5258991.png" alt="정보 수정 아이콘">
+              <a type="submit" onclick="location.href='{% url 'restaurants:update' restaurant.pk %}' ">정보수정</a>
             {% endif %}
           </div>
+
           <!-- 로그인 안했을 때 -->
         {% else %}
           <div class="bookmark">
             <span id="like-count">{{ restaurant.like_users.count }}</span>
             {% if request.user in restaurant.like_users.all %}
-              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star-fill" disabled="disabled"></i>
+              <i class="bi bi-star-fill" disabled="disabled"></i>
             {% else %}
-              <i id="like-btn" data-restaurant-id="{{ restaurant.pk }}" class="bi bi-star" disabled="disabled"></i>
+              <i class="bi bi-star" disabled="disabled"></i>
             {% endif %}
           {% endif %}
         </div>
       </div>
     </div>
-
+    <hr class="separator">
     <!-- 지도 -->
     <div class="row">
       <div class="col-7">
@@ -114,10 +124,7 @@
     </div>
   </div>
 
-  <hr>
-
   <!-- 메뉴사진 -->
-  <div class="row justify-content-center m-2" style="background-color:grey;">사진에 마우스를 올려보세요!</div>
   <div class="slide-wrapper">
     <ul class="slides">
       {% for img in restaurant.restaurant.all %}
@@ -127,10 +134,10 @@
   </div>
   <!-- 메뉴 컨트롤러 -->
   <p class="controls">
-    <span class="prev">prev</span>
-    <span class="next">next</span>
+    <span class="prev"><img src="https://cdn-icons-png.flaticon.com/512/151/151846.png" alt="이전"></span>
+    <span class="next"><img src="https://cdn-icons-png.flaticon.com/512/151/151858.png" alt="다음"></span>
   </p>
-  <hr>
+  <hr class="separator">
   <!-- 리뷰창 -->
   <!-- 개인 리뷰 -->
   <div class="row justify-content-between p-3" style="background-color:lightgrey;">

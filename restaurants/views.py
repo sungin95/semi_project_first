@@ -202,7 +202,7 @@ def like(request, restaurant_pk):
 
 
 def search(request):
-    s = Search.objects.filter().order_by("count")[:3]
+    s = Search.objects.filter().order_by("count")[1:12]
     if request.method == "GET":
         content_list = Restaurants.objects.all()
         search = request.GET.get("search", "")

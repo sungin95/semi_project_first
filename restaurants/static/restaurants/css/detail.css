@@ -1,4 +1,5 @@
 @charset "utf-8";
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@700&display=swap');
 
 .r_info {
   margin-top: 3rem;
@@ -11,47 +12,96 @@
   padding-left: 0;
 }
 
-.r_header h1 {
-  font-weight: 600;
+
+/* 음식점 이름과 평점 */
+.r_header h2 {
+    font-family: 'Noto Sans KR', sans-serif;
+    margin: 4rem 0 0;
 }
 
-.r_header div {
-  margin-left: 20px;
+
+/* 평점에 색 */
+.grade {
+    color: #ffa704;
+    margin-left: 0.5rem;
 }
 
 .detailed_info {
-  display: flex;
-  flex-flow: row;
+    display: flex;
+    flex-flow: row;
+    margin: 4rem 0 0;
 }
 
 .detailed_info img {
-  margin-left: 1.6rem;
-  width: 1.2rem;
-  height: 1.2rem;
+    height: 1.2rem;
+    margin-left: 1.6rem;
+    width: 1.2rem;
+}
+
+.division {
+    color: #666666;
+    margin: 0 0.5rem;
+    opacity: 30;
 }
 
 .people_views {
-  display: flex;
-  flex-flow: row;
-  align-items: center;
+    display: flex;
+    flex-flow: row;
 }
 
 .people_views img {
-  margin: 0;
+    margin: 0.2rem;
 }
 
-#review-create-btn {
-  display: flex;
-  align-items: center;
+.review_create {
+    display: flex;
 }
 
-#review-create-btn a img {
-  margin: 0;
+.review_create a {
+    color: black;
+    text-decoration: none;
+}
+
+.review_create a img {
+    height: 45%;
+    margin: 0.2rem;
+}
+
+.review_creation {
+    color: black;
+    text-decoration: none;
+}
+
+.link-secondary {
+    margin-top: 7%;
 }
 
 .bookmark {
-  display: flex;
-  align-items: center;
+    display: flex;
+}
+
+.correction img {
+    margin-left: 0;
+    width: 21%;
+}
+
+.correction a {
+    color: black;
+    text-decoration: none;
+}
+
+.correction a:hover {
+    color: black;
+    text-decoration: none;
+}
+
+.like_count {
+    margin-left: 0.2rem;
+}
+
+.separator {
+    margin: 3rem 0;
+
 }
 
 table {
@@ -71,11 +121,11 @@ li {
 }
 
 .slide-wrapper {
-  position: relative;
-  width: 1320px;
-  margin: 0 auto;
-  height: 300px;
-  overflow: hidden;
+    height: 300px;
+    margin: 4.5rem auto 1.5rem;
+    overflow: hidden;
+    position: relative;
+    width: 1320px;
 }
 
 .slide-img {
@@ -93,21 +143,18 @@ li {
 }
 
 .slides li:not(:last-child) {
-  margin-right: 30px;
+    margin-right: 1.875rem;
 }
 
 .controls {
-  text-align: center;
-  margin-top: 30px;
+    text-align: center;
 }
 
 .controls span {
-  background: #333;
-  color: #fff;
-  padding: 10px 20px;
-  margin: 0 10px;
-  top: 50%;
-  transform: translateY(-50%);
+    padding: 0px 20px;
+    margin: 0 50px;
+    top: 50%;
+    transform: translateY(-50%);
 }
 
 .controls span.prev {
@@ -116,6 +163,11 @@ li {
 
 .controls span.next {
   right: calc(100% + 50px);
+}
+
+.controls img {
+    opacity: 60%;
+    width: 1.5%;
 }
 
 .slides li {
@@ -135,3 +187,4 @@ li {
 .hidden {
   display: none;
 }
+

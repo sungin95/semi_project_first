@@ -18,3 +18,6 @@ class ProfileCustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
         model = get_user_model()
         fields = ("image",)
+        label = {
+            'image': '프로필',
+        }
