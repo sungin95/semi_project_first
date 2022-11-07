@@ -2,37 +2,50 @@
 {% load django_bootstrap5 %}
 {% load static %}
 {% block css %}
-<link rel="stylesheet" href="{% static 'restaurants/css/index.css' %}">
+  <link rel="stylesheet" href="{% static 'restaurants/css/index.css' %}">
 {% endblock css %}
 
 {% block content %}
-<div class="container">
-  {% for restaurant in restaurants %}
-  <div class="a_restaurant">
-    <div class="direction">
-      <img src="https://cdn-icons-png.flaticon.com/512/5582/5582962.png" alt="위치 아이콘">
-      <p>{{ restaurant.address }}</p>
-    </div>
-    <div class="r_img">
-      {% if restaurant.image %}
-      <img src="{{ restaurant.image.url }}" alt="음식점 썸네일 사진">
-      {% else %}
-      <img src="https://www.dummyimage.com/300X300/000/fff" />
-      {% endif %}
-    </div>
-    <div class="hash">
-      <a href="{% url 'restaurants:menu' %}">
-        <p>#{{ restaurant.category }}</p>
-      </a>
-      <p>#{{ restaurant.price_avg }}</p>
-      <p>#{{ restaurant.parking }}</p>
-    </div>
-    <div class="info_text">
-      <p class="name">
-        <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
-      </p>
-    </div>
+  <div class="container">
+    {% for restaurant in restaurants %}
+      <div class="a_restaurant">
+        <div class="direction">
+          <img src="https://cdn-icons-png.flaticon.com/512/5582/5582962.png" alt="위치 아이콘">
+          <p>{{ restaurant.address }}</p>
+        </div>
+        <div class="r_img">
+          {% if restaurant.image %}
+            <img src="{{ restaurant.image.url }}" alt="음식점 썸네일 사진">
+          {% else %}
+            <img src="https://www.dummyimage.com/300X300/000/fff"/>
+          {% endif %}
+        </div>
+        <div class="hash">
+          <form action="{% url 'restaurants:menu' %}">
+            <button type="submit" class="a_menu">
+              <p>#{{ restaurant.category }}</p>
+              <input type="text" value="{{ restaurant.category }}" class="category-value" name="category">
+            </button>
+          </form>
+          <form action="{% url 'restaurants:search' %}">
+            <button type="submit" class="a_menu">
+              <p>#{{ restaurant.price_avg }}</p>
+              <input type="search" value="{{ restaurant.price_avg }}" name="search" aria-label="Search" id="search" class="category-value"/>
+            </button>
+          </form>
+          <form action="{% url 'restaurants:search' %}">
+            <button type="submit" class="a_menu">
+              <p>#{{ restaurant.parking }}</p>
+              <input type="search" value="{{ restaurant.parking }}" name="search" aria-label="Search" id="search" class="category-value"/>
+            </button>
+          </form>
+        </div>
+        <div class="info_text">
+          <p class="name">
+            <a href="{% url 'restaurants:detail' restaurant.pk %}">{{ restaurant.restaurant_name }}</a>
+          </p>
+        </div>
+      </div>
+    {% endfor %}
   </div>
-  {% endfor %}
-</div>
 {% endblock content %}
