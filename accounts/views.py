@@ -9,6 +9,7 @@ from .forms import (
     ProfileCustomUserChangeForm,
 )
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 
 @login_required
@@ -58,7 +59,7 @@ def logout(request):
     auth_logout(request)
     return redirect("accounts:login")
 
-
+@login_required
 def detail(request, pk):
     user = get_user_model().objects.get(pk=pk)
     like_restaurant = user.like_restaurant.all()
@@ -85,7 +86,8 @@ def update(request):
         form = CustomUserChangeForm(request.POST, request.FILES, instance=request.user)
         if form.is_valid():
             form.save()
-            return redirect("accounts:index")
+            messages.success(request, "프로필 정보가 성공적으로 변경되었습니다.")
+            return redirect("accounts:detail", request.user.pk)
     else:
         form = CustomUserChangeForm(instance=request.user)
     context = {
@@ -101,7 +103,8 @@ def profile(request):
         )
         if form.is_valid():
             form.save()
-            return redirect("accounts:index")
+            messages.success(request, "프로필사진이 성공적으로 변경되었습니다.")
+            return redirect("accounts:detail", request.user.pk)
     else:
         form = ProfileCustomUserChangeForm(instance=request.user)
     context = {
@@ -116,7 +119,9 @@ def change_password(request):
         form = PasswordChangeForm(request.user, request.POST)
         if form.is_valid():
             form.save()
-            return redirect("accounts:index")
+            messages.success(request, "비밀번호 변경이 성공적으로 완료되었습니다.")
+            messages.warning(request, "새로 로그인해주세요.")
+            return redirect("accounts:login")
     else:
         form = PasswordChangeForm(request.user)
     context = {
