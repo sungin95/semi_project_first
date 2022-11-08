@@ -53,8 +53,7 @@
             </div>
           {% endif %}
           <form class="d-flex" action="{% url 'restaurants:search' %}">
-            <input style="width: 150px; background-color: #fc6; placeholder: #fff;" class="form-control me-2 border border-0 " type="search" name="search" placeholder="검색" aria-label="Search" required="required">
-            <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
+            <input style="width: 150px; border: 0.1rem solid #cdcdcd; border-radius: 5rem;" class="px-3" type="search" name="search" placeholder="검색" aria-label="Search" required="required">
             <button style="background-color: #fc6" class="border border-0">
               <lord-icon src="https://cdn.lordicon.com/msoeawqm.json" trigger="click" style="width:32px;height:32px" type="submit"></lord-icon>
             </button>
@@ -88,6 +87,7 @@
 
     <!-- 스크립트 -->
     {% bootstrap_javascript %}
+    <script src="https://cdn.lordicon.com/qjzruarw.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     {% block js %}{% endblock js %}
   </body>

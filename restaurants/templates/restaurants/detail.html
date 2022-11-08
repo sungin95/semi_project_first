@@ -308,6 +308,7 @@
 <!-- 자바스크립트 -->
 {% block js %}
   <script src="{% static 'restaurants/js/detail.js' %}"></script>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
 
   <!-- 지도 -->
   <script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey={{ JSMAPKEY }}&libraries=services"></script>
@@ -351,7 +352,7 @@
     });
   </script>
 
-  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <!-- 리뷰 댓글 삭제 -->
   <script>
     const reviewComments = document.querySelectorAll(`.review-comment`)
     for (const reviewComment of reviewComments) {
@@ -429,6 +430,8 @@
       })
     }
   </script>
+
+  <!-- 리뷰 좋아요 -->
   <script>
     const csrftoken = document
       .querySelector('[name=csrfmiddlewaretoken]')
