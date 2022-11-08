@@ -27,7 +27,7 @@ def signup(request):
         if form.is_valid():
             user = form.save()
             auth_login(request, user)  # 회원가입과 동시에 로그인을 시키기 위해
-            return redirect("accounts:index")
+            return redirect("accounts:detail", request.user.pk)
     else:
         form = CustomUserCreationForm()
     context = {
@@ -95,7 +95,7 @@ def update(request):
     }
     return render(request, "accounts/update.html", context=context)
 
-
+@login_required
 def profile(request):
     if request.method == "POST":
         form = ProfileCustomUserChangeForm(

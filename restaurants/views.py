@@ -94,6 +94,7 @@ def menu(request):
     return render(request, "restaurants/menu.html", context)
 
 
+@login_required
 @require_http_methods(["GET", "POST"])
 def create(request):
     ImageFormSet = modelformset_factory(
@@ -128,7 +129,7 @@ def create(request):
     }
     return render(request, "restaurants/forms.html", context)
 
-
+@login_required
 @require_http_methods(["GET", "POST"])
 def update(request, restaurant_pk):
     restaurant = get_object_or_404(Restaurants, pk=restaurant_pk)
@@ -172,6 +173,7 @@ def update(request, restaurant_pk):
     return render(request, "restaurants/forms.html", context)
 
 
+@login_required
 def image_delete(request, restaurant_pk):
     restaurant = Restaurants.objects.get(pk=restaurant_pk)
     images = restaurant.restaurant.all()
@@ -180,6 +182,7 @@ def image_delete(request, restaurant_pk):
     return redirect("restaurants:update", restaurant.pk)
 
 
+@login_required
 def delete(request, restaurant_pk):
     get_object_or_404(Restaurants, pk=restaurant_pk).delete()
     return redirect("restaurants:main")

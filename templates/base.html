@@ -33,7 +33,12 @@
             <li class="nav-item">
               <a class="nav-link" href="{% url 'restaurants:create' %}">음식점 정보등록</a>
             </li>
-            <li class="nav-item"></li>
+            <!-- 어드민만 보이는 회원목록 -->
+            {% if request.user.is_superuser == 1 %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'accounts:index' %}">회원정보 목록</a>
+              </li>
+            {% endif %}
           </ul>
 
           {% if request.user.is_authenticated %}
